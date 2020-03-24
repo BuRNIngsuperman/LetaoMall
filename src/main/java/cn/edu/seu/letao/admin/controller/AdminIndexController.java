@@ -10,8 +10,4 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminIndexController {
 
-    @RequestMapping("/index")
-    public String index(Model model){
-        return "admin/admin_index";
-    }
 }
