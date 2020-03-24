@@ -14,6 +14,11 @@
     <name>letao</name>
     <description>letao mall project for Spring Boot</description>
 
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+
     <repositories>
         <repository>
             <id>ali-maven</id>
@@ -39,31 +44,33 @@
         </repository>
     </repositories>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
-
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
+
+        <!--   springboot web     -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!--   将tomcat集成到springboot     -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <version>2.2.4.RELEASE</version>
         </dependency>
 
 
+        <!--    MySQL驱动    -->
         <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-core</artifactId>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!--druid依赖,阿里的数据管理源-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.10</version>
         </dependency>
 
         <!--   mybatis plus     -->
@@ -72,20 +79,25 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.3.0</version>
         </dependency>
-
+        <!--    代码自动生成工具 mybatis-plus    -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+        </dependency>
+        <!--    代码生成器中使用freemarker    -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+            <version>2.2.2.RELEASE</version>
         </dependency>
 
-        <!--druid依赖,阿里的数据管理源-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.10</version>
-        </dependency>
-
+        <!--    springboot 单元测试    -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -97,6 +109,18 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!--模板引擎-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-core</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
