@@ -1,54 +1,99 @@
 package cn.edu.seu.letao.admin.controller;
 
+import cn.edu.seu.letao.mall.entity.UsrAccount;
+import cn.edu.seu.letao.mall.service.IUsrAccountService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import javax.servlet.http.HttpSession;
+import org.springframework.util.StringUtils;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
+    @Autowired
+    IUsrAccountService usrAccountService;
 
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public String login(){
         return "admin/admin_login";
     }
 
-    @RequestMapping("/index")
+    @GetMapping("/index")
     public String index(){
         return "admin/admin_index";
     }
 
-    @RequestMapping("/orders")
+    @GetMapping("/orders")
     public String orders(){
         return "admin/admin_orders";
     }
 
-    @RequestMapping("/category")
+    @GetMapping("/category")
     public String category(){
         return "admin/admin_category";
     }
 
-    @RequestMapping("/user")
+    @GetMapping("/user")
     public String usrer(){
         return "admin/admin_user";
     }
 
 
-    @RequestMapping("/goods")
+    @GetMapping("/goods")
     public String goods(){
         return "admin/admin_goods";
     }
 
-    @RequestMapping("/goods/edit")
+    @GetMapping("/goods/edit")
     public String goodsEdit(){
         return "admin/admin_goods_edit";
     }
 
-    @RequestMapping("/statistics")
+    @GetMapping("/statistics")
     public String statistics(){
         return "admin/admin_statistics";
+    }
+
+
+    @PostMapping(value = "/login")
+    public String login(@RequestParam("userName") String userName,
+                        @RequestParam("password") String password,
+                        @RequestParam("verifyCode") String verifyCode,
+                        HttpSession session) {
+        if (StringUtils.isEmpty(verifyCode)) {
+            session.setAttribute("errorMsg", "验证码不能为空");
+            return "admin/admin_login";
+        }
+        if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) {
+            session.setAttribute("errorMsg", "用户名或密码不能为空");
+            return "admin/admin_login";
+        }
+        String kaptchaCode = session.getAttribute("verifyCode") + "";
+        if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.equals(kaptchaCode)) {
+            session.setAttribute("errorMsg", "验证码错误");
+            return "admin/admin_login";
+        }
+
+        //服务层代码。
+        QueryWrapper<UsrAccount> wrapper = new QueryWrapper<>();
+        wrapper.eq("username",userName).eq("password",password);
+        UsrAccount usrAccount=usrAccountService.getOne(wrapper);
+
+        if (usrAccount != null) {
+            session.setAttribute("loginUser", userName);
+            return "redirect:/admin/index";
+        } else {
+            session.setAttribute("errorMsg", "登陆失败，请联系作者获得测试账号");
+            return "admin/admin_login";
+        }
+
     }
 
 }
