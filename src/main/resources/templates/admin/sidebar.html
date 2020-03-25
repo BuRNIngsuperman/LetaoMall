@@ -26,7 +26,7 @@
                 </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/admin/personal_info}" th:class="${path}=='personal_info'?'nav-link active':'nav-link'">
+                    <a th:href="@{/admin/personalInfo}" th:class="${path}=='personalInfo'?'nav-link active':'nav-link'">
                         <i class="nav-icon fa fa-dashboard"></i>
                         <p>
                             个人信息-缺少页面
@@ -38,7 +38,7 @@
 
                 <li class="nav-header">管理模块</li>
                 <li class="nav-item">
-                    <a th:href="@{/admin/admin_orders}"
+                    <a th:href="@{/admin/orders}"
                        th:class="${path}=='admin_orders'?'nav-link active':'nav-link'">
                         <i class="fa fa-list-alt nav-icon" aria-hidden="true"></i>
                         <p>
@@ -48,7 +48,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a th:href="@{/admin/admin_goods}" th:class="${path}=='admin_goods'?'nav-link active':'nav-link'">
+                    <a th:href="@{/admin/goods}" th:class="${path}=='admin_goods'?'nav-link active':'nav-link'">
                         <i class="fa fa-archive nav-icon" aria-hidden="true"></i>
                         <p>
                             商品管理
@@ -56,7 +56,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/admin/admin_category}" th:class="${path}=='admin_category'?'nav-link active':'nav-link'">
+                    <a th:href="@{/admin/category}" th:class="${path}=='admin_category'?'nav-link active':'nav-link'">
                         <i class="fa fa-money nav-icon" aria-hidden="true"></i>
                         <p>
                             分类信息管理
@@ -64,7 +64,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/admin/admin_user}" th:class="${path}=='admin_user'?'nav-link active':'nav-link'">
+                    <a th:href="@{/admin/user}" th:class="${path}=='admin_user'?'nav-link active':'nav-link'">
                         <i class="fa fa-users nav-icon" aria-hidden="true"></i>
                         <p>
                             账户信息管理
@@ -72,7 +72,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/admin/admin_statistics}" th:class="${path}=='admin_user'?'nav-link active':'nav-link'">
+                    <a th:href="@{/admin/statistics}" th:class="${path}=='admin_user'?'nav-link active':'nav-link'">
                         <i class="fa fa-users nav-icon" aria-hidden="true"></i>
                         <p>
                             数据统计
@@ -81,7 +81,7 @@
                 </li>
 
 
-                <li class="nav-header">其他模块</li>
+                <li class="nav-header">其他</li>
                 <li class="nav-item">
                     <a th:href="@{/admin/logout}" class="nav-link">
                         <i class="fa fa-sign-out nav-icon"></i>
