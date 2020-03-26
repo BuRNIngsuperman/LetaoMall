@@ -45,6 +45,7 @@
                 <!-- 未配置轮播图则显示默认的三张轮播图 -->
                 <th:block th:if="${#lists.isEmpty(carousels)}">
                     <div class="swiper-slide">
+
                         <img src="./mall/image/swiper/banner01.jpg" alt="">
                     </div>
                     <div class="swiper-slide">
@@ -75,22 +76,22 @@
         <!-- 未配置热销商品则显示默认 -->
         <th:block th:if="${#lists.isEmpty(hotGoodses)}">
             <div class="hot-image">
-                <a href="##">
+                <a th:href="@{'/goods/detail/'+1}">
                     <img src="./mall/image/sub_banner/r4.jpg" alt="">
                 </a>
             </div>
             <div class="hot-image">
-                <a href="##">
+                <a th:href="@{'/goods/detail/'+1}">
                     <img src="./mall/image/sub_banner/hot2.jpg" alt="">
                 </a>
             </div>
             <div class="hot-image">
-                <a href="##">
+                <a th:href="@{'/goods/detail/'+1}">
                     <img src="./mall/image/sub_banner/hot3.jpg" alt="">
                 </a>
             </div>
             <div class="hot-image">
-                <a href="##">
+                <a th:href="@{'/goods/detail/'+1}">
                     <img src="./mall/image/sub_banner/hot4.jpg" alt="">
                 </a>
             </div>
@@ -116,7 +117,7 @@
             <!-- 未配置则显示默认 -->
             <th:block th:if="${#lists.isEmpty(newGoodses)}">
                 <li>
-                    <a href="##">
+                    <a th:href="@{'/goods/detail/'+1}">
                         <img src="./mall/image/sub_banner/m6.jpg" alt=""/>
                         <p class="name">华为平板 M6</p>
                         <p class="discount">醇香音质 身临其境</p>
@@ -124,7 +125,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="##">
+                    <a th:href="@{'/goods/detail/'+1}">
+
                         <img src="./mall/image/sub_banner/headphones.jpg" alt=""/>
                         <p class="name">蓝牙耳机</p>
                         <p class="discount">一键变声 原唱消音</p>
@@ -132,7 +134,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="##">
+                    <a th:href="@{'/goods/detail/'+1}">
                         <img src="./mall/image/sub_banner/pc.jpg" alt=""/>
                         <p class="name">15.6" i3笔记本</p>
                         <p class="discount">纤薄机身 金属材质</p>
