@@ -1,6 +1,8 @@
 package cn.edu.seu.letao.controller.admin;
 
 import cn.edu.seu.letao.entity.UsrAccount;
+import cn.edu.seu.letao.service.admin.IAdminService;
+import cn.edu.seu.letao.service.admin.impl.AdminServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,8 +18,9 @@ import org.springframework.util.StringUtils;
 @RequestMapping("/admin")
 public class AdminController {
 
-//    @Autowired
-//    IUsrAccountService usrAccountService;
+
+    @Autowired
+    IAdminService adminService;
 
     @GetMapping("/login")
     public String login(){
@@ -61,38 +64,36 @@ public class AdminController {
     }
 
 
-//    @PostMapping(value = "/login")
-//    public String login(@RequestParam("userName") String userName,
-//                        @RequestParam("password") String password,
-//                        @RequestParam("verifyCode") String verifyCode,
-//                        HttpSession session) {
-//        if (StringUtils.isEmpty(verifyCode)) {
-//            session.setAttribute("errorMsg", "验证码不能为空");
-//            return "admin/admin_login";
-//        }
-//        if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) {
-//            session.setAttribute("errorMsg", "用户名或密码不能为空");
-//            return "admin/admin_login";
-//        }
-//        String kaptchaCode = session.getAttribute("verifyCode") + "";
-//        if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.equals(kaptchaCode)) {
-//            session.setAttribute("errorMsg", "验证码错误");
-//            return "admin/admin_login";
-//        }
-//
-//        //服务层代码。
-//        QueryWrapper<UsrAccount> wrapper = new QueryWrapper<>();
-//        wrapper.eq("username",userName).eq("password",password);
-//        UsrAccount usrAccount=usrAccountService.getOne(wrapper);
-//
-//        if (usrAccount != null) {
-//            session.setAttribute("loginUser", userName);
-//            return "redirect:/admin/index";
-//        } else {
-//            session.setAttribute("errorMsg", "登陆失败，请联系作者获得测试账号");
-//            return "admin/admin_login";
-//        }
-//
-//    }
+    @PostMapping(value = "/login")
+    public String login(@RequestParam("userName") String userName,
+                        @RequestParam("password") String password,
+                        @RequestParam("verifyCode") String verifyCode,
+                        HttpSession session) {
+        if (StringUtils.isEmpty(verifyCode)) {
+            session.setAttribute("errorMsg", "验证码不能为空");
+            return "admin/admin_login";
+        }
+        if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) {
+            session.setAttribute("errorMsg", "用户名或密码不能为空");
+            return "admin/admin_login";
+        }
+        String kaptchaCode = session.getAttribute("verifyCode") + "";
+        if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.equals(kaptchaCode)) {
+            session.setAttribute("errorMsg", "验证码错误");
+            return "admin/admin_login";
+        }
+
+
+        boolean bool=adminService.checkAccount(userName,password);
+
+        if (bool) {
+            session.setAttribute("loginUser", userName);
+            return "redirect:/admin/index";
+        } else {
+            session.setAttribute("errorMsg", "登陆失败，请联系作者获得测试账号");
+            return "admin/admin_login";
+        }
+
+    }
 
 }
