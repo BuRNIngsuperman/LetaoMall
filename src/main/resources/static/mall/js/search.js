@@ -4,7 +4,7 @@ $(function () {
         if (key == 13) {
             var q = $(this).val();
             if (q && q != '') {
-                window.location.href = '/search?keyword=' + q;
+                window.location.href = '/search/' + q;
             }
         }
     });
@@ -12,7 +12,7 @@ $(function () {
 
 function search() {
     var q = $('#keyword').val();
-    if (q && q != '') {
-        window.location.href = '/search?keyword=' + q;
-    }
+    // if (q && q != '') {
+        window.location.href = '/search/' + q;
+    // }
 }
