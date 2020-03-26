@@ -1,8 +1,12 @@
 package cn.edu.seu.letao.controller.mall;
 
+import cn.edu.seu.letao.util.PageResult;
 import com.google.code.kaptcha.util.Config;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -10,7 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Properties;
+import cn.edu.seu.letao.controller.vo.*;
 
 
 @Controller
@@ -69,4 +76,42 @@ public class IndexController {
         responseOutputStream.flush();
         responseOutputStream.close();
     }
+
+   // @GetMapping({"/search", "/search.html"})
+    @GetMapping("/search/{keyword}")
+    public String searchPage(@PathVariable("keyword") String keyword,HttpServletRequest request) {
+
+        SearchGoodsVO searchGoodsVO = new SearchGoodsVO();
+        searchGoodsVO.setGoodsId((long)1);
+        searchGoodsVO.setGoodsName("HUAWEI Mate 30 4000万超感光徕卡影像");
+        searchGoodsVO.setGoodsIntro("OLED全面屏 8GB+128GB 全网通4G版 （罗兰紫）");
+        searchGoodsVO.setGoodsCoverImg("/mall/image/mate30-3.png");
+        searchGoodsVO.setSellingPrice(4000);
+        ArrayList<SearchGoodsVO> pageList = new ArrayList<>();
+
+        PageResult pageResult = new PageResult();
+        for (int i = 0;i<10;i++){
+            pageList.add(searchGoodsVO);
+        }
+        pageResult.setList(pageList);
+        request.setAttribute("pageResult", pageResult);
+        return "mall/goods_search_result";
+    }
+
+    @GetMapping("/goods/detail/{goodsId}")
+    public String detailPage(@PathVariable("goodsId") Long goodsId, HttpServletRequest request) {
+
+        GoodsDetailVO goodsDetailVO = new GoodsDetailVO();
+        goodsDetailVO.setGoodsId((long)1);
+        goodsDetailVO.setGoodsName("HUAWEI Mate 30 4000万超感光徕卡影像");
+        goodsDetailVO.setGoodsIntro("OLED全面屏 8GB+128GB 全网通4G版 （罗兰紫）");
+        goodsDetailVO.setGoodsCoverImg("/mall/image/mate30-3.png");
+        goodsDetailVO.setSellingPrice(4000);
+        goodsDetailVO.setOriginalPrice(3000);
+        goodsDetailVO.setGoodsDetailContent("华为 ！！！");
+
+        request.setAttribute("goodsDetail", goodsDetailVO);
+        return "mall/goods_detail";
+    }
+
 }

@@ -3,9 +3,6 @@
 <aside th:fragment="sidebar-fragment(path)" class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a th:href="@{/admin/index}" class="brand-link">
-        <img th:src="@{/admin/dist/img/new-bee-logo-1.png}" alt="ssm-cluster Logo"
-             class="brand-image img-circle elevation-3"
-             style="opacity: .8">
         <span class="brand-text font-weight-light">乐淘商城</span>
     </a>
     <!-- Sidebar -->
@@ -25,27 +22,9 @@
                     </p>
                 </a>
                 </li>
-                <li class="nav-item">
-                    <a th:href="@{/admin/personalInfo}" th:class="${path}=='personalInfo'?'nav-link active':'nav-link'">
-                        <i class="nav-icon fa fa-dashboard"></i>
-                        <p>
-                            个人信息-缺少页面
-                        </p>
-                    </a>
-                </li>
-
 
 
                 <li class="nav-header">管理模块</li>
-                <li class="nav-item">
-                    <a th:href="@{/admin/orders}"
-                       th:class="${path}=='admin_orders'?'nav-link active':'nav-link'">
-                        <i class="fa fa-list-alt nav-icon" aria-hidden="true"></i>
-                        <p>
-                            订单管理
-                        </p>
-                    </a>
-                </li>
 
                 <li class="nav-item">
                     <a th:href="@{/admin/goods}" th:class="${path}=='admin_goods'?'nav-link active':'nav-link'">
@@ -55,33 +34,65 @@
                         </p>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a th:href="@{/admin/category}" th:class="${path}=='admin_category'?'nav-link active':'nav-link'">
+                    <a th:href="@{/admin/categories}" th:class="${path}=='admin_category'?'nav-link active':'nav-link'">
                         <i class="fa fa-money nav-icon" aria-hidden="true"></i>
                         <p>
-                            分类信息管理
+                            分类管理
                         </p>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a th:href="@{/admin/user}" th:class="${path}=='admin_user'?'nav-link active':'nav-link'">
-                        <i class="fa fa-users nav-icon" aria-hidden="true"></i>
+                    <a th:href="@{/admin/orders}" th:class="${path}=='admin_orders'?'nav-link active':'nav-link'">
+                        <i class="fa fa-list-alt nav-icon" aria-hidden="true"></i>
                         <p>
-                            账户信息管理
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/admin/statistics}" th:class="${path}=='admin_user'?'nav-link active':'nav-link'">
-                        <i class="fa fa-users nav-icon" aria-hidden="true"></i>
-                        <p>
-                            数据统计
+                            订单管理
                         </p>
                     </a>
                 </li>
 
 
-                <li class="nav-header">其他</li>
+                <li class="nav-item">
+                    <a th:href="@{/admin/users}" th:class="${path}=='admin_user'?'nav-link active':'nav-link'">
+                        <i class="fa fa-users nav-icon" aria-hidden="true"></i>
+                        <p>
+                            会员管理
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-header">统计管理</li>
+
+                <li class="nav-item">
+                    <a th:href="@{/admin/statistics}" class="nav-link">
+                        <i class="fa fa-line-chart nav-icon"></i>
+                        <p>统计报表</p>
+                    </a>
+                </li>
+
+
+                <li class="nav-header">系统管理</li>
+
+                <li class="nav-item">
+                    <a th:href="@{/admin/profile}" th:class="${path}=='personalInfo'?'nav-link active':'nav-link'">
+                        <i class="fa fa-user nav-icon"></i>
+                        <p>
+                            修改密码
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:href="@{/admin/account}" th:class="${path}=='admin_user'?'nav-link active':'nav-link'">
+                        <i class="fa fa-users nav-icon" aria-hidden="true"></i>
+                        <p>
+                            账户管理
+                        </p>
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <a th:href="@{/admin/logout}" class="nav-link">
                         <i class="fa fa-sign-out nav-icon"></i>
