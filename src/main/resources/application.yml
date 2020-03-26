@@ -4,22 +4,32 @@ server:
 spring:
   datasource:
     username: root
-    password: rootroot
+    password: admin
     url: jdbc:mysql://localhost:3306/letaomall
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
-    initialSize: 5
-    minIdle: 5
-    maxWait: 20
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-    filters: stat,wall,log4j
-    maxPoolPreparedStatementPerConnectionSize: 20
-    useGlobalDataSourceStat: true
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    druid:
+      initial-size: 10
+      min-idle: 10
+      max-active: 200
+      min-evictable-idle-time-millis: 300000
+      test-on-borrow: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 30000
+      pool-prepared-statements: true
+      max-open-prepared-statements: 100
+
+mybatis-plus:
+  type-aliases-package: cn.edu.seu.letao.entity
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: 1
+      logic-not-delete-value: 0
+
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    jdbc-type-for-null: 'null'
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
