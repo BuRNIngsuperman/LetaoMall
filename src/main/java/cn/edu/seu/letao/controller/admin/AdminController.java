@@ -27,4 +27,10 @@ public class AdminController {
     public String register(){
         return "admin/admin_login";
     }
+
+
+    @RequestMapping(value = "/profile",method = {RequestMethod.POST,RequestMethod.GET})
+    public String profile(){
+        return "admin/admin_profile";
+    }
 }
