@@ -7,15 +7,15 @@ import java.io.Serializable;
  */
 public class SearchGoodsVO implements Serializable {
 
-    public Long goodsId;
+    private Long goodsId;
 
-    public String goodsName;
+    private String goodsName;
 
-    public String goodsIntro;
+    private String goodsIntro;
 
-    public String goodsCoverImg;
+    private String goodsCoverImg;
 
-    public Integer sellingPrice;
+    private Integer sellingPrice;
 
     public Long getGoodsId() {
         return goodsId;
