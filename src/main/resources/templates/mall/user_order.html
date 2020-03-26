@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('乐淘商城-订单列表','my-orders')">
+</head>
+
+<body>
+<header th:replace="mall/header::header-fragment"></header>
+
+<!-- nav -->
+<nav th:replace="mall/header::nav-fragment"></nav>
+
+
+<!-- personal -->
+<div id="personal">
+    <div class="self-info center">
+
+        <!-- sidebar -->
+        <div th:replace="mall/personal-sidebar::sidebar-fragment"></div>
+
+        <div class="intro fr">
+            <div class="uc-box uc-main-box">
+                <div class="uc-content-box order-list-box">
+                    <div class="box-hd">
+                        <h1 class="title">我的订单
+                            <small>请谨防钓鱼链接或诈骗电话，<a href="##">了解更多&gt;</a>
+                            </small>
+                        </h1>
+                    </div>
+                    <div class="box-bd">
+                        <div id="J_orderList">
+                            <ul class="order-list">
+                        </div>
+                        </li>
+                        </th:block>
+                        </th:block>
+                        </ul>
+                    </div>
+                    <div id="J_orderListPages">
+                        <div class="newbee-pagenavi">
+
+
+                            <a href="##" class="numbers current">1</a>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+</div>
+
+<div th:replace="mall/footer::footer-fragment"></div>
+
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+
+</body>
+</html>
