@@ -70,12 +70,14 @@
             <artifactId>kaptcha</artifactId>
             <version>2.3.2</version>
         </dependency>
+
         <!--    MySQL驱动    -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+
         <!--druid依赖,阿里的数据管理源-->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -95,6 +97,7 @@
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.3.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -120,7 +123,7 @@
             </exclusions>
         </dependency>
 
-        <!--模板引擎-->
+        <!--代码生成模板引擎-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -131,11 +134,18 @@
             <artifactId>spring-session-core</artifactId>
         </dependency>
 
-        <!-- 验证码 -->
+        <!--微信支付sdk-->
         <dependency>
-            <groupId>com.github.penggle</groupId>
-            <artifactId>kaptcha</artifactId>
-            <version>2.3.2</version>
+            <groupId>com.github.wxpay</groupId>
+            <artifactId>wxpay-sdk</artifactId>
+            <version>0.0.3</version>
+        </dependency>
+
+        <!--加载自定义properties文件-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <version>2.2.4.RELEASE</version>
         </dependency>
 
     </dependencies>
