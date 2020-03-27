@@ -3,20 +3,19 @@ $(function () {
         url: '/admin/goods/list',
         datatype: "json",
         colModel: [
-            {label: '商品编号', name: 'goodsId', index: 'goodsId', width: 60, key: true},
-            {label: '商品名', name: 'goodsName', index: 'goodsName', width: 120},
-            {label: '商品简介', name: 'goodsIntro', index: 'goodsIntro', width: 120},
-            {label: '商品图片', name: 'goodsCoverImg', index: 'goodsCoverImg', width: 120, formatter: coverImageFormatter},
-            {label: '商品库存', name: 'stockNum', index: 'stockNum', width: 60},
-            {label: '商品售价', name: 'sellingPrice', index: 'sellingPrice', width: 60},
+            {label: '商品编号', name: 'commId', index: 'commId', width: 60, key: true},
+            {label: '商品名', name: 'name', index: 'name', width: 120},
+            {label: '商品简介', name: 'description', index: 'description', width: 120},
+            {label: '商品图片', name: 'albumPics', index: 'albumPics', width: 120, formatter: coverImageFormatter},
+            {label: '商品库存', name: 'stock', index: 'stock', width: 60},
+            {label: '商品售价', name: 'price', index: 'price', width: 60},
             {
                 label: '上架状态',
-                name: 'goodsSellStatus',
-                index: 'goodsSellStatus',
+                name: 'publish_status',
+                index: 'publish_status',
                 width: 80,
                 formatter: goodsSellStatusFormatter
-            },
-            {label: '创建时间', name: 'createTime', index: 'createTime', width: 60}
+            }
         ],
         height: 760,
         rowNum: 20,
