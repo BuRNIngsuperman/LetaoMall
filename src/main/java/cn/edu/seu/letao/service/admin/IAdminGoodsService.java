@@ -7,4 +7,6 @@ public interface IAdminGoodsService {
 
 
     public PageResult getGoodsPage(PageQueryUtil pageUtil);
+    public boolean updateSellStatus(Long[] ids,int sellStatus);
+
 }

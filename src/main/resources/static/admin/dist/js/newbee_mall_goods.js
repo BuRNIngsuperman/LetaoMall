@@ -11,8 +11,8 @@ $(function () {
             {label: '商品售价', name: 'price', index: 'price', width: 60},
             {
                 label: '上架状态',
-                name: 'publish_status',
-                index: 'publish_status',
+                name: 'publishStatus',
+                index: 'publishStatus',
                 width: 80,
                 formatter: goodsSellStatusFormatter
             }
@@ -49,11 +49,11 @@ $(function () {
     });
 
     function goodsSellStatusFormatter(cellvalue) {
-        //商品上架状态 0-上架 1-下架
-        if (cellvalue == 0) {
+        //商品上架状态 1-上架 0-下架
+        if (cellvalue == 1) {
             return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 80%;\">销售中</button>";
         }
-        if (cellvalue == 1) {
+        if (cellvalue == 0) {
             return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 80%;\">已下架</button>";
         }
     }
@@ -111,7 +111,7 @@ function putUpGoods() {
             if (flag) {
                 $.ajax({
                     type: "PUT",
-                    url: "/admin/goods/status/0",
+                    url: "/admin/goods/status/1",
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function (r) {
@@ -151,7 +151,7 @@ function putDownGoods() {
             if (flag) {
                 $.ajax({
                     type: "PUT",
-                    url: "/admin/goods/status/1",
+                    url: "/admin/goods/status/0",
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function (r) {

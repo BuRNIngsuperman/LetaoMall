@@ -19,10 +19,14 @@ public class AdminGoodsServiceImpl implements IAdminGoodsService {
 
     @Override
     public PageResult getGoodsPage(PageQueryUtil pageUtil) {
-        List<PmCommodity> goodsList = commodityMapper.selectByMap(null);
+        List<PmCommodity> goodsList = commodityMapper.selectForPage(pageUtil);
         int total = commodityMapper.selectCount(null);
         PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
 
+    @Override
+    public boolean updateSellStatus(Long[] ids, int sellStatus) {
+        return commodityMapper.updateSellStatus(ids,sellStatus);
+    }
 }
