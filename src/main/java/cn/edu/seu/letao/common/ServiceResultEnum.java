@@ -1,11 +1,5 @@
 package cn.edu.seu.letao.common;
 
-/**
- * @author 13
- * @qq交流群 796794009
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
- */
 public enum ServiceResultEnum {
     ERROR("error"),
 

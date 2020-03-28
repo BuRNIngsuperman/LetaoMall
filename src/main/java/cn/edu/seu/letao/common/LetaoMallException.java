@@ -1,11 +1,11 @@
 package cn.edu.seu.letao.common;
 
-public class NewBeeMallException extends RuntimeException {
+public class LetaoMallException extends RuntimeException {
 
-    public NewBeeMallException() {
+    public LetaoMallException() {
     }
 
-    public NewBeeMallException(String message) {
+    public LetaoMallException(String message) {
         super(message);
     }
 
@@ -15,7 +15,7 @@ public class NewBeeMallException extends RuntimeException {
      * @param message
      */
     public static void fail(String message) {
-        throw new NewBeeMallException(message);
+        throw new LetaoMallException(message);
     }
 
 }

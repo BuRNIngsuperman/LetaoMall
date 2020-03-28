@@ -1,13 +1,9 @@
 package cn.edu.seu.letao.common;
 
 /**
- * @author 13
- * @qq交流群 796794009
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
  * @apiNote 分类级别
  */
-public enum NewBeeMallCategoryLevelEnum {
+public enum LetaoMallCategoryLevelEnum {
 
     DEFAULT(0, "ERROR"),
     LEVEL_ONE(1, "一级分类"),
@@ -18,15 +14,15 @@ public enum NewBeeMallCategoryLevelEnum {
 
     private String name;
 
-    NewBeeMallCategoryLevelEnum(int level, String name) {
+    LetaoMallCategoryLevelEnum(int level, String name) {
         this.level = level;
         this.name = name;
     }
 
-    public static NewBeeMallCategoryLevelEnum getNewBeeMallOrderStatusEnumByLevel(int level) {
-        for (NewBeeMallCategoryLevelEnum newBeeMallCategoryLevelEnum : NewBeeMallCategoryLevelEnum.values()) {
-            if (newBeeMallCategoryLevelEnum.getLevel() == level) {
-                return newBeeMallCategoryLevelEnum;
+    public static LetaoMallCategoryLevelEnum getNewBeeMallOrderStatusEnumByLevel(int level) {
+        for (LetaoMallCategoryLevelEnum letaoMallCategoryLevelEnum : LetaoMallCategoryLevelEnum.values()) {
+            if (letaoMallCategoryLevelEnum.getLevel() == level) {
+                return letaoMallCategoryLevelEnum;
             }
         }
         return DEFAULT;
