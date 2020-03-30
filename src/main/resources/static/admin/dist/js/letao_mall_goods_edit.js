@@ -42,87 +42,184 @@ $(function () {
 
 $('#confirmButton').click(function () {
     var goodsName = $('#goodsName').val();
-    var tag = $('#tag').val();
-    var originalPrice = $('#originalPrice').val();
-    var sellingPrice = $('#sellingPrice').val();
-    var stockNum = $('#stockNum').val();
-    var goodsIntro = $('#goodsIntro').val();
+    var goodsPrice = $('#goodsPrice').val();
+    var goodsImageURL = $('#goodsImageURL').val();
+    var goodsStock = $('#goodsStock').val();
+    var goodsUnit = $('#goodsUnit').val();
+    var goodsSN = $('#goodsSN').val();
+    var goodsSaleAddress = $('#goodsSaleAddress').val();
+    var goodsMakeAddress = $('#goodsMakeAddress').val();
     var goodsCategoryId = $('#levelThree option:selected').val();
+
+        var goodsSubTitle = $('#goodsSubTitle').val();
+        var goodsOriginalPrice = $('#goodsOriginalPrice').val();
+        var goodsLowStock = $('#goodsLowStock').val();
+        var goodsWeight = $('#goodsWeight').val();
+        var goodsKeyWords = $('#goodsKeyWords').val();
+        var goodsNote = $('#goodsNote').val();
+
+
+
     var goodsSellStatus = $("input[name='goodsSellStatus']:checked").val();
-    var goodsDetailContent = editor.html();
-    if (isNull(goodsCategoryId)) {
-        swal("请选择分类", {
+    var goodsNewStatus = $("input[name='goodsNewStatus']:checked").val();
+    var goodsRecommandStatus = $("input[name='goodsRecommandStatus']:checked").val();
+
+    var goodsDescription = editor.html();
+    var goodsDetailTitle = $("textarea[id='editor2']").html();
+    var goodsDetailDesc = $("textarea[id='editor3']").html();
+    var goodsDetailHtm = $("textarea[id='editor4']").html();
+
+    if (isNull(goodsDetailTitle)) {
+        swal("请输入商品详情标题", {
             icon: "error",
         });
         return;
     }
+    if (isNull(goodsDetailDesc)) {
+        swal("请输入商品详情描述", {
+            icon: "error",
+        });
+        return;
+    }
+    if (isNull(goodsDetailHtm)) {
+        swal("请输入商品详情网页内容", {
+            icon: "error",
+        });
+        return;
+    }
+
+    if (isNull(goodsWeight)) {
+        swal("请输入商品重量", {
+            icon: "error",
+        });
+        return;
+    }
+    if (isNull(goodsKeyWords)) {
+        swal("请输入商品关键字", {
+            icon: "error",
+        });
+        return;
+    }
+    if (isNull(goodsNote)) {
+        swal("请输入商品备注", {
+            icon: "error",
+        });
+        return;
+    }
+    if (isNull(goodsLowStock)) {
+        swal("请输入商品库存预警值", {
+            icon: "error",
+        });
+        return;
+    }
+
+    if (isNull(goodsOriginalPrice)) {
+        swal("请输入商品市场价", {
+            icon: "error",
+        });
+        return;
+    }
+
+    if (isNull(goodsSubTitle)) {
+        swal("请输入商品副标题", {
+            icon: "error",
+        });
+        return;
+    }
+
     if (isNull(goodsName)) {
         swal("请输入商品名称", {
             icon: "error",
         });
         return;
     }
-    if (!validLength(goodsName, 100)) {
-        swal("请输入商品名称", {
+    if (isNull(goodsPrice)) {
+        swal("请输入价格", {
             icon: "error",
         });
         return;
     }
-    if (isNull(tag)) {
-        swal("请输入商品小标签", {
+    if (goodsPrice < 1) {
+        swal("价格输入非法", {
             icon: "error",
         });
         return;
     }
-    if (!validLength(tag, 100)) {
-        swal("标签过长", {
+    if (!validLength(goodsName, 200)) {
+        swal("商品名称过长", {
             icon: "error",
         });
         return;
     }
-    if (isNull(goodsIntro)) {
-        swal("请输入商品简介", {
+    if (isNull(goodsImageURL)) {
+        swal("请输入图片路径", {
             icon: "error",
         });
         return;
     }
-    if (!validLength(goodsIntro, 100)) {
-        swal("简介过长", {
+    if (isNull(goodsStock)) {
+        swal("请输入库存量", {
             icon: "error",
         });
         return;
     }
-    if (isNull(originalPrice) || originalPrice < 1) {
-        swal("请输入商品价格", {
+    if (isNull(goodsUnit)) {
+        swal("请输入商品单位", {
             icon: "error",
         });
         return;
-    }
-    if (isNull(sellingPrice) || sellingPrice < 1) {
-        swal("请输入商品售卖价", {
-            icon: "error",
-        });
-        return;
-    }
-    if (isNull(stockNum) || sellingPrice < 0) {
-        swal("请输入商品库存数", {
-            icon: "error",
-        });
-        return;
-    }
+     }
+     if (isNull(goodsSN)) {
+         swal("请输入商品条码", {
+             icon: "error",
+         });
+         return;
+     }
+     if (isNull(goodsSaleAddress)) {
+         swal("请输入出货地址", {
+             icon: "error",
+         });
+         return;
+      }
+     if (isNull(goodsMakeAddress)) {
+         swal("请输入产地", {
+             icon: "error",
+         });
+         return;
+      }
+     if (isNull(goodsCategoryId)) {
+         swal("请选择分类", {
+             icon: "error",
+         });
+         return;
+      }
+
     if (isNull(goodsSellStatus)) {
         swal("请选择上架状态", {
             icon: "error",
         });
         return;
     }
-    if (isNull(goodsDetailContent)) {
+    if (isNull(goodsNewStatus)) {
+        swal("请选择新品状态", {
+            icon: "error",
+        });
+        return;
+    }
+    if (isNull(goodsRecommandStatus)) {
+        swal("请选择推荐状态", {
+            icon: "error",
+        });
+        return;
+    }
+
+    if (isNull(goodsDescription)) {
         swal("请输入商品介绍", {
             icon: "error",
         });
         return;
     }
-    if (!validLength(goodsDetailContent, 50000)) {
+    if (!validLength(goodsDescription, 200)) {
         swal("商品介绍内容过长", {
             icon: "error",
         });
@@ -132,16 +229,33 @@ $('#confirmButton').click(function () {
 });
 
 $('#saveButton').click(function () {
-    var goodsId = $('#goodsId').val();
-    var goodsCategoryId = $('#levelThree option:selected').val();
     var goodsName = $('#goodsName').val();
-    var tag = $('#tag').val();
-    var originalPrice = $('#originalPrice').val();
-    var sellingPrice = $('#sellingPrice').val();
-    var goodsIntro = $('#goodsIntro').val();
-    var stockNum = $('#stockNum').val();
+    var goodsPrice = $('#goodsPrice').val();
+    var goodsImageURL = $('#goodsImageURL').val();
+    var goodsStock = $('#goodsStock').val();
+    var goodsUnit = $('#goodsUnit').val();
+    var goodsSN = $('#goodsSN').val();
+    var goodsSaleAddress = $('#goodsSaleAddress').val();
+    var goodsMakeAddress = $('#goodsMakeAddress').val();
+
+    var goodsCategoryId = $('#levelThree option:selected').val();
+
+    var goodsSubTitle = $('#goodsSubTitle').val();
+    var goodsOriginalPrice = $('#goodsOriginalPrice').val();
+    var goodsLowStock = $('#goodsLowStock').val();
+    var goodsWeight = $('#goodsWeight').val();
+    var goodsKeyWords = $('#goodsKeyWords').val();
+    var goodsNote = $('#goodsNote').val();
+
     var goodsSellStatus = $("input[name='goodsSellStatus']:checked").val();
-    var goodsDetailContent = editor.html();
+    var goodsNewStatus = $("input[name='goodsNewStatus']:checked").val();
+    var goodsRecommandStatus = $("input[name='goodsRecommandStatus']:checked").val();
+
+    var goodsDescription = editor.html();
+    var goodsDetailTitle = $("textarea[id='editor2']").html();
+    var goodsDetailDesc = $("textarea[id='editor3']").html();
+    var goodsDetailHtm = $("textarea[id='editor4']").html();
+
     var goodsCoverImg = $('#goodsCoverImg')[0].src;
     if (isNull(goodsCoverImg) || goodsCoverImg.indexOf('img-upload') != -1) {
         swal("封面图片不能为空", {
@@ -152,36 +266,66 @@ $('#saveButton').click(function () {
     var url = '/admin/goods/save';
     var swlMessage = '保存成功';
     var data = {
-        "goodsName": goodsName,
-        "goodsIntro": goodsIntro,
-        "goodsCategoryId": goodsCategoryId,
-        "tag": tag,
-        "originalPrice": originalPrice,
-        "sellingPrice": sellingPrice,
-        "stockNum": stockNum,
-        "goodsDetailContent": goodsDetailContent,
-        "goodsCoverImg": goodsCoverImg,
-        "goodsCarousel": goodsCoverImg,
-        "goodsSellStatus": goodsSellStatus
+        "name": goodsName,
+        "price": goodsPrice,
+        //"albumPics": goodsImageURL,
+        "stock": goodsStock,
+        "unit": goodsUnit,
+        "productSn": goodsSN,
+        "saleAddress": goodsSaleAddress,
+        "makeAddress": goodsMakeAddress,
+        "commodityCategoryId": goodsCategoryId,
+
+        "publishStatus": goodsSellStatus,
+        "newStatus": goodsNewStatus,
+        "recommandStatus": goodsRecommandStatus,
+
+        "description": goodsDescription,
+        "albumPics": goodsCoverImg,
+
+         "subTitle":goodsSubTitle,
+         "originalPrice":goodsOriginalPrice,
+         "lowStock":goodsLowStock,
+         "weight":goodsWeight,
+         "keyWords":goodsKeyWords,
+         "note":goodsNote,
+
+         "detailTitle"goodsDetailTitle,
+         "detailDesc":goodsDetailDesc,
+         "detailHtml":goodsDetailHtm
+
     };
-    if (goodsId > 0) {
+
+    /*新增商品ID默认设置了0，而修改商品则会把数据库中的ID获取出来*/
+    if (commId > 0) {
         url = '/admin/goods/update';
         swlMessage = '修改成功';
         data = {
-            "goodsId": goodsId,
-            "goodsName": goodsName,
-            "goodsIntro": goodsIntro,
-            "goodsCategoryId": goodsCategoryId,
-            "tag": tag,
-            "originalPrice": originalPrice,
-            "sellingPrice": sellingPrice,
-            "stockNum": stockNum,
-            "goodsDetailContent": goodsDetailContent,
-            "goodsCoverImg": goodsCoverImg,
-            "goodsCarousel": goodsCoverImg,
-            "goodsSellStatus": goodsSellStatus
+            "name": goodsName,
+            "price": goodsPrice,
+            "stock": goodsStock,
+            "unit": goodsUnit,
+            "productSn": goodsSN,
+            "saleAddress": goodsSaleAddress,
+            "makeAddress": goodsMakeAddress,
+            "commodityCategoryId": goodsCategoryId,
+            "publishStatus": goodsSellStatus,
+            "newStatus": goodsNewStatus,
+            "recommandStatus": goodsRecommandStatus,
+            "description": goodsDescription,
+            "albumPics": goodsCoverImg,
+            "subTitle":goodsSubTitle,
+            "originalPrice":goodsOriginalPrice,
+            "lowStock":goodsLowStock,
+            "weight":goodsWeight,
+            "keyWords":goodsKeyWords,
+            "note":goodsNote,
+            "detailTitle"goodsDetailTitle,
+            "detailDesc":goodsDetailDesc,
+            "detailHtml":goodsDetailHtm
         };
     }
+
     console.log(data);
     $.ajax({
         type: 'POST',//方法类型
@@ -222,6 +366,7 @@ $('#cancelButton').click(function () {
     window.location.href = "/admin/goods";
 });
 
+/*选则等级变化，还没完成*/
 $('#levelOne').on('change', function () {
     $.ajax({
         url: '/admin/categories/listForSelect?categoryId=' + $(this).val(),

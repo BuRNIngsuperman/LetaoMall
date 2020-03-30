@@ -3,17 +3,20 @@ package cn.edu.seu.letao.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Hala
- * @since 2020-03-23
+ * @since 2020-03-30
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -23,40 +26,51 @@ public class UsrUser implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 用户id
+     * 用户主键id
      */
     @TableId(value = "user_id", type = IdType.AUTO)
-    private Integer userId;
+    private Long userId;
 
     /**
-     * 姓名
+     * 用户昵称
      */
-    private String name;
+    private String nickName;
 
     /**
-     * 年龄
+     * 登陆名称(默认为手机号)
      */
-    private Integer age;
+    private String loginName;
 
     /**
-     * 性别
+     * 密码
      */
-    private String sex;
+    private String password;
 
     /**
-     * 所在地
+     * 个性签名
+     */
+    private String introduceSign;
+
+    /**
+     * 收货地址
      */
     private String address;
 
     /**
-     * 联系方式
+     * 注销标识字段(0-正常 1-已注销)
      */
-    private String contactInfo;
+    private Integer isDeleted;
 
     /**
-     * 关联账户id
+     * 锁定标识字段(0-未锁定 1-已锁定)
      */
-    private Integer accoId;
+    private Integer lockedFlag;
+
+    /**
+     * 注册时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
 
 
 }

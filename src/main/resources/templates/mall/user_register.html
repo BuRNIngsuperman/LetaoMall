@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="login_submit">
-                    <input class="submit" type="button" onclick="user_register()" value="立即注册">
+                    <input class="submit" type="button" onclick="register()" value="立即注册">
                 </div>
             </form>
         </div>
@@ -103,11 +103,11 @@
                         buttons: true,
                         dangerMode: true,
                     }).then((flag) => {
-                            if (flag) {
-                                window.location.href = '/login';
-                            }
+                        if (flag) {
+                            window.location.href = '/login';
                         }
-                    )
+                    }
+                )
                     ;
                 } else {
                     swal(result.message, {

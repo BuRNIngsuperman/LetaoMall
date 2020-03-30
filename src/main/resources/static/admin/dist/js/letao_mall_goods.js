@@ -3,20 +3,19 @@ $(function () {
         url: '/admin/goods/list',
         datatype: "json",
         colModel: [
-            {label: '商品编号', name: 'goodsId', index: 'goodsId', width: 60, key: true},
-            {label: '商品名', name: 'goodsName', index: 'goodsName', width: 120},
-            {label: '商品简介', name: 'goodsIntro', index: 'goodsIntro', width: 120},
-            {label: '商品图片', name: 'goodsCoverImg', index: 'goodsCoverImg', width: 120, formatter: coverImageFormatter},
-            {label: '商品库存', name: 'stockNum', index: 'stockNum', width: 60},
-            {label: '商品售价', name: 'sellingPrice', index: 'sellingPrice', width: 60},
+            {label: '商品编号', name: 'commId', index: 'commId', width: 60, key: true},
+            {label: '商品名', name: 'name', index: 'name', width: 120},
+            {label: '商品简介', name: 'description', index: 'description', width: 120},
+            {label: '商品图片', name: 'albumPics', index: 'albumPics', width: 120, formatter: coverImageFormatter},
+            {label: '商品库存', name: 'stock', index: 'stock', width: 60},
+            {label: '商品售价', name: 'price', index: 'price', width: 60},
             {
                 label: '上架状态',
-                name: 'goodsSellStatus',
-                index: 'goodsSellStatus',
+                name: 'publishStatus',
+                index: 'publishStatus',
                 width: 80,
                 formatter: goodsSellStatusFormatter
-            },
-            {label: '创建时间', name: 'createTime', index: 'createTime', width: 60}
+            }
         ],
         height: 760,
         rowNum: 20,
@@ -50,11 +49,11 @@ $(function () {
     });
 
     function goodsSellStatusFormatter(cellvalue) {
-        //商品上架状态 0-上架 1-下架
-        if (cellvalue == 0) {
+        //商品上架状态 1-上架 0-下架
+        if (cellvalue == 1) {
             return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 80%;\">销售中</button>";
         }
-        if (cellvalue == 1) {
+        if (cellvalue == 0) {
             return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 80%;\">已下架</button>";
         }
     }
@@ -112,7 +111,7 @@ function putUpGoods() {
             if (flag) {
                 $.ajax({
                     type: "PUT",
-                    url: "/admin/goods/status/0",
+                    url: "/admin/goods/status/1",
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function (r) {
@@ -152,7 +151,7 @@ function putDownGoods() {
             if (flag) {
                 $.ajax({
                     type: "PUT",
-                    url: "/admin/goods/status/1",
+                    url: "/admin/goods/status/0",
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function (r) {
