@@ -24,7 +24,7 @@ public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> i
 
         password = MD5Util.MD5Encode(password,"UTF-8");
         QueryWrapper<UsrAccount> wrapper = new QueryWrapper<>();
-        wrapper.eq("username", username).eq("password", password).eq("stop","NO");
+        wrapper.eq("username", username).eq("password", password).eq("stop","yes");
         UsrAccount usrAccount = usrAccountMapper.selectOne(wrapper);
         if (usrAccount != null)
             return true;
@@ -44,7 +44,7 @@ public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> i
         usrAdmin.setUsername(username);
         usrAdmin.setPassword(password);
         usrAdmin.setType("admin");
-        usrAdmin.setStop("NO");
+        usrAdmin.setStop("yes");
         usrAccountMapper.insert(usrAdmin);
         return true;
     }
