@@ -169,5 +169,235 @@ public class PmCommodity implements Serializable {
      */
     private String detailHtml;
 
+    public Integer getCommId() {
+        return commId;
+    }
 
+    public void setCommId(Integer commId) {
+        this.commId = commId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getCommodityCategoryId() {
+        return commodityCategoryId;
+    }
+
+    public void setCommodityCategoryId(Integer commodityCategoryId) {
+        this.commodityCategoryId = commodityCategoryId;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getProductSn() {
+        return productSn;
+    }
+
+    public void setProductSn(String productSn) {
+        this.productSn = productSn;
+    }
+
+    public Integer getDeleteStatus() {
+        return deleteStatus;
+    }
+
+    public void setDeleteStatus(Integer deleteStatus) {
+        this.deleteStatus = deleteStatus;
+    }
+
+    public Integer getPublishStatus() {
+        return publishStatus;
+    }
+
+    public void setPublishStatus(Integer publishStatus) {
+        this.publishStatus = publishStatus;
+    }
+
+    public Integer getNewStatus() {
+        return newStatus;
+    }
+
+    public void setNewStatus(Integer newStatus) {
+        this.newStatus = newStatus;
+    }
+
+    public Integer getRecommandStatus() {
+        return recommandStatus;
+    }
+
+    public void setRecommandStatus(Integer recommandStatus) {
+        this.recommandStatus = recommandStatus;
+    }
+
+    public Integer getVerifyStatus() {
+        return verifyStatus;
+    }
+
+    public void setVerifyStatus(Integer verifyStatus) {
+        this.verifyStatus = verifyStatus;
+    }
+
+    public String getSaleAddress() {
+        return saleAddress;
+    }
+
+    public void setSaleAddress(String saleAddress) {
+        this.saleAddress = saleAddress;
+    }
+
+    public String getMakeAddress() {
+        return makeAddress;
+    }
+
+    public void setMakeAddress(String makeAddress) {
+        this.makeAddress = makeAddress;
+    }
+
+    public Integer getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(Integer brandId) {
+        this.brandId = brandId;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public Integer getSale() {
+        return sale;
+    }
+
+    public void setSale(Integer sale) {
+        this.sale = sale;
+    }
+
+    public BigDecimal getPromotionPrice() {
+        return promotionPrice;
+    }
+
+    public void setPromotionPrice(BigDecimal promotionPrice) {
+        this.promotionPrice = promotionPrice;
+    }
+
+    public String getSubTitle() {
+        return subTitle;
+    }
+
+    public void setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
+    }
+
+    public BigDecimal getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(BigDecimal originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public Integer getLowStock() {
+        return lowStock;
+    }
+
+    public void setLowStock(Integer lowStock) {
+        this.lowStock = lowStock;
+    }
+
+    public BigDecimal getWeight() {
+        return weight;
+    }
+
+    public void setWeight(BigDecimal weight) {
+        this.weight = weight;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getAlbumPics() {
+        return albumPics;
+    }
+
+    public void setAlbumPics(String albumPics) {
+        this.albumPics = albumPics;
+    }
+
+    public String getDetailTitle() {
+        return detailTitle;
+    }
+
+    public void setDetailTitle(String detailTitle) {
+        this.detailTitle = detailTitle;
+    }
+
+    public String getDetailDesc() {
+        return detailDesc;
+    }
+
+    public void setDetailDesc(String detailDesc) {
+        this.detailDesc = detailDesc;
+    }
+
+    public String getDetailHtml() {
+        return detailHtml;
+    }
+
+    public void setDetailHtml(String detailHtml) {
+        this.detailHtml = detailHtml;
+    }
 }

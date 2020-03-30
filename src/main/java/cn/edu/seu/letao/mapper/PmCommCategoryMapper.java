@@ -15,6 +15,6 @@ import java.util.List;
  */
 public interface PmCommCategoryMapper extends BaseMapper<PmCommCategory> {
 
-    public List<PmCommCategory> selectByLevelAndParentIdsAndNumber(List<Integer> parentIds, int categoryLevel);
+    public List<PmCommCategory> selectByLevelAndParentIds(List<Integer> parentIds, int categoryLevel);
 
 }

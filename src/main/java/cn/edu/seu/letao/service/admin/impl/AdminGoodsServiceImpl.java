@@ -1,5 +1,6 @@
 package cn.edu.seu.letao.service.admin.impl;
 
+import cn.edu.seu.letao.common.ServiceResultEnum;
 import cn.edu.seu.letao.entity.PmCommCategory;
 import cn.edu.seu.letao.entity.PmCommodity;
 import cn.edu.seu.letao.mapper.PmCommCategoryMapper;
@@ -46,9 +47,45 @@ public class AdminGoodsServiceImpl implements IAdminGoodsService {
     * 根据父级别id,自身等级查询，分类级别信息
     * */
     @Override
-    public List<PmCommCategory> selectByLevelAndParentIdsAndNumber(List<Integer> parentIds, int categoryLevel){
+    public List<PmCommCategory> selectByLevelAndParentIds(List<Integer> parentIds, int categoryLevel){
 
-        return categoryMapper.selectByLevelAndParentIdsAndNumber(parentIds, categoryLevel);
+        return categoryMapper.selectByLevelAndParentIds(parentIds, categoryLevel);
     }
+
+    /*查询商品分类表级别信息*/
+    @Override
+    public PmCommCategory getCategoryById(int id){
+        return categoryMapper.selectById(id);
+    }
+
+    /**
+     * 添加商品
+     */
+    @Override
+    public String saveCommodity(PmCommodity commodity){
+
+        //添加商品默认属性
+//        commodity.setDeleteStatus(0);
+//        commodity.setVerifyStatus(1);
+//        commodity.setBrandId(0);
+//        commodity.setSort(0);
+//        commodity.setSale(0);
+
+
+        if(commodityMapper.insert(commodity) > 0)
+            return  ServiceResultEnum.SUCCESS.getResult();
+
+        return ServiceResultEnum.DB_ERROR.getResult();
+    }
+
+
+    /**
+     * 获取商品信息
+     */
+    @Override
+    public PmCommodity getGoodsById(int id){
+        return commodityMapper.selectById(id);
+    }
+
 
 }

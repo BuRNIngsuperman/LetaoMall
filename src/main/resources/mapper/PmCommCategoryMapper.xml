@@ -8,7 +8,7 @@
         <result column="lever" jdbcType="INTEGER" property="level"/>
     </resultMap>
 
-    <select id="selectByLevelAndParentIdsAndNumber" resultMap="LevelResultMap">
+    <select id="selectByLevelAndParentIds" resultMap="LevelResultMap">
         select cid,cname,level from pm_comm_category
         where parent_id in
         <foreach item="parentId" collection="parentIds" open="(" separator="," close=")">
