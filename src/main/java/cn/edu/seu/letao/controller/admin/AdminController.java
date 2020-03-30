@@ -23,11 +23,17 @@ public class AdminController {
         return "admin/admin_index";
     }
 
+    /*
+    * 跳转登陆页面
+    * */
     @GetMapping(value = "/login")
     public String toLogin(){
         return "admin/admin_login";
     }
 
+    /*
+     * 在登陆页面发出登陆请求
+     * */
     @PostMapping(value = "/login")
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,

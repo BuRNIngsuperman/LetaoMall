@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author Hala
- * @since 2020-03-23
+ * @since 2020-03-30
  */
 @RestController
-@RequestMapping("/mall/usr-user")
+@RequestMapping("/User/usr-user")
 public class UsrUserController {
 
 }
