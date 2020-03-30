@@ -4,8 +4,8 @@ package cn.edu.seu.letao.common;
  * @apiNote 常量配置
  */
 public class Constants {
-    //public final static String FILE_UPLOAD_DIC = "/opt/image/upload/";//上传文件的默认url前缀，根据部署设置自行修改
-    public final static String FILE_UPLOAD_DIC = "D:\\upload\\";//上传文件的默认url前缀，根据部署设置自行修改
+
+    public final static String FILE_UPLOAD_DIC = "/goods-img/";//上传文件的默认url前缀
 
     public final static int INDEX_CAROUSEL_NUMBER = 5;//首页轮播图数量(可根据自身需求修改)
 

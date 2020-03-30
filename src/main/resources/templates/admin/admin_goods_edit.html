@@ -28,6 +28,7 @@
                             <!--商品分类级别选择区域-->
                             <div class="form-group" style="display:flex;">
                                 <label class="control-label">请选择分类:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+
                                 <select class="form-control col-sm-3" id="levelOne"
                                         data-placeholder="请选择分类...">
                                     <th:block th:unless="${null == firstLevelCategories}">
@@ -118,13 +119,50 @@
                                        required="true">
                             </div>
 
+                            <div class="form-group" style="display:flex;">
+                                <input type="text" class="form-control col-sm-6" id="goodsSubTitle" name="goodsSubTitle"
+                                       placeholder="*请输入商品副标题"
+                                       th:value="${goods!=null and goods.subTitle!=null }?${goods.subTitle}: ''"
+                                       required="true">
+                                &nbsp;&nbsp;
+                                <input type="text" class="form-control col-sm-6" id="goodsOriginalPrice" name="goodsOriginalPrice"
+                                       placeholder="*请输入商品市场价"
+                                       th:value="${goods!=null and goods.originalPrice!=null }?${goods.originalPrice}: ''"
+                                       required="true">
+                            </div>
+
+                            <div class="form-group" style="display:flex;">
+                                <input type="text" class="form-control col-sm-6" id="goodsLowStock" name="goodsLowStock"
+                                       placeholder="*请输入商品库存预警值"
+                                       th:value="${goods!=null and goods.lowStock!=null }?${goods.lowStock}: ''"
+                                       required="true">
+                                &nbsp;&nbsp;
+                                <input type="text" class="form-control col-sm-6" id="goodsWeight" name="goodsWeight"
+                                       placeholder="*请输入商品重量"
+                                       th:value="${goods!=null and goods.weight!=null }?${goods.weight}: ''"
+                                       required="true">
+                            </div>
+
+                            <div class="form-group" style="display:flex;">
+                                <input type="text" class="form-control col-sm-6" id="goodsKeyWords" name="goodsKeyWords"
+                                       placeholder="*请输入商品关键字"
+                                       th:value="${goods!=null and goods.keywords!=null }?${goods.keywords}: ''"
+                                       required="true">
+                                &nbsp;&nbsp;
+                                <input type="text" class="form-control col-sm-6" id="goodsNote" name="goodsNote"
+                                       placeholder="*请输入商品备注"
+                                       th:value="${goods!=null and goods.note!=null }?${goods.note}: ''"
+                                       required="true">
+                            </div>
+
+
                             <div class="form-group">
                                 <label class="control-label">上架状态:&nbsp;</label>
                                 <input name="goodsSellStatus" type="radio" id="goodsPublicshStatusTrue" checked=true
                                        th:checked="${null==goods||(null !=goods and null !=goods.publishStatus and goods.publishStatus==1)} ?true:false"
-                                       value="0"/>&nbsp;上架&nbsp;
-                                <input name="goodsSellStatus" type="radio" id="goodsPublicshStatusFalse" value="1"
-                                       th:checked="${null !=goods and null !=goods.publishStatus and goods.publishStatus==1} ?true:false"/>&nbsp;下架&nbsp;
+                                       value="1"/>&nbsp;上架&nbsp;
+                                <input name="goodsSellStatus" type="radio" id="goodsPublicshStatusFalse" value="0"
+                                       th:checked="${null !=goods and null !=goods.publishStatus and goods.publishStatus==0} ?true:false"/>&nbsp;下架&nbsp;
                             </div>
 
                             <div class="form-group">
@@ -147,8 +185,20 @@
 
 
                             <div class="form-group">
-                                <textarea id="editor" style="width: 100%; height: 260px;" placeholder="*请输入商品简介(100字以内)"
+                                <textarea id="editor" style="width: 100%; height: 260px;" placeholder="*请输入商品简介"
                                           th:utext="${goods!=null and goods.decription !=null}?${goods.decription}: ''"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="editor2" style="width: 100%; height: 260px;" placeholder="*请输入商品详情标题"
+                                          th:utext="${goods!=null and goods.detailTitle !=null}?${goods.detailTitle}: ''"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="editor3" style="width: 100%; height: 260px;" placeholder="*请输入商品详情描述"
+                                          th:utext="${goods!=null and goods.detailDesc !=null}?${goods.detailDesc}: ''"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="editor4" style="width: 100%; height: 260px;" placeholder="*请输入商品产品详情网页内容"
+                                          th:utext="${goods!=null and goods.detailHtml !=null}?${goods.detailHtml}: ''"></textarea>
                             </div>
 
                             <div class="form-group">
@@ -235,6 +285,6 @@
 <script th:src="@{/admin/plugins/kindeditor-4.1.10/kindeditor-all.js}"></script>
 <script th:src="@{/admin/plugins/kindeditor-4.1.10/lang/zh_CN.js}"></script>
 <script th:src="@{/admin/dist/js/public.js}"></script>
-<script th:src="@{/admin/dist/js/newbee_mall_goods_edit.js}"></script>
+<script th:src="@{/admin/dist/js/letao_mall_goods_edit.js}"></script>
 </body>
 </html>

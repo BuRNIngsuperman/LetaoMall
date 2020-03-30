@@ -49,14 +49,83 @@ $('#confirmButton').click(function () {
     var goodsSN = $('#goodsSN').val();
     var goodsSaleAddress = $('#goodsSaleAddress').val();
     var goodsMakeAddress = $('#goodsMakeAddress').val();
-
     var goodsCategoryId = $('#levelThree option:selected').val();
+
+        var goodsSubTitle = $('#goodsSubTitle').val();
+        var goodsOriginalPrice = $('#goodsOriginalPrice').val();
+        var goodsLowStock = $('#goodsLowStock').val();
+        var goodsWeight = $('#goodsWeight').val();
+        var goodsKeyWords = $('#goodsKeyWords').val();
+        var goodsNote = $('#goodsNote').val();
+
+
 
     var goodsSellStatus = $("input[name='goodsSellStatus']:checked").val();
     var goodsNewStatus = $("input[name='goodsNewStatus']:checked").val();
     var goodsRecommandStatus = $("input[name='goodsRecommandStatus']:checked").val();
 
     var goodsDescription = editor.html();
+    var goodsDetailTitle = $("textarea[id='editor2']").html();
+    var goodsDetailDesc = $("textarea[id='editor3']").html();
+    var goodsDetailHtm = $("textarea[id='editor4']").html();
+
+    if (isNull(goodsDetailTitle)) {
+        swal("请输入商品详情标题", {
+            icon: "error",
+        });
+        return;
+    }
+    if (isNull(goodsDetailDesc)) {
+        swal("请输入商品详情描述", {
+            icon: "error",
+        });
+        return;
+    }
+    if (isNull(goodsDetailHtm)) {
+        swal("请输入商品详情网页内容", {
+            icon: "error",
+        });
+        return;
+    }
+
+    if (isNull(goodsWeight)) {
+        swal("请输入商品重量", {
+            icon: "error",
+        });
+        return;
+    }
+    if (isNull(goodsKeyWords)) {
+        swal("请输入商品关键字", {
+            icon: "error",
+        });
+        return;
+    }
+    if (isNull(goodsNote)) {
+        swal("请输入商品备注", {
+            icon: "error",
+        });
+        return;
+    }
+    if (isNull(goodsLowStock)) {
+        swal("请输入商品库存预警值", {
+            icon: "error",
+        });
+        return;
+    }
+
+    if (isNull(goodsOriginalPrice)) {
+        swal("请输入商品市场价", {
+            icon: "error",
+        });
+        return;
+    }
+
+    if (isNull(goodsSubTitle)) {
+        swal("请输入商品副标题", {
+            icon: "error",
+        });
+        return;
+    }
 
     if (isNull(goodsName)) {
         swal("请输入商品名称", {
@@ -171,11 +240,21 @@ $('#saveButton').click(function () {
 
     var goodsCategoryId = $('#levelThree option:selected').val();
 
+    var goodsSubTitle = $('#goodsSubTitle').val();
+    var goodsOriginalPrice = $('#goodsOriginalPrice').val();
+    var goodsLowStock = $('#goodsLowStock').val();
+    var goodsWeight = $('#goodsWeight').val();
+    var goodsKeyWords = $('#goodsKeyWords').val();
+    var goodsNote = $('#goodsNote').val();
+
     var goodsSellStatus = $("input[name='goodsSellStatus']:checked").val();
     var goodsNewStatus = $("input[name='goodsNewStatus']:checked").val();
     var goodsRecommandStatus = $("input[name='goodsRecommandStatus']:checked").val();
 
     var goodsDescription = editor.html();
+    var goodsDetailTitle = $("textarea[id='editor2']").html();
+    var goodsDetailDesc = $("textarea[id='editor3']").html();
+    var goodsDetailHtm = $("textarea[id='editor4']").html();
 
     var goodsCoverImg = $('#goodsCoverImg')[0].src;
     if (isNull(goodsCoverImg) || goodsCoverImg.indexOf('img-upload') != -1) {
@@ -187,22 +266,34 @@ $('#saveButton').click(function () {
     var url = '/admin/goods/save';
     var swlMessage = '保存成功';
     var data = {
-        "goodsName": goodsName,
-        "goodsPrice": goodsPrice,
-        "goodsImageURL": goodsImageURL,
-        "goodsStock": goodsStock,
-        "goodsUnit": goodsUnit,
-        "goodsSN": goodsSN,
-        "goodsSaleAddress": goodsSaleAddress,
-        "goodsMakeAddress": goodsMakeAddress,
-        "goodsCategoryId": goodsCategoryId,
+        "name": goodsName,
+        "price": goodsPrice,
+        //"albumPics": goodsImageURL,
+        "stock": goodsStock,
+        "unit": goodsUnit,
+        "productSn": goodsSN,
+        "saleAddress": goodsSaleAddress,
+        "makeAddress": goodsMakeAddress,
+        "commodityCategoryId": goodsCategoryId,
 
-        "goodsSellStatus": goodsSellStatus,
-        "goodsNewStatus": goodsNewStatus,
-        "goodsRecommandStatus": goodsRecommandStatus,
+        "publishStatus": goodsSellStatus,
+        "newStatus": goodsNewStatus,
+        "recommandStatus": goodsRecommandStatus,
 
-        "goodsDescription": goodsDescription,
-        "goodsCoverImg": goodsCoverImg
+        "description": goodsDescription,
+        "albumPics": goodsCoverImg,
+
+         "subTitle":goodsSubTitle,
+         "originalPrice":goodsOriginalPrice,
+         "lowStock":goodsLowStock,
+         "weight":goodsWeight,
+         "keyWords":goodsKeyWords,
+         "note":goodsNote,
+
+         "detailTitle"goodsDetailTitle,
+         "detailDesc":goodsDetailDesc,
+         "detailHtml":goodsDetailHtm
+
     };
 
     /*新增商品ID默认设置了0，而修改商品则会把数据库中的ID获取出来*/
@@ -210,18 +301,28 @@ $('#saveButton').click(function () {
         url = '/admin/goods/update';
         swlMessage = '修改成功';
         data = {
-            "goodsId": goodsId,
-            "goodsName": goodsName,
-            "goodsIntro": goodsIntro,
-            "goodsCategoryId": goodsCategoryId,
-            "tag": tag,
-            "originalPrice": originalPrice,
-            "sellingPrice": sellingPrice,
-            "stockNum": stockNum,
-            "goodsDetailContent": goodsDetailContent,
-            "goodsCoverImg": goodsCoverImg,
-            "goodsCarousel": goodsCoverImg,
-            "goodsSellStatus": goodsSellStatus
+            "name": goodsName,
+            "price": goodsPrice,
+            "stock": goodsStock,
+            "unit": goodsUnit,
+            "productSn": goodsSN,
+            "saleAddress": goodsSaleAddress,
+            "makeAddress": goodsMakeAddress,
+            "commodityCategoryId": goodsCategoryId,
+            "publishStatus": goodsSellStatus,
+            "newStatus": goodsNewStatus,
+            "recommandStatus": goodsRecommandStatus,
+            "description": goodsDescription,
+            "albumPics": goodsCoverImg,
+            "subTitle":goodsSubTitle,
+            "originalPrice":goodsOriginalPrice,
+            "lowStock":goodsLowStock,
+            "weight":goodsWeight,
+            "keyWords":goodsKeyWords,
+            "note":goodsNote,
+            "detailTitle"goodsDetailTitle,
+            "detailDesc":goodsDetailDesc,
+            "detailHtml":goodsDetailHtm
         };
     }
 
