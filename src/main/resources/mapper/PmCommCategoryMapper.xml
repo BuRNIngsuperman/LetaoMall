@@ -8,13 +8,28 @@
         <result column="lever" jdbcType="INTEGER" property="level"/>
     </resultMap>
 
+    <sql id="Base_Column_List">
+       cid,parent_id,cname,level,product_count,product_unit,nav_status,show_status,sort,icon,keywords,description
+    </sql>
     <select id="selectByLevelAndParentIdsAndNumber" resultMap="LevelResultMap">
-        select cid,cname,level from pm_comm_category
+       <!-- select cid,cname,level from pm_comm_category
         where parent_id in
         <foreach item="parentId" collection="parentIds" open="(" separator="," close=")">
              #{parentId,jdbcType=INTEGER}
         </foreach>
-            and level = #{categoryLevel,jdbcType=INTEGER}
+            and level = #{categoryLevel,jdbcType=INTEGER}-->
+        select
+        <include refid="Base_Column_List"/>
+        from pm_comm_category
+        where parent_id in
+        <foreach item="parentId" collection="parentIds" open="(" separator="," close=")">
+            #{parentId,jdbcType=INTEGER}
+        </foreach>
+        and level = #{categoryLevel,jdbcType=INTEGER}
+        order by sort desc
+        <if test="number>0">
+            limit #{number}
+        </if>
     </select>
 
 </mapper>

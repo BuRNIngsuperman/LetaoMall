@@ -48,7 +48,7 @@ public class AdminGoodsServiceImpl implements IAdminGoodsService {
     @Override
     public List<PmCommCategory> selectByLevelAndParentIdsAndNumber(List<Integer> parentIds, int categoryLevel){
 
-        return categoryMapper.selectByLevelAndParentIdsAndNumber(parentIds, categoryLevel);
+        return categoryMapper.selectByLevelAndParentIdsAndNumber(parentIds, categoryLevel,0);
     }
 
 }
