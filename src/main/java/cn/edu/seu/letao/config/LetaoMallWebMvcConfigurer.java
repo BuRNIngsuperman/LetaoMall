@@ -19,12 +19,8 @@ public class LetaoMallWebMvcConfigurer implements WebMvcConfigurer {
         registry.addInterceptor(adminLoginInterceptor)
                 .addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/login")
+                .excludePathPatterns("/admin/register")
                 .excludePathPatterns("/admin/dist/**")
                 .excludePathPatterns("/admin/plugins/**");
     }
-//
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/upload/**").addResourceLocations("file:" + Constants.FILE_UPLOAD_DIC);
-//        registry.addResourceHandler("/goods-img/**").addResourceLocations("file:" + Constants.FILE_UPLOAD_DIC);
-//    }
 }
