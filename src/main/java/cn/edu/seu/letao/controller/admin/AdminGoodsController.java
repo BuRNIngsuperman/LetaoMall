@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 
 @Controller
@@ -93,8 +94,35 @@ public class AdminGoodsController {
                 return "admin/admin_goods_edit";
             }
         }
+        //未完成的错误处理
         return "error/error_5xx";
     }
+
+//    /**
+//     * 添加
+//     */
+//    @RequestMapping(value = "/goods/save", method = RequestMethod.POST)
+//    @ResponseBody
+//    public Result save(@RequestBody NewBeeMallGoods newBeeMallGoods) {
+//        if (StringUtils.isEmpty(newBeeMallGoods.getGoodsName())
+//                || StringUtils.isEmpty(newBeeMallGoods.getGoodsIntro())
+//                || StringUtils.isEmpty(newBeeMallGoods.getTag())
+//                || Objects.isNull(newBeeMallGoods.getOriginalPrice())
+//                || Objects.isNull(newBeeMallGoods.getGoodsCategoryId())
+//                || Objects.isNull(newBeeMallGoods.getSellingPrice())
+//                || Objects.isNull(newBeeMallGoods.getStockNum())
+//                || Objects.isNull(newBeeMallGoods.getGoodsSellStatus())
+//                || StringUtils.isEmpty(newBeeMallGoods.getGoodsCoverImg())
+//                || StringUtils.isEmpty(newBeeMallGoods.getGoodsDetailContent())) {
+//            return ResultGenerator.genFailResult("参数异常！");
+//        }
+//        String result = newBeeMallGoodsService.saveNewBeeMallGoods(newBeeMallGoods);
+//        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
+//            return ResultGenerator.genSuccessResult();
+//        } else {
+//            return ResultGenerator.genFailResult(result);
+//        }
+//    }
 
 //    @GetMapping("/goods/edit/{goodsId}")
 //    public String goodsEdit(){

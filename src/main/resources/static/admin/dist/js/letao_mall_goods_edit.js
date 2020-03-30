@@ -159,18 +159,24 @@ $('#confirmButton').click(function () {
     $('#goodsModal').modal('show');
 });
 
-/*写到这里了*/
 $('#saveButton').click(function () {
-    var goodsId = $('#goodsId').val();
-    var goodsCategoryId = $('#levelThree option:selected').val();
     var goodsName = $('#goodsName').val();
-    var tag = $('#tag').val();
-    var originalPrice = $('#originalPrice').val();
-    var sellingPrice = $('#sellingPrice').val();
-    var goodsIntro = $('#goodsIntro').val();
-    var stockNum = $('#stockNum').val();
+    var goodsPrice = $('#goodsPrice').val();
+    var goodsImageURL = $('#goodsImageURL').val();
+    var goodsStock = $('#goodsStock').val();
+    var goodsUnit = $('#goodsUnit').val();
+    var goodsSN = $('#goodsSN').val();
+    var goodsSaleAddress = $('#goodsSaleAddress').val();
+    var goodsMakeAddress = $('#goodsMakeAddress').val();
+
+    var goodsCategoryId = $('#levelThree option:selected').val();
+
     var goodsSellStatus = $("input[name='goodsSellStatus']:checked").val();
-    var goodsDetailContent = editor.html();
+    var goodsNewStatus = $("input[name='goodsNewStatus']:checked").val();
+    var goodsRecommandStatus = $("input[name='goodsRecommandStatus']:checked").val();
+
+    var goodsDescription = editor.html();
+
     var goodsCoverImg = $('#goodsCoverImg')[0].src;
     if (isNull(goodsCoverImg) || goodsCoverImg.indexOf('img-upload') != -1) {
         swal("封面图片不能为空", {
@@ -182,18 +188,25 @@ $('#saveButton').click(function () {
     var swlMessage = '保存成功';
     var data = {
         "goodsName": goodsName,
-        "goodsIntro": goodsIntro,
+        "goodsPrice": goodsPrice,
+        "goodsImageURL": goodsImageURL,
+        "goodsStock": goodsStock,
+        "goodsUnit": goodsUnit,
+        "goodsSN": goodsSN,
+        "goodsSaleAddress": goodsSaleAddress,
+        "goodsMakeAddress": goodsMakeAddress,
         "goodsCategoryId": goodsCategoryId,
-        "tag": tag,
-        "originalPrice": originalPrice,
-        "sellingPrice": sellingPrice,
-        "stockNum": stockNum,
-        "goodsDetailContent": goodsDetailContent,
-        "goodsCoverImg": goodsCoverImg,
-        "goodsCarousel": goodsCoverImg,
-        "goodsSellStatus": goodsSellStatus
+
+        "goodsSellStatus": goodsSellStatus,
+        "goodsNewStatus": goodsNewStatus,
+        "goodsRecommandStatus": goodsRecommandStatus,
+
+        "goodsDescription": goodsDescription,
+        "goodsCoverImg": goodsCoverImg
     };
-    if (goodsId > 0) {
+
+    /*新增商品ID默认设置了0，而修改商品则会把数据库中的ID获取出来*/
+    if (commId > 0) {
         url = '/admin/goods/update';
         swlMessage = '修改成功';
         data = {
@@ -211,6 +224,7 @@ $('#saveButton').click(function () {
             "goodsSellStatus": goodsSellStatus
         };
     }
+
     console.log(data);
     $.ajax({
         type: 'POST',//方法类型
@@ -251,6 +265,7 @@ $('#cancelButton').click(function () {
     window.location.href = "/admin/goods";
 });
 
+/*选则等级变化，还没完成*/
 $('#levelOne').on('change', function () {
     $.ajax({
         url: '/admin/categories/listForSelect?categoryId=' + $(this).val(),
