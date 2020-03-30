@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Hala
@@ -178,4 +178,6 @@ public class PmCommCategory implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
 }

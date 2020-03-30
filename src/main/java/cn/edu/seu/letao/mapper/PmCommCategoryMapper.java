@@ -2,6 +2,7 @@ package cn.edu.seu.letao.mapper;
 
 import cn.edu.seu.letao.entity.PmCommCategory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  */
 public interface PmCommCategoryMapper extends BaseMapper<PmCommCategory> {
 
-    public List<PmCommCategory> selectByLevelAndParentIds(List<Integer> parentIds, int categoryLevel);
+
+    public List<PmCommCategory> selectByLevelAndParentIdsAndNumber(@Param("parentIds") List<Integer> parentIds, @Param("categoryLevel") int categoryLevel, @Param("number") int number);
 
 }
