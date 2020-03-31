@@ -62,6 +62,7 @@ public class AdminController {
         if (usrAccount != null) {
             session.setAttribute("loginUser", username);
             session.setAttribute("loginUserId",usrAccount.getAccoId());
+            session.setAttribute("AdminUser",usrAccount);
             //session过期时间设置为7200秒 即两小时
             //session.setMaxInactiveInterval(60 * 60 * 2);
             return "redirect:/admin/index";
@@ -102,6 +103,7 @@ public class AdminController {
             QueryWrapper<UsrAccount> wrapper = new QueryWrapper<>();
             wrapper.eq("username",username);
             UsrAccount usrAccount = adminService.getOne(wrapper);
+            session.setAttribute("AdminUser",usrAccount);
             session.setAttribute("loginUserId",usrAccount.getAccoId());
             return "redirect:/admin/index";
         }else {
@@ -153,6 +155,7 @@ public class AdminController {
             request.getSession().removeAttribute("loginUserId");
             request.getSession().removeAttribute("loginUser");
             request.getSession().removeAttribute("errorMsg");
+            request.getSession().removeAttribute("AdminUser");
             return ServiceResultEnum.SUCCESS.getResult();
 
         }else {
@@ -164,6 +167,7 @@ public class AdminController {
     public String logout(HttpServletRequest request) {
         request.getSession().removeAttribute("loginUserId");
         request.getSession().removeAttribute("loginUser");
+        request.getSession().removeAttribute("AdminUser");
         request.getSession().removeAttribute("errorMsg");
         return "admin/admin_login";
     }
