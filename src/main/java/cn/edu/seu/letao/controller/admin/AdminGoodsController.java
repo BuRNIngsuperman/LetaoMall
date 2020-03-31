@@ -2,7 +2,9 @@ package cn.edu.seu.letao.controller.admin;
 
 import cn.edu.seu.letao.common.Constants;
 import cn.edu.seu.letao.common.LetaoMallCategoryLevelEnum;
+import cn.edu.seu.letao.common.ServiceResultEnum;
 import cn.edu.seu.letao.entity.PmCommCategory;
+import cn.edu.seu.letao.entity.PmCommodity;
 import cn.edu.seu.letao.service.admin.IAdminGoodsService;
 import cn.edu.seu.letao.util.PageQueryUtil;
 import cn.edu.seu.letao.util.Result;
@@ -79,13 +81,13 @@ public class AdminGoodsController {
     public String edit(HttpServletRequest request) {
         request.setAttribute("path", "edit");
         //查询所有的一级分类
-        List<PmCommCategory> firstLevelCategories = adminGoodsService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0), LetaoMallCategoryLevelEnum.LEVEL_ONE.getLevel());
+        List<PmCommCategory> firstLevelCategories = adminGoodsService.selectByLevelAndParentIds(Collections.singletonList(0), LetaoMallCategoryLevelEnum.LEVEL_ONE.getLevel());
         if (!CollectionUtils.isEmpty(firstLevelCategories)) {
             //查询一级分类列表中第一个实体的所有二级分类
-            List<PmCommCategory> secondLevelCategories = adminGoodsService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(firstLevelCategories.get(0).getCid()), LetaoMallCategoryLevelEnum.LEVEL_TWO.getLevel());
+            List<PmCommCategory> secondLevelCategories = adminGoodsService.selectByLevelAndParentIds(Collections.singletonList(firstLevelCategories.get(0).getCid()), LetaoMallCategoryLevelEnum.LEVEL_TWO.getLevel());
             if (!CollectionUtils.isEmpty(secondLevelCategories)) {
                 //查询二级分类列表中第一个实体的所有三级分类
-                List<PmCommCategory> thirdLevelCategories = adminGoodsService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondLevelCategories.get(0).getCid()), LetaoMallCategoryLevelEnum.LEVEL_THREE.getLevel());
+                List<PmCommCategory> thirdLevelCategories = adminGoodsService.selectByLevelAndParentIds(Collections.singletonList(secondLevelCategories.get(0).getCid()), LetaoMallCategoryLevelEnum.LEVEL_THREE.getLevel());
                 request.setAttribute("firstLevelCategories", firstLevelCategories);
                 request.setAttribute("secondLevelCategories", secondLevelCategories);
                 request.setAttribute("thirdLevelCategories", thirdLevelCategories);
@@ -98,31 +100,89 @@ public class AdminGoodsController {
         return "error/error_5xx";
     }
 
-//    /**
-//     * 添加
-//     */
-//    @RequestMapping(value = "/goods/save", method = RequestMethod.POST)
-//    @ResponseBody
-//    public Result save(@RequestBody NewBeeMallGoods newBeeMallGoods) {
-//        if (StringUtils.isEmpty(newBeeMallGoods.getGoodsName())
-//                || StringUtils.isEmpty(newBeeMallGoods.getGoodsIntro())
-//                || StringUtils.isEmpty(newBeeMallGoods.getTag())
-//                || Objects.isNull(newBeeMallGoods.getOriginalPrice())
-//                || Objects.isNull(newBeeMallGoods.getGoodsCategoryId())
-//                || Objects.isNull(newBeeMallGoods.getSellingPrice())
-//                || Objects.isNull(newBeeMallGoods.getStockNum())
-//                || Objects.isNull(newBeeMallGoods.getGoodsSellStatus())
-//                || StringUtils.isEmpty(newBeeMallGoods.getGoodsCoverImg())
-//                || StringUtils.isEmpty(newBeeMallGoods.getGoodsDetailContent())) {
-//            return ResultGenerator.genFailResult("参数异常！");
-//        }
-//        String result = newBeeMallGoodsService.saveNewBeeMallGoods(newBeeMallGoods);
-//        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
-//            return ResultGenerator.genSuccessResult();
-//        } else {
-//            return ResultGenerator.genFailResult(result);
-//        }
-//    }
+    @GetMapping("/goods/edit/{goodsId}")
+    public String edit(HttpServletRequest request, @PathVariable("goodsId") Long goodsId) {
+        request.setAttribute("path", "edit");
+        PmCommodity commodity = adminGoodsService.getGoodsById(goodsId.intValue());
+
+        if (commodity == null) {
+            return "error/error_400";
+        }
+
+        //需要修改的商品的分类信相关息
+        PmCommCategory commCategory = adminGoodsService.getCategoryById(commodity.getCommodityCategoryId());
+
+        //商品表中存储的分类id字段为三级分类的id，不为三级分类则是错误数据
+        if (commCategory != null && commCategory.getLevel() == LetaoMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
+
+            //查询所有的一级分类
+            List<PmCommCategory> firstLevelCategories = adminGoodsService.selectByLevelAndParentIds(Collections.singletonList(0), LetaoMallCategoryLevelEnum.LEVEL_ONE.getLevel());
+
+            //根据parentId查询当前parentId下所有的三级分类
+            List<PmCommCategory> thirdLevelCategories = adminGoodsService.selectByLevelAndParentIds(Collections.singletonList(commCategory.getParentId()), LetaoMallCategoryLevelEnum.LEVEL_THREE.getLevel());
+
+            //查询当前三级分类的父级二级分类
+            PmCommCategory secondCategory = adminGoodsService.getCategoryById(commCategory.getParentId());
+
+            if (secondCategory != null) {
+                //根据parentId查询当前parentId下所有的二级分类
+                List<PmCommCategory> secondLevelCategories = adminGoodsService.selectByLevelAndParentIds(Collections.singletonList(secondCategory.getParentId()), LetaoMallCategoryLevelEnum.LEVEL_TWO.getLevel());
+                //查询当前二级分类的父级一级分类
+                PmCommCategory firestCategory = adminGoodsService.getCategoryById(secondCategory.getParentId());
+                if (firestCategory != null) {
+                    //所有分类数据都得到之后放到request对象中供前端读取
+                    request.setAttribute("firstLevelCategories", firstLevelCategories);
+                    request.setAttribute("secondLevelCategories", secondLevelCategories);
+                    request.setAttribute("thirdLevelCategories", thirdLevelCategories);
+                    request.setAttribute("firstLevelCategoryId", firestCategory.getLevel());
+                    request.setAttribute("secondLevelCategoryId", secondCategory.getLevel());
+                    request.setAttribute("thirdLevelCategoryId", commCategory.getLevel());
+                }
+            }
+        }
+        request.setAttribute("goods", commodity);
+        request.setAttribute("path", "goods-edit");
+        return "admin/admin_goods_edit";
+    }
+
+    /**
+     * 添加
+     */
+    @RequestMapping(value = "/goods/save", method = RequestMethod.POST)
+    @ResponseBody
+    public Result save(@RequestBody PmCommodity commodity) {
+        if (StringUtils.isEmpty(commodity.getName())
+                || Objects.isNull(commodity.getPrice())
+                || Objects.isNull(commodity.getStock())
+                || Objects.isNull(commodity.getUnit())
+                || Objects.isNull(commodity.getProductSn())
+                || Objects.isNull(commodity.getSaleAddress())
+                || Objects.isNull(commodity.getMakeAddress())
+                || Objects.isNull(commodity.getCommodityCategoryId())
+                || Objects.isNull(commodity.getPublishStatus())
+                || Objects.isNull(commodity.getNewStatus())
+                || Objects.isNull(commodity.getRecommandStatus())
+                || Objects.isNull(commodity.getDescription())
+                || Objects.isNull(commodity.getSubTitle())
+                || Objects.isNull(commodity.getOriginalPrice())
+                || Objects.isNull(commodity.getLowStock())
+                || Objects.isNull(commodity.getWeight())
+                || Objects.isNull(commodity.getKeywords())
+                || Objects.isNull(commodity.getDetailTitle())
+                || Objects.isNull(commodity.getDetailDesc())
+                || Objects.isNull(commodity.getDetailHtml())
+                || Objects.isNull(commodity.getNote())
+                || Objects.isNull(commodity.getAlbumPics())) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+
+        String result = adminGoodsService.saveCommodity(commodity);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(result);
+        }
+    }
 
 //    @GetMapping("/goods/edit/{goodsId}")
 //    public String goodsEdit(){

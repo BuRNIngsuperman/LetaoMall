@@ -19,4 +19,7 @@ public interface PmCommCategoryMapper extends BaseMapper<PmCommCategory> {
 
     public List<PmCommCategory> selectByLevelAndParentIdsAndNumber(@Param("parentIds") List<Integer> parentIds, @Param("categoryLevel") int categoryLevel, @Param("number") int number);
 
+
+    public List<PmCommCategory> selectByLevelAndParentIds(List<Integer> parentIds, int categoryLevel);
+
 }
