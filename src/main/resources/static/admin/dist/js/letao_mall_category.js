@@ -6,10 +6,9 @@ $(function () {
         url: '/admin/categories/list?categoryLevel=' + categoryLevel + '&parentId=' + parentId,
         datatype: "json",
         colModel: [
-            {label: 'id', name: 'categoryId', index: 'categoryId', width: 50, key: true, hidden: true},
-            {label: '分类名称', name: 'categoryName', index: 'categoryName', width: 240},
-            {label: '排序值', name: 'categoryRank', index: 'categoryRank', width: 120},
-            {label: '添加时间', name: 'createTime', index: 'createTime', width: 120}
+            {label: 'id', name: 'cid', index: 'cid', width: 50, key: true, hidden: true},
+            {label: '分类名称', name: 'cname', index: 'cname', width: 240},
+            {label: '排序值', name: 'sort', index: 'sort', width: 120}
         ],
         height: 560,
         rowNum: 10,
@@ -106,21 +105,21 @@ $('#saveButton').click(function () {
         $('#edit-error-msg').html("请输入符合规范的分类名称！");
     } else {
         var data = {
-            "categoryName": categoryName,
-            "categoryLevel": categoryLevel,
+            "cname": categoryName,
+            "level": categoryLevel,
             "parentId": parentId,
-            "categoryRank": categoryRank
+            "sort": categoryRank
         };
         var url = '/admin/categories/save';
         var id = getSelectedRowWithoutAlert();
         if (id != null) {
             url = '/admin/categories/update';
             data = {
-                "categoryId": id,
-                "categoryName": categoryName,
-                "categoryLevel": categoryLevel,
+                "cid": id,
+                "cname": categoryName,
+                "level": categoryLevel,
                 "parentId": parentId,
-                "categoryRank": categoryRank
+                "sort": categoryRank
             };
         }
         $.ajax({
@@ -172,10 +171,6 @@ function categoryEdit() {
  * 不过代码我也写了一部分，如果想保留删除功能的话可以在此代码的基础上进行修改。
  */
 function deleteCagegory() {
-    swal("未开放", {
-        icon: "warning",
-    });
-    return;
     var ids = getSelectedRows();
     if (ids == null) {
         return;
