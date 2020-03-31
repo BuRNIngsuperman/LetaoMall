@@ -2,15 +2,19 @@ package cn.edu.seu.letao.controller.mall;
 
 import cn.edu.seu.letao.config.WXPayConfigImpl;
 import cn.edu.seu.letao.service.mall.WXPayService;
+import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayConfig;
 import com.github.wxpay.sdk.WXPayUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,8 +36,9 @@ public class WXPayController {
     @Autowired
     private WXPayService wxPayService;
 
-    @RequestMapping(value = "/codeUrl", method = {RequestMethod.GET})
-    public Map<String, String> unifiedOrder(){
+
+    @RequestMapping(value = "/codeUrl")
+    public String unifiedOrder(RedirectAttributes model){
         Map<String, String> result = new HashMap<>();
 
         /*
@@ -43,19 +48,24 @@ public class WXPayController {
          */
         // 以下数据为模拟参数
         String outTradeNo = new Long(new Date().getTime()).toString();
-        String totalFee = "3"; // 金额必须为整数，单位：分
+        String totalPrice = "3"; // 金额必须为整数，单位：分
         String body = "商品描述信息";
         String productId = new Long(new Date().getTime()).toString();
         String attach = "wxpay";
 
         String codeUrl = null;
         try {
-            codeUrl = wxPayService.wxUnifiedOrder(outTradeNo, totalFee, body, productId, attach);
+            codeUrl = wxPayService.wxUnifiedOrder(outTradeNo, totalPrice, body, productId, attach);
         } catch (Exception e) {
             e.printStackTrace();
         }
         result.put("codeUrl", codeUrl);
-        return result;
+        //return result;
+        //System.out.println("codeUrl");
+        model.addFlashAttribute("totalPrice",totalPrice);
+        model.addFlashAttribute("orderNo",outTradeNo);
+        model.addFlashAttribute("qrAddress",codeUrl);
+        return "redirect:toPayPage";
     }
 
     @RequestMapping("/payOrder")
@@ -119,11 +129,14 @@ public class WXPayController {
         return "<xml><return_code><![CDATA[" + return_code + "]]></return_code><return_msg><![CDATA[" + return_msg + "]]></return_msg></xml>";
     }
 
-    @GetMapping("/toPayPage")
-    public String toPayPage(Model model, String qrAddress, String totalFee,String orderNo){
-        model.addAttribute("totalPrice",totalFee);
-        model.addAttribute("orderNo",orderNo);
-        model.addAttribute("qrAddress",qrAddress);
+    @RequestMapping(value="/toPayPage")
+    public String toPayPage(Model model, @ModelAttribute("totalPrice")String totalPrice, @ModelAttribute("orderNo")String orderNo, @ModelAttribute("qrAddress")String qrAddress){
+
+        System.out.println(totalPrice+orderNo+qrAddress);
+//        model.addAttribute("totalPrice",request.getAttribute("totalFee"));
+//        model.addAttribute("orderNo",request.getAttribute("orderNo"));
+//        model.addAttribute("qrAddress",request.getAttribute("qrAddress"));
+        System.out.println(model.getAttribute("totalFee"));
         return "mall/user_payPage";
     }
 
