@@ -3,19 +3,19 @@ var editor;
 
 $(function () {
 
-    //详情编辑器
-    editor = KindEditor.create('textarea[id="editor"]', {
-        items: ['source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
-            'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
-            'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-            'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
-            'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
-            'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'multiimage',
-            'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
-            'anchor', 'link', 'unlink'],
-        uploadJson: '/admin/upload/file',
-        filePostName: 'file'
-    });
+     //详情编辑器
+         editor = KindEditor.create('textarea[id="editor"]', {
+             items: ['source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
+                 'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                 'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+                 'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+                 'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                 'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'multiimage',
+                 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
+                 'anchor', 'link', 'unlink'],
+             uploadJson: '/admin/upload/file',
+             filePostName: 'file'
+         });
 
     new AjaxUpload('#uploadGoodsCoverImg', {
         action: '/admin/upload/file',
@@ -67,7 +67,7 @@ $('#confirmButton').click(function () {
     var goodsDescription = editor.html();
     var goodsDetailTitle = $("textarea[id='editor2']").html();
     var goodsDetailDesc = $("textarea[id='editor3']").html();
-    var goodsDetailHtm = $("textarea[id='editor4']").html();
+    var goodsDetailHtml = $("textarea[id='editor4']").html();
 
     if (isNull(goodsDetailTitle)) {
         swal("请输入商品详情标题", {
@@ -81,7 +81,7 @@ $('#confirmButton').click(function () {
         });
         return;
     }
-    if (isNull(goodsDetailHtm)) {
+    if (isNull(goodsDetailHtml)) {
         swal("请输入商品详情网页内容", {
             icon: "error",
         });
@@ -228,79 +228,74 @@ $('#confirmButton').click(function () {
     $('#goodsModal').modal('show');
 });
 
+/*这个有问题*/
 $('#saveButton').click(function () {
-    var goodsName = $('#goodsName').val();
-    var goodsPrice = $('#goodsPrice').val();
-    var goodsImageURL = $('#goodsImageURL').val();
-    var goodsStock = $('#goodsStock').val();
-    var goodsUnit = $('#goodsUnit').val();
-    var goodsSN = $('#goodsSN').val();
-    var goodsSaleAddress = $('#goodsSaleAddress').val();
-    var goodsMakeAddress = $('#goodsMakeAddress').val();
+        var goodsCommId = $('#commId').val();
+        var goodsName = $('#goodsName').val();
+        var goodsPrice = $('#goodsPrice').val();
+        var goodsImageURL = $('#goodsImageURL').val();
+        var goodsStock = $('#goodsStock').val();
+        var goodsUnit = $('#goodsUnit').val();
+        var goodsSN = $('#goodsSN').val();
+        var goodsSaleAddress = $('#goodsSaleAddress').val();
+        var goodsMakeAddress = $('#goodsMakeAddress').val();
+        var goodsCategoryId = $('#levelThree option:selected').val();
+        var goodsSubTitle = $('#goodsSubTitle').val();
+        var goodsOriginalPrice = $('#goodsOriginalPrice').val();
+        var goodsLowStock = $('#goodsLowStock').val();
+        var goodsWeight = $('#goodsWeight').val();
+        var goodsKeyWords = $('#goodsKeyWords').val();
+        var goodsNote = $('#goodsNote').val();
+        var goodsSellStatus = $("input[name='goodsSellStatus']:checked").val();
+        var goodsNewStatus = $("input[name='goodsNewStatus']:checked").val();
+        var goodsRecommandStatus = $("input[name='goodsRecommandStatus']:checked").val();
+        var goodsDescription = editor.html();
+        var goodsDetailTitle = $("textarea[id='editor2']").html();
+        var goodsDetailDesc = $("textarea[id='editor3']").html();
+        var goodsDetailHtml = $("textarea[id='editor4']").html();
 
-    var goodsCategoryId = $('#levelThree option:selected').val();
+        var goodsCoverImg = $('#goodsCoverImg')[0].src;
+        if (isNull(goodsCoverImg) || goodsCoverImg.indexOf('img-upload') != -1) {
+            swal("封面图片不能为空", {
+                icon: "error",
+            });
+            return;
+        }
 
-    var goodsSubTitle = $('#goodsSubTitle').val();
-    var goodsOriginalPrice = $('#goodsOriginalPrice').val();
-    var goodsLowStock = $('#goodsLowStock').val();
-    var goodsWeight = $('#goodsWeight').val();
-    var goodsKeyWords = $('#goodsKeyWords').val();
-    var goodsNote = $('#goodsNote').val();
+        var url = '/admin/goods/save';
+        var swlMessage = '保存成功';
+        var data = {
+            "name": goodsName,
+            "price": goodsPrice,
+            "stock": goodsStock,
+            "unit": goodsUnit,
+            "productSn": goodsSN,
+            "saleAddress": goodsSaleAddress,
+            "makeAddress": goodsMakeAddress,
+            "commodityCategoryId": goodsCategoryId,
+            "publishStatus": goodsSellStatus,
+            "newStatus": goodsNewStatus,
 
-    var goodsSellStatus = $("input[name='goodsSellStatus']:checked").val();
-    var goodsNewStatus = $("input[name='goodsNewStatus']:checked").val();
-    var goodsRecommandStatus = $("input[name='goodsRecommandStatus']:checked").val();
+            "recommandStatus": goodsRecommandStatus,
+            "description": goodsDescription,
+            "albumPics": goodsCoverImg,
+            "subTitle":goodsSubTitle,
+            "originalPrice":goodsOriginalPrice,
 
-    var goodsDescription = editor.html();
-    var goodsDetailTitle = $("textarea[id='editor2']").html();
-    var goodsDetailDesc = $("textarea[id='editor3']").html();
-    var goodsDetailHtm = $("textarea[id='editor4']").html();
-
-    var goodsCoverImg = $('#goodsCoverImg')[0].src;
-    if (isNull(goodsCoverImg) || goodsCoverImg.indexOf('img-upload') != -1) {
-        swal("封面图片不能为空", {
-            icon: "error",
-        });
-        return;
-    }
-    var url = '/admin/goods/save';
-    var swlMessage = '保存成功';
-    var data = {
-        "name": goodsName,
-        "price": goodsPrice,
-        //"albumPics": goodsImageURL,
-        "stock": goodsStock,
-        "unit": goodsUnit,
-        "productSn": goodsSN,
-        "saleAddress": goodsSaleAddress,
-        "makeAddress": goodsMakeAddress,
-        "commodityCategoryId": goodsCategoryId,
-
-        "publishStatus": goodsSellStatus,
-        "newStatus": goodsNewStatus,
-        "recommandStatus": goodsRecommandStatus,
-
-        "description": goodsDescription,
-        "albumPics": goodsCoverImg,
-
-         "subTitle":goodsSubTitle,
-         "originalPrice":goodsOriginalPrice,
-         "lowStock":goodsLowStock,
-         "weight":goodsWeight,
-         "keyWords":goodsKeyWords,
-         "note":goodsNote,
-
-         "detailTitle"goodsDetailTitle,
-         "detailDesc":goodsDetailDesc,
-         "detailHtml":goodsDetailHtm
-
-    };
-
-    /*新增商品ID默认设置了0，而修改商品则会把数据库中的ID获取出来*/
-    if (commId > 0) {
-        url = '/admin/goods/update';
-        swlMessage = '修改成功';
-        data = {
+            "lowStock":goodsLowStock,
+            "weight":goodsWeight,
+            "keyWords":goodsKeyWords,
+            "note":goodsNote,
+            "detailTitle":goodsDetailTitle,
+            "detailDesc":goodsDetailDesc,
+            "detailHtml":goodsDetailHtml
+            };
+       /*新增商品ID默认设置了0，而修改商品则会把数据库中的ID获取出来*/
+       if (goodsCommId > 0) {
+         url = '/admin/goods/update';
+         swlMessage = '修改成功';
+         data = {
+            "commId":goodsCommId,
             "name": goodsName,
             "price": goodsPrice,
             "stock": goodsStock,
@@ -320,12 +315,11 @@ $('#saveButton').click(function () {
             "weight":goodsWeight,
             "keyWords":goodsKeyWords,
             "note":goodsNote,
-            "detailTitle"goodsDetailTitle,
+            "detailTitle":goodsDetailTitle,
             "detailDesc":goodsDetailDesc,
-            "detailHtml":goodsDetailHtm
+            "detailHtml":goodsDetailHtml
         };
     }
-
     console.log(data);
     $.ajax({
         type: 'POST',//方法类型
@@ -360,13 +354,14 @@ $('#saveButton').click(function () {
             });
         }
     });
+
 });
+
 
 $('#cancelButton').click(function () {
     window.location.href = "/admin/goods";
 });
 
-/*选则等级变化，还没完成*/
 $('#levelOne').on('change', function () {
     $.ajax({
         url: '/admin/categories/listForSelect?categoryId=' + $(this).val(),
