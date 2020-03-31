@@ -105,21 +105,21 @@ $('#saveButton').click(function () {
         $('#edit-error-msg').html("请输入符合规范的分类名称！");
     } else {
         var data = {
-            "categoryName": categoryName,
-            "categoryLevel": categoryLevel,
+            "cname": categoryName,
+            "level": categoryLevel,
             "parentId": parentId,
-            "categoryRank": categoryRank
+            "sort": categoryRank
         };
         var url = '/admin/categories/save';
         var id = getSelectedRowWithoutAlert();
         if (id != null) {
             url = '/admin/categories/update';
             data = {
-                "categoryId": id,
-                "categoryName": categoryName,
-                "categoryLevel": categoryLevel,
+                "cid": id,
+                "cname": categoryName,
+                "level": categoryLevel,
                 "parentId": parentId,
-                "categoryRank": categoryRank
+                "sort": categoryRank
             };
         }
         $.ajax({
@@ -171,10 +171,6 @@ function categoryEdit() {
  * 不过代码我也写了一部分，如果想保留删除功能的话可以在此代码的基础上进行修改。
  */
 function deleteCagegory() {
-    swal("未开放", {
-        icon: "warning",
-    });
-    return;
     var ids = getSelectedRows();
     if (ids == null) {
         return;

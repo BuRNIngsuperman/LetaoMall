@@ -19,4 +19,13 @@ public interface IAdminCategoryService {
     /*查询商品分类表级别信息*/
     public PmCommCategory getCategoryById(int id);
 
+    /*添加商品分类信息*/
+    public String saveCategory(PmCommCategory category);
+
+    /*更新商品分类信息*/
+    public String updateCategory(PmCommCategory goodsCategory);
+
+    /*删除商品分类信息*/
+    public Boolean deleteCategoris(Integer[] ids);
+
 }

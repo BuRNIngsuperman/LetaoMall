@@ -1,6 +1,7 @@
 package cn.edu.seu.letao.controller.admin;
 
 import cn.edu.seu.letao.common.LetaoMallCategoryLevelEnum;
+import cn.edu.seu.letao.common.ServiceResultEnum;
 import cn.edu.seu.letao.entity.PmCommCategory;
 import cn.edu.seu.letao.service.admin.IAdminCategoryService;
 import cn.edu.seu.letao.util.PageQueryUtil;
@@ -13,10 +14,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Controller
@@ -84,4 +82,62 @@ public class AdminGoodsCateController {
         }
         return ResultGenerator.genSuccessResult(categoryResult);
     }
+
+    /**
+     * 添加
+     */
+    @RequestMapping(value = "/categories/save", method = RequestMethod.POST)
+    @ResponseBody
+    public Result save(@RequestBody PmCommCategory category) {
+        if (Objects.isNull(category.getLevel())
+                || StringUtils.isEmpty(category.getCname())
+                || Objects.isNull(category.getParentId())
+                || Objects.isNull(category.getSort())) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        String result = categoryService.saveCategory(category);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(result);
+        }
+    }
+
+    /**
+     * 修改
+     */
+    @RequestMapping(value = "/categories/update", method = RequestMethod.POST)
+    @ResponseBody
+    public Result update(@RequestBody PmCommCategory category) {
+        if (Objects.isNull(category.getCid())
+                || Objects.isNull(category.getLevel())
+                || StringUtils.isEmpty(category.getCname())
+                || Objects.isNull(category.getParentId())
+                || Objects.isNull(category.getSort())) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        String result = categoryService.updateCategory(category);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(result);
+        }
+    }
+
+    /**
+     * 分类删除
+     */
+    @RequestMapping(value = "/categories/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public Result delete(@RequestBody Integer[] ids) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (categoryService.deleteCategoris(ids)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("删除失败");
+        }
+    }
+
 }
