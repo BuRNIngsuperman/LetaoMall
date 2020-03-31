@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import jdk.nashorn.internal.runtime.UserAccessorProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,10 +25,13 @@ public interface IAdminService extends IService<UsrAccount> {
     * 正确返回 true
     * 错误返回 false
     * */
-    boolean checkAccount(String username,String password);
+    UsrAccount checkAccount(String username,String password);
 
     boolean addAdminAccount(String name,String password);
 
+    boolean updateName(int userId,String originalUsername,String newUsername);
+
+    boolean updatePassword(int userId,String originalPaw,String newPaw);
 
 
 }
