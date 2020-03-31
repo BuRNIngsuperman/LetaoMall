@@ -3,16 +3,16 @@ package cn.edu.seu.letao.controller.admin;
 import cn.edu.seu.letao.common.LetaoMallCategoryLevelEnum;
 import cn.edu.seu.letao.entity.PmCommCategory;
 import cn.edu.seu.letao.service.admin.IAdminCategoryService;
+import cn.edu.seu.letao.util.PageQueryUtil;
 import cn.edu.seu.letao.util.Result;
 import cn.edu.seu.letao.util.ResultGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -26,9 +26,29 @@ public class AdminGoodsCateController {
     @Autowired
     IAdminCategoryService categoryService;
 
-    @RequestMapping(value = "/categories",method = {RequestMethod.GET,RequestMethod.POST})
-    public String categoriesPage(){
+    @GetMapping("/categories")
+    public String categoriesPage(HttpServletRequest request, @RequestParam("categoryLevel") Integer categoryLevel, @RequestParam("parentId") Integer parentId, @RequestParam("backParentId") Integer backParentId) {
+        if (categoryLevel == null || categoryLevel < 1 || categoryLevel > 3) {
+            return "error/error_5xx";
+        }
+        request.setAttribute("path", "admin_category");
+        request.setAttribute("parentId", parentId);
+        request.setAttribute("backParentId", backParentId);
+        request.setAttribute("categoryLevel", categoryLevel);
         return "admin/admin_category";
+    }
+
+    /**
+     * 列表
+     */
+    @RequestMapping(value = "/categories/list", method = RequestMethod.GET)
+    @ResponseBody
+    public Result list(@RequestParam Map<String, Object> params) {
+        if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit")) || StringUtils.isEmpty(params.get("categoryLevel")) || StringUtils.isEmpty(params.get("parentId"))) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        PageQueryUtil pageUtil = new PageQueryUtil(params);
+        return ResultGenerator.genSuccessResult(categoryService.getCategorisPage(pageUtil));
     }
 
     /**

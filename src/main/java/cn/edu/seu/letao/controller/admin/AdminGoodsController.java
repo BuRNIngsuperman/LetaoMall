@@ -34,12 +34,9 @@ public class AdminGoodsController {
     @Autowired
     IAdminCategoryService categoryService;
 
-
-    /*
-    * 跳转至商品管理页面
-    * */
     @GetMapping("/goods")
-    public String goodsShow(){
+    public String goodsShow(HttpServletRequest request) {
+        request.setAttribute("path", "admin_goods");
         return "admin/admin_goods";
     }
 

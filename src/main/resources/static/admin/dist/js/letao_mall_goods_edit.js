@@ -372,14 +372,14 @@ $('#levelOne').on('change', function () {
                 var secondLevelCategories = result.data.secondLevelCategories;
                 var length2 = secondLevelCategories.length;
                 for (var i = 0; i < length2; i++) {
-                    levelTwoSelect += '<option value=\"' + secondLevelCategories[i].categoryId + '\">' + secondLevelCategories[i].categoryName + '</option>';
+                    levelTwoSelect += '<option value=\"' + secondLevelCategories[i].cid + '\">' + secondLevelCategories[i].cname + '</option>';
                 }
                 $('#levelTwo').html(levelTwoSelect);
                 var levelThreeSelect = '';
                 var thirdLevelCategories = result.data.thirdLevelCategories;
                 var length3 = thirdLevelCategories.length;
                 for (var i = 0; i < length3; i++) {
-                    levelThreeSelect += '<option value=\"' + thirdLevelCategories[i].categoryId + '\">' + thirdLevelCategories[i].categoryName + '</option>';
+                    levelThreeSelect += '<option value=\"' + thirdLevelCategories[i].cid + '\">' + thirdLevelCategories[i].cname + '</option>';
                 }
                 $('#levelThree').html(levelThreeSelect);
             } else {
@@ -407,7 +407,7 @@ $('#levelTwo').on('change', function () {
                 var thirdLevelCategories = result.data.thirdLevelCategories;
                 var length = thirdLevelCategories.length;
                 for (var i = 0; i < length; i++) {
-                    levelThreeSelect += '<option value=\"' + thirdLevelCategories[i].categoryId + '\">' + thirdLevelCategories[i].categoryName + '</option>';
+                    levelThreeSelect += '<option value=\"' + thirdLevelCategories[i].cid + '\">' + thirdLevelCategories[i].cname + '</option>';
                 }
                 $('#levelThree').html(levelThreeSelect);
             } else {
