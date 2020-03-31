@@ -20,15 +20,13 @@ public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> i
 
 
     @Override
-    public boolean checkAccount(String username, String password) {
+    public UsrAccount checkAccount(String username, String password) {
 
         password = MD5Util.MD5Encode(password,"UTF-8");
         QueryWrapper<UsrAccount> wrapper = new QueryWrapper<>();
         wrapper.eq("username", username).eq("password", password).eq("stop","yes");
         UsrAccount usrAccount = usrAccountMapper.selectOne(wrapper);
-        if (usrAccount != null)
-            return true;
-        return false;
+        return usrAccount;
     }
 
     @Override
@@ -49,5 +47,32 @@ public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> i
         return true;
     }
 
+    @Override
+    public boolean updateName(int userId, String originalUsername, String newUsername) {
+        UsrAccount usrAccount = usrAccountMapper.selectById(userId);
+        //当前用户非空
+        if (usrAccount != null){
+            usrAccount.setUsername(newUsername);
+            return usrAccountMapper.updateById(usrAccount) > 0;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updatePassword(int userId, String originalPaw, String newPaw) {
+        UsrAccount usrAccount = usrAccountMapper.selectById(userId);
+        //当前用户非空
+        if(usrAccount != null){
+            String originalPawMd5 = MD5Util.MD5Encode(originalPaw,"UTF-8");
+            String newPawMd5 = MD5Util.MD5Encode(newPaw,"UTF-8");
+
+            //密码相等时才能更改
+            if(originalPawMd5.equals(usrAccount.getPassword())){
+                usrAccount.setPassword(newPawMd5);
+                return usrAccountMapper.updateById(usrAccount) > 0;
+            }
+        }
+        return false;
+    }
 
 }

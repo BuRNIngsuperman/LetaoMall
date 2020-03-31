@@ -2,9 +2,9 @@ $(function () {
     //修改个人信息
     $('#updateUserNameButton').click(function () {
         $("#updateUserNameButton").attr("disabled",true);
-        var userName = $('#loginUserName').val();
-        var nickName = $('#nickName').val();
-        if (validUserNameForUpdate(userName, nickName)) {
+        var originName = $('#originalUserName').val();
+        var newName = $('#newUserName').val();
+        if (validUserNameForUpdate(originName, newName)) {
             //ajax提交数据
             var params = $("#userNameForm").serialize();
             $.ajax({
