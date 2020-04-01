@@ -19,4 +19,7 @@ public interface IAdminUserService extends IService<UsrUser> {
      * @return
      */
     PageResult getMallUserPage(PageQueryUtil pageUtil);
+
+
+    Boolean lockUsers(Integer[] ids, int lockStatus);
 }

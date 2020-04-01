@@ -21,6 +21,22 @@
                 <h3 class="card-title">管理员账户管理页面</h3>
             </div>
             <div class="card-body">
+                <div class="grid-btn">
+                    <button class="btn btn-info" onclick="lockAccount(0)"><i
+                            class="fa fa-plus"></i>&nbsp;解除禁用
+                    </button>
+                    <button class="btn btn-danger" onclick="lockAccount(1)"><i
+                            class="fa fa-trash-o"></i>&nbsp;禁用账户
+                    </button>
+                    <button class="btn btn-success" onclick="assignRole()"><i
+                            class="fa fa-user"></i>&nbsp;分配角色
+                    </button>
+                </div>
+                <div class="card-body">
+                    <table id="jqGrid" class="table table-bordered">
+                    </table>
+                    <div id="jqGridPager"></div>
+                </div><!-- /.card-body -->
                 <!--body-->
             </div>
         </div>
@@ -46,6 +62,6 @@
 <!-- sweetalert -->
 <script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
 <script th:src="@{/admin/dist/js/public.js}"></script>
-<script th:src="@{/admin/dist/js/newbee_mall_index_config.js}"></script>
+<script th:src="@{/admin/dist/js/letao_mall_account.js}"></script>
 </body>
 </html>
