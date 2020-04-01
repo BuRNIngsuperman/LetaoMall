@@ -86,7 +86,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item" th:if="${session.AdminUser.getType()} == 'admin'">
                     <a th:href="@{/admin/account}" th:class="${path}=='admin_user'?'nav-link active':'nav-link'">
                         <i class="fa fa-users nav-icon" aria-hidden="true"></i>
                         <p>

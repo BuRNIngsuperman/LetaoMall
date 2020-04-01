@@ -42,7 +42,7 @@ public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> i
         password = MD5Util.MD5Encode(password,"UTF-8");
         usrAdmin.setUsername(username);
         usrAdmin.setPassword(password);
-        usrAdmin.setType("admin");
+        usrAdmin.setType("normal");
         usrAdmin.setStop("yes");
         usrAdmin.setCreateTime(new Date());
         usrAccountMapper.insert(usrAdmin);
