@@ -41,8 +41,8 @@
             </div>
 
             <div class="order">
-                <input class="car" type="button" th:onclick="'saveAndGoCart('+${goodsDetail.goodsId}+')'" value="立即选购"/>
-                <input class="car" type="button" th:onclick="'saveToCart('+${goodsDetail.goodsId}+')'" value="加入购物车"/>
+                <input class="car" type="button" th:onclick="'saveAndGoCart(45)'" value="立即选购"/>
+                <input class="car" type="button" th:onclick="'saveToCart(139)'" value="加入购物车"/>
             </div>
             <div class="tb-extra ml20" id="J_tbExtra">
                 <dl>
@@ -84,8 +84,8 @@
     function saveToCart(id) {
         var goodsCount = 1;
         var data = {
-            "goodsId": id,
-            "goodsCount": goodsCount
+            "commId": id,
+            "quantity": goodsCount
         };
         $.ajax({
             type: 'POST',
@@ -124,8 +124,8 @@
     function saveAndGoCart(id) {
         var goodsCount = 1;
         var data = {
-            "goodsId": id,
-            "goodsCount": goodsCount
+            "commId": id,
+            "quantity": goodsCount
         };
         $.ajax({
             type: 'POST',

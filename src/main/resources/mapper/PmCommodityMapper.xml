@@ -27,4 +27,23 @@
         </foreach>
     </update>
 
+    <select id="selectByPrimaryKeys" resultType="cn.edu.seu.letao.entity.PmCommodity">
+        select
+        *
+        from pm_commodity
+        where comm_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        order by field(comm_id,
+        <foreach item="id" collection="list" separator=",">
+            #{id}
+        </foreach>
+        );
+    </select>
+
+
+
+
+
 </mapper>

@@ -15,5 +15,6 @@ import java.util.Map;
  */
 public interface UsrUserMapper extends BaseMapper<UsrUser> {
 
+     int updateUserInfo(UsrUser user);
 
 }

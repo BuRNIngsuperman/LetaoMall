@@ -1,5 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.seu.letao.mapper.OmCartMapper">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.edu.seu.letao.entity.OmCart">
+        update om_cart
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="goodsId != null">
+                comm_id = #{commId},
+            </if>
+            <if test="quantity != null">
+                quantity = #{quantity},
+            </if>
+            <if test="deleteStatus != null">
+                delete_status = #{deleteStatus},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 
+    <select id="selectCountByUserId" parameterType="Long" resultType="int">
+    select
+    count(*)
+    from om_cart
+    where user_id = #{userId} and delete_status=0
+  </select>
+
+    <insert id="insertSelective" parameterType="cn.edu.seu.letao.entity.OmCart">
+        insert into om_cart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="commId != null">
+                comm_id,
+            </if>
+            <if test="quantity != null">
+                quantity,
+            </if>
+            <if test="deleteStatus != null">
+                delete_status,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="modifyDate != null">
+                modify_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="commId != null">
+                #{commId},
+            </if>
+            <if test="quantity != null">
+                #{quantity},
+            </if>
+            <if test="deleteStatus != null">
+                #{deleteStatus},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="modifyDate != null">
+                #{modifyDate},
+            </if>
+        </trim>
+    </insert>
+
+
+    <select id="selectByUserId" resultType="cn.edu.seu.letao.entity.OmCart">
+        select
+        *
+        from om_cart
+        where user_id = #{userId} and delete_status = 0
+        limit #{number}
+    </select>
+
+    <select id="selectByUserIdAndCommId" resultType="cn.edu.seu.letao.entity.OmCart">
+        select
+        *
+        from om_cart
+        where user_id = #{userId} and comm_id=#{commId} and delete_status= 0
+        limit 1
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="int" resultType="cn.edu.seu.letao.entity.OmCart">
+        select * from om_cart where id=#{id} and delete_status=0
+    </select>
 </mapper>
