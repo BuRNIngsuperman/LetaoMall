@@ -26,11 +26,11 @@ import java.util.stream.Collectors;
  */
 @Service
 public class OmCartServiceImpl implements IOmCartService {
-    @Resource
+    @Autowired
     OmCartMapper omCartMapper;
 
-    @Resource
-    PmCommodityMapper commodityMapper;
+    @Autowired
+    PmCommodityMapper pmCommodityMapper;
 
     @Override
     public String saveCartItem(OmCart cart) {
@@ -41,7 +41,7 @@ public class OmCartServiceImpl implements IOmCartService {
             temp.setQuantity(temp.getQuantity()+1);
             return updateCartItem(temp);
         }
-        PmCommodity comm = commodityMapper.selectById(cart.getCommId());
+        PmCommodity comm = pmCommodityMapper.selectById(cart.getCommId());
         //商品为空
         if (comm == null) {
             return ServiceResultEnum.GOODS_NOT_EXIST.getResult();
@@ -90,7 +90,7 @@ public class OmCartServiceImpl implements IOmCartService {
         if (!CollectionUtils.isEmpty(letaoMallShoppingCartItems)) {
             //查询商品信息并做数据转换
             List<Integer> commIds = letaoMallShoppingCartItems.stream().map(OmCart::getCommId).collect(Collectors.toList());
-            List<PmCommodity> letaoMallGoods = commodityMapper.selectByPrimaryKeys(commIds);
+            List<PmCommodity> letaoMallGoods = pmCommodityMapper.selectByPrimaryKeys(commIds);
             Map<Integer, PmCommodity> letaoMallCommMap = new HashMap<>();
             if (!CollectionUtils.isEmpty(letaoMallGoods)) {
                 letaoMallCommMap = letaoMallGoods.stream().collect(Collectors.toMap(PmCommodity::getCommId, Function.identity(), (entity1, entity2) -> entity1));

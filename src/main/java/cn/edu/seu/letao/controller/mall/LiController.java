@@ -33,14 +33,14 @@ import java.util.Map;
 @Controller
 public class LiController {
 
-    @Resource
+    @Autowired
     OrderService orderService;
 
     @Autowired
-    IUsrUserService userService;
+    IUsrUserService iUsrUserService;
 
-    @Resource
-    IOmCartService cartService;
+    @Autowired
+    IOmCartService iOmCartService;
 
     //个人中心界面
     @GetMapping("/personal")
@@ -74,7 +74,7 @@ public class LiController {
         LetaoMallUserVO user = (LetaoMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         cart.setUserId(user.getUserId());
         //todo 判断数量
-        String saveResult = cartService.saveCartItem(cart);
+        String saveResult = iOmCartService.saveCartItem(cart);
         //添加成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(saveResult)) {
             return ResultGenerator.genSuccessResult();
@@ -90,7 +90,7 @@ public class LiController {
         LetaoMallUserVO user = (LetaoMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         int itemsTotal = 0;
         int priceTotal = 0;
-        List<LetaoMallCartItemVO> myShoppingCartItems = cartService.getMyShoppingCartItems(user.getUserId());
+        List<LetaoMallCartItemVO> myShoppingCartItems = iOmCartService.getMyShoppingCartItems(user.getUserId());
         if (!CollectionUtils.isEmpty(myShoppingCartItems)) {
             //购物项总数
             itemsTotal = myShoppingCartItems.stream().mapToInt(LetaoMallCartItemVO::getQuantity).sum();
@@ -117,7 +117,7 @@ public class LiController {
                              HttpSession httpSession) {
         int priceTotal = 0;
         LetaoMallUserVO user = (LetaoMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        List<LetaoMallCartItemVO> myShoppingCartItems = cartService.getMyShoppingCartItems(user.getUserId());
+        List<LetaoMallCartItemVO> myShoppingCartItems = iOmCartService.getMyShoppingCartItems(user.getUserId());
         if (CollectionUtils.isEmpty(myShoppingCartItems)) {
             //无数据则不跳转至结算页
             return "/shop-cart";
@@ -139,7 +139,7 @@ public class LiController {
     @GetMapping("/saveOrder")
     public String saveOrder(HttpSession httpSession) {
         LetaoMallUserVO user = (LetaoMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        List<LetaoMallCartItemVO> myShoppingCartItems = cartService.getMyShoppingCartItems(user.getUserId());
+        List<LetaoMallCartItemVO> myShoppingCartItems = iOmCartService.getMyShoppingCartItems(user.getUserId());
         if (StringUtils.isEmpty(user.getAddress().trim())) {
             //无收货地址
             LetaoMallException.fail(ServiceResultEnum.NULL_ADDRESS_ERROR.getResult());
@@ -165,7 +165,7 @@ public class LiController {
     @PostMapping("/personal/updateInfo")
     @ResponseBody
     public Result updateInfo(@RequestBody UsrUser mallUser, HttpSession httpSession) {
-        LetaoMallUserVO mallUserTemp = userService.updateUserInfo(mallUser,httpSession);
+        LetaoMallUserVO mallUserTemp = iUsrUserService.updateUserInfo(mallUser,httpSession);
         if (mallUserTemp == null) {
             Result result = ResultGenerator.genFailResult("修改失败");
             return result;
