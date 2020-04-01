@@ -40,4 +40,10 @@
     </select>
 
 
+    <update id="updateUserInfo" parameterType="cn.edu.seu.letao.entity.UsrUser">
+        update usr_user set nick_name=#{nickName},introduce_sign=#{introduceSign},address=#{address}
+        where user_id=#{userId}
+    </update>
+
+
 </mapper>

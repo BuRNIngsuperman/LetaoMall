@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.seu.letao.mapper.OmCartMapper">
+
+    <sql id="Base_Column_List">
+    id, comm_id, user_id, quantity,price,sp1,delete_status
+    </sql>
     <update id="updateByPrimaryKeySelective" parameterType="cn.edu.seu.letao.entity.OmCart">
         update om_cart
         <set>
             <if test="userId != null">
                 user_id = #{userId},
             </if>
-            <if test="goodsId != null">
+            <if test="commId != null">
                 comm_id = #{commId},
             </if>
             <if test="quantity != null">
@@ -94,13 +98,15 @@
 
     <select id="selectByUserIdAndCommId" resultType="cn.edu.seu.letao.entity.OmCart">
         select
-        *
+        <include refid="Base_Column_List"/>
         from om_cart
         where user_id = #{userId} and comm_id=#{commId} and delete_status= 0
         limit 1
     </select>
 
     <select id="selectByPrimaryKey" parameterType="int" resultType="cn.edu.seu.letao.entity.OmCart">
-        select * from om_cart where id=#{id} and delete_status=0
+        select
+        <include refid="Base_Column_List"/>
+        from om_cart where id=#{id} and delete_status=0
     </select>
 </mapper>

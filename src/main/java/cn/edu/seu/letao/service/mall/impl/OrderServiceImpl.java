@@ -21,7 +21,7 @@ import cn.edu.seu.letao.util.BeanUtil;
 import cn.edu.seu.letao.util.PageQueryUtil;
 import cn.edu.seu.letao.util.PageResult;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
-import freemarker.template.utility.NumberUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
