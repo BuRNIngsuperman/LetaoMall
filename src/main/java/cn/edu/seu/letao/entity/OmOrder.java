@@ -95,10 +95,6 @@ public class OmOrder implements Serializable {
      */
     private Integer payType;
 
-    /**
-     * 订单来源：0->PC订单；1->app订单
-     */
-    private Integer sourceType;
 
     /**
      * 订单类型：0->正常订单；1->秒杀订单
