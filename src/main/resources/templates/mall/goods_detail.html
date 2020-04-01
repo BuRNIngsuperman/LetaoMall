@@ -27,22 +27,22 @@
     <div class="intro mt20 w clearfix">
         <div class="left fl" style="position: relative;">
             <div class="swiper-container fl">
-                <img th:src="@{${goodsDetail.goodsCoverImg}}">
+                <img th:src="@{${goodsDetail.albumPics}}">
             </div>
         </div>
         <div class="right fr">
-            <div class="h3 ml20 mt20" th:text="${goodsDetail.goodsName}">NewBeeMall</div>
-            <div class="sub_title mr40 ml20 mt10" th:text="${goodsDetail.goodsIntro}">NewBeeMall</div>
+            <div class="h3 ml20 mt20" th:text="${goodsDetail.name}">LetaoMall</div>
+            <div class="sub_title mr40 ml20 mt10" th:text="${goodsDetail.description}">LetaoMall</div>
             <div class="item_price mr40 ml20 mt10">
-                <th:block th:text="${goodsDetail.originalPrice}+'.00 元'"></th:block>
+                <th:block th:text="${goodsDetail.price}+'元'"></th:block>
                 <del>
-                    <th:block th:text="${goodsDetail.sellingPrice}+'.00 元'"></th:block>
+                    <th:block th:text="${goodsDetail.originalPrice}+'元'"></th:block>
                 </del>
             </div>
 
             <div class="order">
-                <input class="car" type="button" th:onclick="'saveAndGoCart('+${goodsDetail.goodsId}+')'" value="立即选购"/>
-                <input class="car" type="button" th:onclick="'saveToCart('+${goodsDetail.goodsId}+')'" value="加入购物车"/>
+                <input class="car" type="button" th:onclick="'saveAndGoCart('+${goodsDetail.commId}+')'" value="立即选购"/>
+                <input class="car" type="button" th:onclick="'saveToCart('+${goodsDetail.commId}+')'" value="加入购物车"/>
             </div>
             <div class="tb-extra ml20" id="J_tbExtra">
                 <dl>
@@ -67,7 +67,7 @@
         <div class="clear"></div>
     </div>
     <!-- 这里使用的是 th:utext 标签，用 th:text 不会解析 html，用 th:utext 会解析 html -->
-    <div class="goods mt20 w clearfix" th:utext="${goodsDetail.goodsDetailContent}">
+    <div class="goods mt20 w clearfix" th:utext="${goodsDetail.detailDesc}">
     </div>
 </div>
 

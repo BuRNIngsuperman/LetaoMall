@@ -27,4 +27,12 @@
         </foreach>
     </update>
 
+
+    <select id="getCommodityForIndex" parameterType="Map" resultMap="PageResultMap">
+        select comm_id, name,description,album_pics,stock,price,publish_status from pm_commodity
+            where recommand_status=#{type}
+            limit #{number}
+
+    </select>
+
 </mapper>
