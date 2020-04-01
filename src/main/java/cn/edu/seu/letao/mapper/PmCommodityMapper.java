@@ -1,7 +1,6 @@
 package cn.edu.seu.letao.mapper;
 
 import cn.edu.seu.letao.entity.PmCommodity;
-import cn.edu.seu.letao.entity.StockNumDTO;
 import cn.edu.seu.letao.util.PageQueryUtil;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
@@ -22,9 +21,7 @@ public interface PmCommodityMapper extends BaseMapper<PmCommodity> {
 
     boolean updateSellStatus(@Param("ids")Long[] ids, @Param("sellStatus") int sellStatus);
 
-    List<PmCommodity> selectByPrimaryKeys(@Param("list") List<Integer> commIds);
-
-    int updateStockNum(@Param("stockNumDTOS") List<StockNumDTO> stockNumDTOS);
+    List<PmCommodity> getCommodityForIndex(@Param("type")int type, @Param("number")int number);
 
 
 }
