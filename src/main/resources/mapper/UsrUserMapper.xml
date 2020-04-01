@@ -5,7 +5,7 @@
         <id column="user_id" jdbcType="BIGINT" property="userId"/>
         <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
         <result column="login_name" jdbcType="VARCHAR" property="loginName"/>
-        <result column="password_md5" jdbcType="VARCHAR" property="password"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="introduce_sign" jdbcType="VARCHAR" property="introduceSign"/>
         <result column="address" jdbcType="VARCHAR" property="address"/>
         <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
@@ -39,6 +39,13 @@
         </if>
     </select>
 
+    <update id="lockUserBatch">
+        update usr_user
+        set locked_flag=#{lockStatus} where user_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 
     <update id="updateUserInfo" parameterType="cn.edu.seu.letao.entity.UsrUser">
         update usr_user
