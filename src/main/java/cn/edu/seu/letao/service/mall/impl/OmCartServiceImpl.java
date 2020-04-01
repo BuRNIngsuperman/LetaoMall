@@ -115,5 +115,31 @@ public class OmCartServiceImpl implements IOmCartService {
         return letaoMallShoppingCartItemVOS;
     }
 
+    @Override
+    public String updateLetaoeMallCartItem(OmCart letaoMallCartItem) {
+        OmCart cartItemUpdate = omCartMapper.selectByPrimaryKey(letaoMallCartItem.getId());
+        if (cartItemUpdate == null) {
+            return ServiceResultEnum.DATA_NOT_EXIST.getResult();
+        }
+        //超出单个商品的最大数量
+        if (letaoMallCartItem.getQuantity() > Constants.SHOPPING_CART_ITEM_LIMIT_NUMBER) {
+            return ServiceResultEnum.SHOPPING_CART_ITEM_LIMIT_NUMBER_ERROR.getResult();
+        }
+        //todo 数量相同不会进行修改
+        //todo userId不同不能修改
+        cartItemUpdate.setQuantity(letaoMallCartItem.getQuantity());
+        cartItemUpdate.setModifyDate(LocalDateTime.now());
+        //修改记录
+        if (omCartMapper.updateByPrimaryKeySelective(cartItemUpdate) > 0) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        }
+        return ServiceResultEnum.DB_ERROR.getResult();
+    }
+
+    @Override
+    public Boolean deleteById(Integer cartItemId) {
+        return omCartMapper.deleteByPrimaryKey(cartItemId) > 0;
+    }
+
 
 }

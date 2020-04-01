@@ -87,10 +87,9 @@
         </trim>
     </insert>
 
-
     <select id="selectByUserId" resultType="cn.edu.seu.letao.entity.OmCart">
         select
-        *
+        <include refid="Base_Column_List"></include>
         from om_cart
         where user_id = #{userId} and delete_status = 0
         limit #{number}
@@ -109,4 +108,9 @@
         <include refid="Base_Column_List"/>
         from om_cart where id=#{id} and delete_status=0
     </select>
+
+    <update id="deleteByPrimaryKey" parameterType="int">
+        update om_cart set delete_status = 1
+        where id = #{id} and delete_status = 0
+  </update>
 </mapper>

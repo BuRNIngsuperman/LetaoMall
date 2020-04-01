@@ -28,4 +28,6 @@ public interface OmCartMapper extends BaseMapper<OmCart> {
     List<OmCart> selectByUserId(@Param("userId") Long userId, @Param("number") int number);
 
     OmCart selectByPrimaryKey(Integer id);
+
+    int deleteByPrimaryKey(Integer cartItemId);
 }

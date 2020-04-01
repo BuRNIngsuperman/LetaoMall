@@ -41,8 +41,34 @@
 
 
     <update id="updateUserInfo" parameterType="cn.edu.seu.letao.entity.UsrUser">
-        update usr_user set nick_name=#{nickName},introduce_sign=#{introduceSign},address=#{address}
-        where user_id=#{userId}
+        update usr_user
+        <set>
+            <if test="nickName != null">
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="loginName != null">
+                login_name = #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="introduceSign != null">
+                introduce_sign = #{introduceSign},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
+            </if>
+            <if test="lockedFlag != null">
+                locked_flag = #{lockedFlag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where user_id = #{userId}
     </update>
 
 

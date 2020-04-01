@@ -13,16 +13,7 @@
     <div class="self-info center">
 
         <!-- sidebar -->
-        <div class="lfnav fl">
-    <div class="nav_title">个人中心</div>
-    <div class="title_list">
-        <ul>
-            <li><a href="/personal">个人信息</a></li>
-            <li><a href="/orders">我的订单</a></li>
-            <li><a href="/logout">退出登录</a></li>
-        </ul>
-    </div>
-</div>
+        <div th:replace="mall/personal-sidebar::sidebar-fragment"></div>
 
         <div class="intro fr">
             <div class="uc-box uc-main-box">
@@ -68,26 +59,29 @@
                                 <table class="order-items-table">
                                     <tbody>
 
-                                    
+                                    <th:block th:each="item : ${myShoppingCartItems}">
                                         <tr>
                                             <td class="col col-thumb">
                                                 <div class="figure figure-thumb">
-                                                    <a target="_blank" th:href="@{/goods/detail/10158}">
-                                                        <img th:src="@{/goods-img/5488564b-8335-4b0c-a5a4-52f3f03ee728.jpg}"
+                                                    <a target="_blank" th:href="@{'/goods/detail/'+${item.commId}}">
+                                                        <img th:src="@{${item.albumPics}}"
                                                              width="80" height="80" alt="">
                                                     </a>
                                                 </div>
                                             </td>
                                             <td class="col col-name">
                                                 <p class="name">
-                                                    <a target="_blank" th:href="@{/goods/detail/10158}">无印良品 女式粗棉线条纹长袖T恤</a>
+                                                    <a target="_blank" th:href="@{'/goods/detail/'+${item.commId}}"
+                                                       th:text="${item.name}">letao</a>
                                                 </p>
                                             </td>
-                                            <td class="col col-price"><p class="price">70元 x 1</p></td>
+                                            <td class="col col-price"><p class="price"
+                                                                         th:text="${item.price+'元 x '+item.quantity}">
+                                                1299元 × 1</p></td>
                                             <td class="col col-actions">
                                             </td>
                                         </tr>
-                                    
+                                    </th:block>
                                     </tbody>
                                 </table>
                             </div>
@@ -97,7 +91,10 @@
                                     <tbody>
                                     <tr>
                                         <th>收货地址：</th>
-                                        <td class="user_address_label">江苏省苏州市独墅湖高教区399号</td>
+                                        <td class="user_address_label"
+                                            th:text="${session.newBeeMallUser.address==''?'无':session.newBeeMallUser.address}">
+                                            letao
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -124,7 +121,7 @@
                                     <tbody>
                                     <tr>
                                         <th>商品总价：</th>
-                                        <td><span class="num">70.00</span>元</td>
+                                        <td><span class="num" th:text="${priceTotal+'.00'}">1299.00</span>元</td>
                                     </tr>
                                     <tr>
                                         <th>运费：</th>
@@ -132,7 +129,7 @@
                                     </tr>
                                     <tr>
                                         <th class="total">应付金额：</th>
-                                        <td class="total"><span class="num">70.00</span>元
+                                        <td class="total"><span class="num" th:text="${priceTotal+'.00'}">1299.00</span>元
                                         </td>
                                     </tr>
                                     </tbody>
@@ -155,10 +152,10 @@
                     <div class="modal-body">
                         <form id="personalInfoForm">
                             <div class="form-group">
-                                <input type="hidden" id="userId" value="9">
+                                <input type="hidden" id="userId" th:value="${session.newBeeMallUser.userId}">
                                 <label for="address" class="control-label">收货地址:</label>
                                 <input type="text" class="form-control" id="address" name="address"
-                                       placeholder="请输入收货地址" value="江苏省苏州市独墅湖高教区399号"
+                                       placeholder="请输入收货地址" th:value="${session.newBeeMallUser.address}"
                                        required="true">
                             </div>
                         </form>

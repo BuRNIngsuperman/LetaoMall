@@ -15,4 +15,8 @@ public interface IOmCartService {
     String updateCartItem(OmCart cart);
 
     List<LetaoMallCartItemVO> getMyShoppingCartItems(Long userId);
+
+    String updateLetaoeMallCartItem(OmCart letaoMallCartItem);
+
+    Boolean deleteById(Integer cartItemId);
 }

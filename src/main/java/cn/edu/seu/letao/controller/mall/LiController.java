@@ -42,7 +42,7 @@ public class LiController {
     @Autowired
     IOmCartService iOmCartService;
 
-    //个人中心界面
+    /*个人中心界面*/
     @GetMapping("/personal")
     public String personalPage(HttpServletRequest request,
                                HttpSession httpSession) {
@@ -50,7 +50,7 @@ public class LiController {
         return "mall/user_personal";
     }
 
-    //我的订单界面
+    /*我的订单界面*/
     @GetMapping("/orders")
     public String orderListPage(@RequestParam Map<String, Object> params, HttpServletRequest request, HttpSession httpSession) {
         LetaoMallUserVO user = (LetaoMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
@@ -66,7 +66,7 @@ public class LiController {
         return "mall/user_order";
     }
 
-    //加入购物车
+    /*加入购物车*/
     @PostMapping("/shop-cart")
     @ResponseBody
     public Result saveShoppingCartItem(@RequestBody OmCart cart,
@@ -83,7 +83,7 @@ public class LiController {
         return ResultGenerator.genFailResult(saveResult);
     }
 
-    //我的购物车界面
+    /*我的购物车界面*/
     @GetMapping("/shop-cart")
     public String cartListPage(HttpServletRequest request,
                                HttpSession httpSession) {
@@ -111,7 +111,39 @@ public class LiController {
         return "mall/user_cart";
     }
 
-    //订单结算页面
+    /*修改购物项的数量*/
+    @PutMapping("/shop-cart")
+    @ResponseBody
+    public Result updateNewBeeMallShoppingCartItem(@RequestBody OmCart letaoMallCartItem,
+                                                   HttpSession httpSession) {
+        LetaoMallUserVO user = (LetaoMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        letaoMallCartItem.setUserId(user.getUserId());
+        //todo 判断数量
+        String updateResult = iOmCartService.updateLetaoeMallCartItem(letaoMallCartItem);
+        //修改成功
+        if (ServiceResultEnum.SUCCESS.getResult().equals(updateResult)) {
+            return ResultGenerator.genSuccessResult();
+        }
+        //修改失败
+        return ResultGenerator.genFailResult(updateResult);
+    }
+
+    /*删除购物车中的某个购物项*/
+    @DeleteMapping("/shop-cart/{cartItemId}")
+    @ResponseBody
+    public Result updateNewBeeMallShoppingCartItem(@PathVariable("cartItemId") Integer cartItemId,
+                                                   HttpSession httpSession) {
+        LetaoMallUserVO user = (LetaoMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        Boolean deleteResult = iOmCartService.deleteById(cartItemId);
+        //删除成功
+        if (deleteResult) {
+            return ResultGenerator.genSuccessResult();
+        }
+        //删除失败
+        return ResultGenerator.genFailResult(ServiceResultEnum.OPERATE_ERROR.getResult());
+    }
+
+    /*订单结算页面*/
     @GetMapping("/shop-cart/settle")
     public String settlePage(HttpServletRequest request,
                              HttpSession httpSession) {
@@ -135,7 +167,7 @@ public class LiController {
         return "mall/user_saveOrder";
     }
 
-    //提交订单跳转到跳转到订单详情页
+    /*提交订单跳转到跳转到订单详情页*/
     @GetMapping("/saveOrder")
     public String saveOrder(HttpSession httpSession) {
         LetaoMallUserVO user = (LetaoMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
@@ -153,6 +185,18 @@ public class LiController {
         //跳转到订单详情页
         return "redirect:/orders/" + saveOrderResult;
     }
+
+    //订单详情页面
+//    @GetMapping("/orders/{orderNo}")
+//    public String orderDetailPage(HttpServletRequest request, @PathVariable("orderNo") String orderNo, HttpSession httpSession) {
+//        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+//        NewBeeMallOrderDetailVO orderDetailVO = newBeeMallOrderService.getOrderDetailByOrderNo(orderNo, user.getUserId());
+//        if (orderDetailVO == null) {
+//            return "error/error_5xx";
+//        }
+//        request.setAttribute("orderDetailVO", orderDetailVO);
+//        return "mall/order-detail";
+//    }
 
     //退出回到登录界面
     @GetMapping("/logout")
