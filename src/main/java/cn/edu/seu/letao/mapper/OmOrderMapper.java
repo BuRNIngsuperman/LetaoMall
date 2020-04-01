@@ -20,4 +20,9 @@ public interface OmOrderMapper extends BaseMapper<OmOrder> {
     int getMyOrderCount(PageQueryUtil pageUtil);
 
     List<OmOrder> findMyOrderList(PageQueryUtil pageUtil);
+
+    int insertSelective(OmOrder letaoMallOrder);
+
+
+    OmOrder selectByOrderNo(String orderSn);
 }

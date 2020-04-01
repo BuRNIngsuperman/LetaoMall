@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -53,32 +55,32 @@ public class OmOrder implements Serializable {
     /**
      * 提交时间
      */
-    private LocalDateTime createdTime;
+    private Date createdTime;
 
     /**
      * 支付时间
      */
-    private LocalDateTime paymentTime;
+    private Date paymentTime;
 
     /**
      * 发货时间
      */
-    private LocalDateTime deliveryTime;
+    private Date deliveryTime;
 
     /**
      * 确认收货时间
      */
-    private LocalDateTime receiveTime;
+    private Date receiveTime;
 
     /**
      * 评价时间
      */
-    private LocalDateTime commentTime;
+    private Date commentTime;
 
     /**
      * 修改时间
      */
-    private LocalDateTime modifyTime;
+    private Date modifyTime;
 
     /**
      * 应付金额（实际支付金额）
@@ -169,6 +171,11 @@ public class OmOrder implements Serializable {
      * 下单时使用的积分
      */
     private Integer useIntegration;
+
+    private String address;//收货地址
+
+    private Integer payStatus;//支付状态
+
 
 
 }

@@ -19,7 +19,7 @@ public class LetaoMallCartItemVO implements Serializable {
 
     private String albumPics;//商品图片
 
-    private BigDecimal price;//商品价格
+    private BigDecimal orderItemPrice;//商品价格
 
     public Integer getId() {
         return id;
@@ -61,11 +61,11 @@ public class LetaoMallCartItemVO implements Serializable {
         this.albumPics = albumPics;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getOrderItemPrice() {
+        return orderItemPrice;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setOrderItemPrice(BigDecimal orderItemPrice) {
+        this.orderItemPrice = orderItemPrice;
     }
 }

@@ -17,4 +17,9 @@ import java.util.List;
 public interface OmOrderItemMapper extends BaseMapper<OmOrderItem> {
 
     List<OmOrderItem> selectByOrderIds(@Param("orderIds") List<Integer> orderIds);
+
+    //lijia
+    int insertBatch(@Param("orderItems") List<OmOrderItem> leTaoMallOrderItems);
+
+    List<OmOrderItem> selectByOrderId(Integer orderId);
 }
