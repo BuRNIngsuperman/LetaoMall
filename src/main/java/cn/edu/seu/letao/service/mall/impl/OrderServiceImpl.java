@@ -23,7 +23,9 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -187,6 +189,28 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return null;
+    }
+
+    @Override
+    public OmOrder getOrderByOrderNo(String OrderNo) {
+        return omOrderMapper.selectByOrderNo(OrderNo);
+    }
+
+    @Override
+    public String paySuccess(String orderNo) {
+        OmOrder omOrder = omOrderMapper.selectByOrderNo(orderNo);
+        if(null!=omOrder){
+            omOrder.setStatus(1);
+            omOrder.setPayType(2);
+            omOrder.setPaymentTime(new Date());
+            omOrder.setModifyTime(new Date());
+            if(omOrderMapper.updateByPrimaryKeySelective(omOrder)>0){
+                return ServiceResultEnum.SUCCESS.getResult();
+            }else{
+                return ServiceResultEnum.DB_ERROR.getResult();
+            }
+        }
+        return ServiceResultEnum.ORDER_NOT_EXIST_ERROR.getResult();
     }
 
 

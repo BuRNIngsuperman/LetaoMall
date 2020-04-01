@@ -25,4 +25,6 @@ public interface OmOrderMapper extends BaseMapper<OmOrder> {
 
 
     OmOrder selectByOrderNo(String orderSn);
+
+    int updateByPrimaryKeySelective(OmOrder order);
 }
