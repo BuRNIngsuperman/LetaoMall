@@ -35,7 +35,7 @@
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="fa fa-user">&nbsp;&nbsp;Admin</i>
+                <i class="fa fa-user" th:text="'&nbsp;&nbsp;' + ${session.AdminUser.getUsername()}">&nbsp;&nbsp;Admin</i>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <div class="dropdown-divider"></div>
@@ -48,8 +48,11 @@
                 <div class="dropdown-divider"></div>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
-                    <i class="fa fa-address-card mr-2"></i> 邮箱
-                    <span class="float-right text-muted text-sm"></span>
+                    <i class="fa fa-address-card mr-2"></i> 角色
+                    <span class="float-right text-muted text-sm">
+                        <p th:text="${session.AdminUser.getType()}"></p>
+
+                    </span>
                 </a>
             </div>
         </li>

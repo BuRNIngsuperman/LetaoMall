@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 @Service
 public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> implements IAdminService {
@@ -43,6 +44,7 @@ public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> i
         usrAdmin.setPassword(password);
         usrAdmin.setType("admin");
         usrAdmin.setStop("yes");
+        usrAdmin.setCreateTime(new Date());
         usrAccountMapper.insert(usrAdmin);
         return true;
     }

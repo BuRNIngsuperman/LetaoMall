@@ -20,9 +20,6 @@ public class InitDataBasesTest {
 
     @Test
     public void test(){
-        adminService.addAdminAccount("zhangwen","zhangwen");
-        adminService.addAdminAccount("lijia","lijia");
-        adminService.addAdminAccount("shixiaoxue","shixiaoxue");
-        adminService.addAdminAccount("linzhonghu","linzhonghu");
+        adminService.addAdminAccount("test1","test1");
     }
 }

@@ -28,4 +28,12 @@ public class AdminUserServiceImpl extends ServiceImpl<UsrUserMapper, UsrUser> im
         PageResult pageResult = new PageResult(mallUserList, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
+
+    @Override
+    public Boolean lockUsers(Integer[] ids, int lockStatus) {
+        if(ids.length < 1){
+            return false;
+        }
+        return usrUserMapper.lockUserBatch(ids,lockStatus) > 0;
+    }
 }
