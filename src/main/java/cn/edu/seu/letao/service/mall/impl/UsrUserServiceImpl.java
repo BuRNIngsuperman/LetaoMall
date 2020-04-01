@@ -68,4 +68,23 @@ public class UsrUserServiceImpl implements IUsrUserService {
         }
         return ServiceResultEnum.DB_ERROR.getResult();
     }
+
+    @Override
+    public LetaoMallUserVO updateUserInfo(UsrUser mallUser, HttpSession httpSession) {
+        UsrUser user = usrUserMapper.selectById(mallUser.getUserId());
+        if (user != null) {
+            user.setNickName(mallUser.getNickName());
+            user.setAddress(mallUser.getAddress());
+            user.setIntroduceSign(mallUser.getIntroduceSign());
+
+            if (usrUserMapper.updateUserInfo(user) > 0) {
+                LetaoMallUserVO letaoMallUserVO = new LetaoMallUserVO();
+                user = usrUserMapper.selectById(mallUser.getUserId());
+                BeanUtil.copyProperties(user, letaoMallUserVO);
+                httpSession.setAttribute(Constants.MALL_USER_SESSION_KEY, letaoMallUserVO);
+                return letaoMallUserVO;
+            }
+        }
+        return null;
+    }
 }

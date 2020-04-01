@@ -36,8 +36,8 @@
                 <th:block th:unless="${#lists.isEmpty(carousels)}">
                     <th:block th:each="carousel : ${carousels}">
                         <div class="swiper-slide">
-                            <a th:href="@{${carousel.redirectUrl}}">
-                                <img th:src="@{${carousel.carouselUrl}}" alt="">
+                            <a th:href="@{'/goods/detail/'+${carousel.commId}}">
+                                <img th:src="@{${carousel.albumPics}}" alt="">
                             </a>
                         </div>
                     </th:block>
@@ -67,8 +67,8 @@
         <th:block th:unless="${#lists.isEmpty(hotGoodses)}">
             <th:block th:each="hotGoodse : ${hotGoodses}">
                 <div class="hot-image">
-                    <a th:href="@{'/goods/detail/'+${hotGoodse.goodsId}}">
-                        <img th:src="@{${hotGoodse.goodsCoverImg}}" th:alt="${hotGoodse.goodsName}">
+                    <a th:href="@{'/goods/detail/'+${hotGoodse.commId}}">
+                        <img th:src="@{${hotGoodse.albumPics}}" th:alt="${hotGoodse.name}">
                     </a>
                 </div>
             </th:block>
@@ -105,11 +105,11 @@
             <th:block th:unless="${#lists.isEmpty(newGoodses)}">
                 <th:block th:each="newGoods : ${newGoodses}">
                     <li>
-                        <a th:href="@{'/goods/detail/'+${newGoods.goodsId}}">
-                            <img th:src="@{${newGoods.goodsCoverImg}}" th:alt="${newGoods.goodsName}">
-                            <p class="name" th:text="${newGoods.goodsName}">NewBeeMall</p>
-                            <p class="discount" th:text="${newGoods.goodsIntro}">NewBeeMall</p>
-                            <p class="item_price" th:text="${newGoods.sellingPrice}">NewBeeMall</p>
+                        <a th:href="@{'/goods/detail/'+${newGoods.commId}}">
+                            <img th:src="@{${newGoods.albumPics}}" th:alt="${newGoods.name}">
+                            <p class="name" th:text="${newGoods.name}">LetaoMall</p>
+                            <p class="discount" th:text="${newGoods.description}">LetaoMall</p>
+                            <p class="item_price" th:text="${newGoods.price}">LetaoMall</p>
                         </a>
                     </li>
                 </th:block>
@@ -169,13 +169,13 @@
             <th:block th:unless="${#lists.isEmpty(recommendGoodses)}">
                 <th:block th:each="recommendGoods : ${recommendGoodses}">
                     <li>
-                        <a th:href="@{'/goods/detail/'+${recommendGoods.goodsId}}">
-                            <div class="info discount" th:text="${recommendGoods.tag}">
+                        <a th:href="@{'/goods/detail/'+${recommendGoods.commId}}">
+                            <div class="info discount" th:text="${recommendGoods.description}">
                                 新品
                             </div>
-                            <img th:src="@{${recommendGoods.goodsCoverImg}}" th:alt="${recommendGoods.goodsName}">
-                            <p class="name" th:text="${recommendGoods.goodsName}">NewBeeMall</p>
-                            <p class="item_price" th:text="${recommendGoods.sellingPrice}">NewBeeMall</p>
+                            <img th:src="@{${recommendGoods.albumPics}}" th:alt="${recommendGoods.name}">
+                            <p class="name" th:text="${recommendGoods.name}">LetaoMall</p>
+                            <p class="item_price" th:text="${recommendGoods.price}">LetaoMall</p>
                             <p class="counter">猜你喜欢</p>
                             <div class="comment">
                                 <p>新蜂精选</p>

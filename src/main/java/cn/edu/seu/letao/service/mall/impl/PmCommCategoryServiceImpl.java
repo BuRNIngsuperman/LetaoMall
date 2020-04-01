@@ -7,9 +7,10 @@ import cn.edu.seu.letao.controller.vo.SecondLevelCategoryVO;
 import cn.edu.seu.letao.controller.vo.ThirdLevelCategoryVO;
 import cn.edu.seu.letao.entity.PmCommCategory;
 import cn.edu.seu.letao.mapper.PmCommCategoryMapper;
-import cn.edu.seu.letao.service.mall.IPmCommCategory;
+import cn.edu.seu.letao.service.mall.IPmCommCategoryService;
 import cn.edu.seu.letao.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -20,7 +21,8 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
 
-public class IPmCommCategoryImpl implements IPmCommCategory {
+@Service
+public class PmCommCategoryServiceImpl implements IPmCommCategoryService {
 
     @Autowired
     PmCommCategoryMapper pmCommCategoryMapper;
@@ -28,7 +30,7 @@ public class IPmCommCategoryImpl implements IPmCommCategory {
 
     @Override
     public List<LetaoMallIndexCategoryVO> getCategoriesForIndex() {
-        List<LetaoMallIndexCategoryVO> LetaoMallIndexCategoryVOS = new ArrayList<>();
+        List<LetaoMallIndexCategoryVO> letaoMallIndexCategoryVOS = new ArrayList<>();
         //获取一级分类的固定数量的数据
         List<PmCommCategory> firstLevelCategories = pmCommCategoryMapper.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0), LetaoMallCategoryLevelEnum.LEVEL_ONE.getLevel(), Constants.INDEX_CATEGORY_NUMBER);
         if (!CollectionUtils.isEmpty(firstLevelCategories)) {
@@ -57,23 +59,23 @@ public class IPmCommCategoryImpl implements IPmCommCategory {
                     }
                     //处理一级分类
                     if (!CollectionUtils.isEmpty(secondLevelCategoryVOS)) {
-                        //根据 parentId 将 thirdLevelCategories 分组
+                        //根据 parentId 将 secondLevelCategories 分组
                         Map<Integer, List<SecondLevelCategoryVO>> secondLevelCategoryVOMap = secondLevelCategoryVOS.stream().collect(groupingBy(SecondLevelCategoryVO::getParentId));
                         for (PmCommCategory firstCategory : firstLevelCategories) {
-                            LetaoMallIndexCategoryVO newBeeLetaoMallIndexCategoryVO = new LetaoMallIndexCategoryVO();
-                            BeanUtil.copyProperties(firstCategory, newBeeLetaoMallIndexCategoryVO);
+                            LetaoMallIndexCategoryVO letaoMallIndexCategoryVO = new LetaoMallIndexCategoryVO();
+                            BeanUtil.copyProperties(firstCategory, letaoMallIndexCategoryVO);
                             //如果该一级分类下有数据则放入 newBeeMallIndexCategoryVOS 对象中
                             if (secondLevelCategoryVOMap.containsKey(firstCategory.getCid())) {
                                 //根据一级分类的id取出secondLevelCategoryVOMap分组中的二级级分类list
                                 List<SecondLevelCategoryVO> tempGoodsCategories = secondLevelCategoryVOMap.get(firstCategory.getCid());
-                                newBeeLetaoMallIndexCategoryVO.setSecondLevelCategoryVOS(tempGoodsCategories);
-                                LetaoMallIndexCategoryVOS.add(newBeeLetaoMallIndexCategoryVO);
+                                letaoMallIndexCategoryVO.setSecondLevelCategoryVOS(tempGoodsCategories);
+                                letaoMallIndexCategoryVOS.add(letaoMallIndexCategoryVO);
                             }
                         }
                     }
                 }
             }
-            return LetaoMallIndexCategoryVOS;
+            return letaoMallIndexCategoryVOS;
         } else {
             return null;
         }

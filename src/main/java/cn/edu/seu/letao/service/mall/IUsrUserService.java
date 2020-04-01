@@ -1,5 +1,6 @@
 package cn.edu.seu.letao.service.mall;
 
+import cn.edu.seu.letao.controller.vo.LetaoMallUserVO;
 import cn.edu.seu.letao.entity.UsrAccount;
 import cn.edu.seu.letao.entity.UsrUser;
 
@@ -12,4 +13,10 @@ public interface IUsrUserService {
      String login(String loginName, String password, HttpSession session);
 
      String register(String loginName, String password);
+
+     LetaoMallUserVO updateUserInfo(UsrUser mallUser, HttpSession httpSession);
+
+
+
+
 }

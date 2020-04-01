@@ -23,4 +23,6 @@ public interface UsrUserMapper extends BaseMapper<UsrUser> {
 
     int getTotalMallUsersCount(PageQueryUtil pageUtil);
 
+    int updateUserInfo(UsrUser user);
+
 }
