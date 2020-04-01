@@ -1,9 +1,12 @@
 package cn.edu.seu.letao.controller.mall;
 
-import cn.edu.seu.letao.common.Constants;
-import cn.edu.seu.letao.common.ServiceResultEnum;
+import cn.edu.seu.letao.common.*;
+import cn.edu.seu.letao.entity.PmCommComment;
+import cn.edu.seu.letao.entity.PmCommodity;
 import cn.edu.seu.letao.entity.UsrAccount;
 import cn.edu.seu.letao.entity.UsrUser;
+import cn.edu.seu.letao.service.mall.IPmCommCategoryService;
+import cn.edu.seu.letao.service.mall.IPmCommodityService;
 import cn.edu.seu.letao.service.mall.IUsrUserService;
 import cn.edu.seu.letao.util.MD5Util;
 import cn.edu.seu.letao.util.PageResult;
@@ -23,6 +26,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import cn.edu.seu.letao.controller.vo.*;
 
@@ -33,10 +37,25 @@ public class IndexController {
     @Autowired
     IUsrUserService usrUserService;
 
+    @Autowired
+    IPmCommCategoryService pmCommCategoryService;
+
+    @Autowired
+    IPmCommodityService pmCommodityService;
+
 
     @GetMapping({"/index", "/", "/index.html"})
-    public String indexPage() {
-
+    public String indexPage(HttpServletRequest request) {
+        List<LetaoMallIndexCategoryVO> categories = pmCommCategoryService.getCategoriesForIndex();
+        List<PmCommodity> carousels = pmCommodityService.getCommodityForIndex(IndexTypeEnum.INDEX_BANNER.getType(),Constants.INDEX_CAROUSEL_NUMBER);
+        List<PmCommodity> hotGoodses = pmCommodityService.getCommodityForIndex(IndexTypeEnum.INDEX_GOODS_HOT.getType(), Constants.INDEX_GOODS_HOT_NUMBER);
+        List<PmCommodity> newGoodses = pmCommodityService.getCommodityForIndex(IndexTypeEnum.INDEX_GOODS_NEW.getType(), Constants.INDEX_GOODS_NEW_NUMBER);
+        List<PmCommodity> recommendGoodses = pmCommodityService.getCommodityForIndex(IndexTypeEnum.INDEX_GOODS_RECOMMOND.getType(), Constants.INDEX_GOODS_RECOMMOND_NUMBER);
+        request.setAttribute("categories", categories);//分类数据
+        request.setAttribute("carousels", carousels);//轮播图
+        request.setAttribute("hotGoodses", hotGoodses);//热销商品
+        request.setAttribute("newGoodses", newGoodses);//热销商品
+        request.setAttribute("recommendGoodses", recommendGoodses);//热销商品
         return "mall/index";
     }
 
@@ -149,7 +168,7 @@ public class IndexController {
         responseOutputStream.close();
     }
 
-   // @GetMapping({"/search", "/search.html"})
+    // @GetMapping({"/search", "/search.html"})
     @GetMapping("/search/{keyword}")
     public String searchPage(@PathVariable("keyword") String keyword,HttpServletRequest request) {
 
@@ -171,18 +190,21 @@ public class IndexController {
     }
 
     @GetMapping("/goods/detail/{goodsId}")
-    public String detailPage(@PathVariable("goodsId") Long goodsId, HttpServletRequest request) {
+    public String detailPage(@PathVariable("goodsId") Integer goodsId, HttpServletRequest request) {
 
-        GoodsDetailVO goodsDetailVO = new GoodsDetailVO();
-        goodsDetailVO.setGoodsId((long)1);
-        goodsDetailVO.setGoodsName("HUAWEI Mate 30 4000万超感光徕卡影像");
-        goodsDetailVO.setGoodsIntro("OLED全面屏 8GB+128GB 全网通4G版 （罗兰紫）");
-        goodsDetailVO.setGoodsCoverImg("/mall/image/mate30-3.png");
-        goodsDetailVO.setSellingPrice(4000);
-        goodsDetailVO.setOriginalPrice(3000);
-        goodsDetailVO.setGoodsDetailContent("华为 ！！！");
+//        if (goodsId < 1) {
+//            return "error/error_5xx";
+//        }
+        PmCommodity commodity = pmCommodityService.getDetail(goodsId);
+        System.out.println(commodity);
+        if (commodity == null) {
+            LetaoMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+        }
+        if (0 != commodity.getPublishStatus()){//未上架
+            LetaoMallException.fail(ServiceResultEnum.GOODS_PUT_DOWN.getResult());
+        }
 
-        request.setAttribute("goodsDetail", goodsDetailVO);
+        request.setAttribute("goodsDetail", commodity);
         return "mall/goods_detail";
     }
 

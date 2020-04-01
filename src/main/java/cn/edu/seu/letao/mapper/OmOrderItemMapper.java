@@ -2,6 +2,9 @@ package cn.edu.seu.letao.mapper;
 
 import cn.edu.seu.letao.entity.OmOrderItem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface OmOrderItemMapper extends BaseMapper<OmOrderItem> {
 
+    List<OmOrderItem> selectByOrderIds(@Param("orderIds") List<Integer> orderIds);
 }

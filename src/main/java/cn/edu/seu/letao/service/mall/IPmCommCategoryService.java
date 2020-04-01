@@ -4,6 +4,6 @@ import cn.edu.seu.letao.controller.vo.LetaoMallIndexCategoryVO;
 
 import java.util.List;
 
-public interface IPmCommCategory {
+public interface IPmCommCategoryService {
     List<LetaoMallIndexCategoryVO> getCategoriesForIndex();
 }
