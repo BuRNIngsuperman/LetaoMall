@@ -7,10 +7,7 @@ import cn.edu.seu.letao.util.ResultGenerator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -42,5 +39,27 @@ public class AdminUserController {
         PageQueryUtil pageUtil = new PageQueryUtil(params);
         return ResultGenerator.genSuccessResult(adminUserService.getMallUserPage(pageUtil));
     }
+
+    /**
+     * 账户禁用
+     */
+    @RequestMapping(value = "/users/lock/{lockStatus}", method = RequestMethod.POST)
+    @ResponseBody
+    public Result updateStatus(@RequestBody Integer[] ids,@PathVariable("lockStatus") int lockStatus){
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (lockStatus != 0 && lockStatus != 1) {
+            return ResultGenerator.genFailResult("操作非法！");
+        }
+
+        if (adminUserService.lockUsers(ids,lockStatus)){
+            return ResultGenerator.genSuccessResult();
+
+        }else {
+            return ResultGenerator.genFailResult("禁用失败");
+        }
+    }
+
 
 }

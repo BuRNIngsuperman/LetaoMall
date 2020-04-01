@@ -76,7 +76,6 @@
 
 
                 <li class="nav-header">系统管理</li>
-
                 <li class="nav-item">
                     <a th:href="@{/admin/profile}" th:class="${path}=='personalInfo'?'nav-link active':'nav-link'">
                         <i class="fa fa-user nav-icon"></i>
@@ -86,7 +85,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item" th:if="${session.AdminUser.getType()} == 'admin'">
                     <a th:href="@{/admin/account}" th:class="${path}=='admin_user'?'nav-link active':'nav-link'">
                         <i class="fa fa-users nav-icon" aria-hidden="true"></i>
                         <p>
