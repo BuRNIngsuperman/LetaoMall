@@ -4,7 +4,6 @@ import cn.edu.seu.letao.entity.UsrUser;
 import cn.edu.seu.letao.util.PageQueryUtil;
 import cn.edu.seu.letao.util.PageResult;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.springframework.stereotype.Service;
 
 /**
  * @author Jin Qiuyang
