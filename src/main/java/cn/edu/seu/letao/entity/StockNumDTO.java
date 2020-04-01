@@ -9,7 +9,7 @@ public class StockNumDTO {
 
     private Integer commId;
 
-    private Integer stock;
+    private Integer quantity;
 
     public Integer getCommId() {
         return commId;
@@ -19,11 +19,11 @@ public class StockNumDTO {
         this.commId = commId;
     }
 
-    public Integer getStock() {
-        return stock;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setStock(Integer stock) {
-        this.stock = stock;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

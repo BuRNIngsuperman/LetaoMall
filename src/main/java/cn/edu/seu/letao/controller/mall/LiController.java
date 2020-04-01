@@ -5,6 +5,7 @@ import cn.edu.seu.letao.common.LetaoMallException;
 import cn.edu.seu.letao.common.ServiceResultEnum;
 import cn.edu.seu.letao.controller.vo.LetaoMallCartItemVO;
 import cn.edu.seu.letao.controller.vo.LetaoMallUserVO;
+import cn.edu.seu.letao.controller.vo.OrderDetailVO;
 import cn.edu.seu.letao.entity.OmCart;
 import cn.edu.seu.letao.entity.UsrAccount;
 import cn.edu.seu.letao.entity.UsrUser;
@@ -99,7 +100,7 @@ public class LiController {
             }
             //总价
             for (LetaoMallCartItemVO letaoMallCartItemVO : myShoppingCartItems) {
-                priceTotal += letaoMallCartItemVO.getQuantity() * letaoMallCartItemVO.getPrice().intValue();
+                priceTotal += letaoMallCartItemVO.getQuantity() * letaoMallCartItemVO.getOrderItemPrice().intValue();
             }
             if (priceTotal < 1) {
                 return "error/error_5xx";
@@ -156,7 +157,7 @@ public class LiController {
         } else {
             //总价
             for (LetaoMallCartItemVO newBeeMallShoppingCartItemVO : myShoppingCartItems) {
-                priceTotal += newBeeMallShoppingCartItemVO.getQuantity() * newBeeMallShoppingCartItemVO.getPrice().intValue();
+                priceTotal += newBeeMallShoppingCartItemVO.getQuantity() * newBeeMallShoppingCartItemVO.getOrderItemPrice().intValue();
             }
             if (priceTotal < 1) {
                 return "error/error_5xx";
@@ -186,17 +187,17 @@ public class LiController {
         return "redirect:/orders/" + saveOrderResult;
     }
 
-    //订单详情页面
-//    @GetMapping("/orders/{orderNo}")
-//    public String orderDetailPage(HttpServletRequest request, @PathVariable("orderNo") String orderNo, HttpSession httpSession) {
-//        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-//        NewBeeMallOrderDetailVO orderDetailVO = newBeeMallOrderService.getOrderDetailByOrderNo(orderNo, user.getUserId());
-//        if (orderDetailVO == null) {
-//            return "error/error_5xx";
-//        }
-//        request.setAttribute("orderDetailVO", orderDetailVO);
-//        return "mall/order-detail";
-//    }
+    /*订单详情页面*/
+    @GetMapping("/orders/{orderSn}")
+    public String orderDetailPage(HttpServletRequest request, @PathVariable("orderSn") String orderSn, HttpSession httpSession) {
+        LetaoMallUserVO user = (LetaoMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        OrderDetailVO orderDetailVO = orderService.getOrderDetailByOrderNo(orderSn, user.getUserId());
+        if (orderDetailVO == null) {
+            return "error/error_5xx";
+        }
+        request.setAttribute("orderDetailVO", orderDetailVO);
+        return "mall/order-detail";
+    }
 
     //退出回到登录界面
     @GetMapping("/logout")

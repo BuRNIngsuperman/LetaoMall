@@ -107,7 +107,7 @@ public class OmCartServiceImpl implements IOmCartService {
                         goodsName = goodsName.substring(0, 28) + "...";
                     }
                     cartItemVO.setName(goodsName);
-                    cartItemVO.setPrice(commTemp.getPrice());
+                    cartItemVO.setOrderItemPrice(commTemp.getPrice());
                     letaoMallShoppingCartItemVOS.add(cartItemVO);
                 }
             }
