@@ -36,13 +36,15 @@
                 </li>
 
                 <li class="nav-item">
-                    <a th:href="@{/admin/categories}" th:class="${path}=='admin_category'?'nav-link active':'nav-link'">
-                        <i class="fa fa-money nav-icon" aria-hidden="true"></i>
+                    <a th:href="@{/admin/categories?parentId=0&categoryLevel=1&backParentId=0}"
+                       th:class="${path}=='admin_category'?'nav-link active':'nav-link'">
+                        <i class="fa fa-list-alt nav-icon" aria-hidden="true"></i>
                         <p>
                             分类管理
                         </p>
                     </a>
                 </li>
+
 
                 <li class="nav-item">
                     <a th:href="@{/admin/orders}" th:class="${path}=='admin_orders'?'nav-link active':'nav-link'">

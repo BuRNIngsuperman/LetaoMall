@@ -43,34 +43,11 @@ public class AdminGoodsServiceImpl implements IAdminGoodsService {
         return commodityMapper.updateSellStatus(ids,sellStatus);
     }
 
-    /*
-    * 根据父级别id,自身等级查询，分类级别信息
-    * */
-    @Override
-    public List<PmCommCategory> selectByLevelAndParentIds(List<Integer> parentIds, int categoryLevel){
-
-        return categoryMapper.selectByLevelAndParentIds(parentIds, categoryLevel);
-    }
-
-    /*查询商品分类表级别信息*/
-    @Override
-    public PmCommCategory getCategoryById(int id){
-        return categoryMapper.selectById(id);
-    }
-
     /**
      * 添加商品
      */
     @Override
     public String saveCommodity(PmCommodity commodity){
-
-        //添加商品默认属性
-//        commodity.setDeleteStatus(0);
-//        commodity.setVerifyStatus(1);
-//        commodity.setBrandId(0);
-//        commodity.setSort(0);
-//        commodity.setSale(0);
-
 
         if(commodityMapper.insert(commodity) > 0)
             return  ServiceResultEnum.SUCCESS.getResult();
@@ -78,7 +55,15 @@ public class AdminGoodsServiceImpl implements IAdminGoodsService {
         return ServiceResultEnum.DB_ERROR.getResult();
     }
 
+    /**
+     * 修改商品
+     */
+    public String updateCommodity(PmCommodity commodity){
+        if(commodityMapper.updateById(commodity) > 0)
+            return  ServiceResultEnum.SUCCESS.getResult();
 
+        return ServiceResultEnum.DB_ERROR.getResult();
+    }
     /**
      * 获取商品信息
      */
