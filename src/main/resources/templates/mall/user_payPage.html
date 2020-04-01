@@ -74,10 +74,13 @@
 <script type="text/javascript">
     function payOrderSuccess() {
         var orderNo = $("#orderNoValue").val();
+        console.log(orderNo);
+
         $.ajax({
             type: 'GET',
-            url: '/paySuccess?outTradeNo=' + orderNo,
+            url: '/pay/paySuccess?outTradeNo=' + orderNo,
             success: function (result) {
+                console.log(result);
                 if (result.resultCode == 200) {
                     window.location.href = '/orders/' + orderNo;
                 } else {
@@ -93,12 +96,14 @@
 <script type="text/javascript">
     var wxTM = setInterval(function() {
         getWxPayStatus();
-    },5000)
+    },2000)
     function getWxPayStatus(){
+        var orderNo = $("#orderNo").val();
         jQuery.ajax({
-            type: 'POST',
-            url: '/paySuccess?outTradeNo=' + orderNo,
+            type: 'GET',
+            url: '/pay/paySuccess?outTradeNo=' + orderNo,
             success: function (result) {
+                console.log(result);
                 if (result.resultCode == 200) {
                     clearInterval(wxTM);
                     window.location.href = '/orders/' + orderNo;

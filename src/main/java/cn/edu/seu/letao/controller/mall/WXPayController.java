@@ -2,6 +2,8 @@ package cn.edu.seu.letao.controller.mall;
 
 import cn.edu.seu.letao.common.ServiceResultEnum;
 import cn.edu.seu.letao.config.WXPayConfigImpl;
+import cn.edu.seu.letao.entity.OmOrder;
+import cn.edu.seu.letao.service.mall.OrderService;
 import cn.edu.seu.letao.service.mall.WXPayService;
 import cn.edu.seu.letao.util.Result;
 import cn.edu.seu.letao.util.ResultGenerator;
@@ -36,6 +38,9 @@ public class WXPayController {
     @Autowired
     private WXPayService wxPayService;
 
+    @Autowired
+    private OrderService orderService;
+
 
     @RequestMapping(value = "/codeUrl")
     public String unifiedOrder(RedirectAttributes model){
@@ -47,7 +52,8 @@ public class WXPayController {
             3. 自定义参数：attach，可选
          */
         // 以下数据为模拟参数
-        String outTradeNo = new Long(new Date().getTime()).toString();
+        //String outTradeNo = new Long(new Date().getTime()).toString();
+        String outTradeNo = "20200326001";
         String totalPrice = "1"; // 金额必须为整数，单位：分
         String body = "商品描述信息";
         String productId = new Long(new Date().getTime()).toString();
@@ -104,6 +110,10 @@ public class WXPayController {
 
             验证不通过则停止执行回调并通知微信订单处理失败
         */
+        orderService.paySuccess(outTradeNo);
+
+
+
         PrintWriter writer = response.getWriter();
         // 签名是否正确
         if (signatureValid) {
@@ -111,6 +121,7 @@ public class WXPayController {
             if ("SUCCESS".equals(map.get("result_code"))) {
                 // 补充以下代码, 根据实际业务完善逻辑
                 // 如：修改订单状态为"已付款" ...
+
 
                 System.out.println("********付款成功********");
                 // 通知微信订单处理成功
@@ -146,7 +157,7 @@ public class WXPayController {
     public Result orderQuery(Model model,String outTradeNo) throws Exception {
 
 
-        Map<String, String> map = WXPayService.orderQuery(outTradeNo, null);
+        Map<String, String> map = WXPayService.orderQuery(outTradeNo, "");
         String attach = map.get("attach");
         String appId = map.get("appid");
         String totalFee = map.get("total_fee");
@@ -161,17 +172,19 @@ public class WXPayController {
         }
     }
 
-//
-//    @GetMapping("/paySuccess")
-//    @ResponseBody
-//    public Result paySuccess(@RequestParam("orderNo") String orderNo, @RequestParam("payType") int payType) {
-//        String payResult = newBeeMallOrderService.paySuccess(orderNo, payType);
-//        if (ServiceResultEnum.SUCCESS.getResult().equals(payResult)) {
-//            return ResultGenerator.genSuccessResult();
-//        } else {
-//            return ResultGenerator.genFailResult(payResult);
-//        }
-//    }
+
+    @GetMapping("/paySuccess")
+    @ResponseBody
+    public Result paySuccess(@RequestParam("outTradeNo") String orderNo) {
+        OmOrder order = orderService.getOrderByOrderNo(orderNo);
+        if(order==null) return ResultGenerator.genFailResult("此订单不存在");
+        Integer payType = order.getPayType();
+        if (payType==2) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("未成功支付");
+        }
+    }
 
 
 }

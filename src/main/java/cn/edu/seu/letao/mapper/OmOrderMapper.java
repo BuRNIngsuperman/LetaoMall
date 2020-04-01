@@ -20,4 +20,9 @@ public interface OmOrderMapper extends BaseMapper<OmOrder> {
     int getMyOrderCount(PageQueryUtil pageUtil);
 
     List<OmOrder> findMyOrderList(PageQueryUtil pageUtil);
+
+    OmOrder selectByOrderNo(String orderNo);
+
+    int updateByPrimaryKeySelective(OmOrder order);
+
 }

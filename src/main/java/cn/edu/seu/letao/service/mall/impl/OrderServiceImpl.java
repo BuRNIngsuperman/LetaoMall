@@ -1,7 +1,5 @@
 package cn.edu.seu.letao.service.mall.impl;
 
-import cn.edu.seu.letao.common.Constants;
-import cn.edu.seu.letao.common.LetaoMallException;
 import cn.edu.seu.letao.common.LetaoMallOrderStatusEnum;
 import cn.edu.seu.letao.common.ServiceResultEnum;
 import cn.edu.seu.letao.controller.vo.LetaoMallCartItemVO;
@@ -10,8 +8,6 @@ import cn.edu.seu.letao.controller.vo.LetaoMallOrderListVO;
 import cn.edu.seu.letao.controller.vo.LetaoMallUserVO;
 import cn.edu.seu.letao.entity.OmOrder;
 import cn.edu.seu.letao.entity.OmOrderItem;
-import cn.edu.seu.letao.entity.PmCommodity;
-import cn.edu.seu.letao.entity.StockNumDTO;
 import cn.edu.seu.letao.mapper.OmCartMapper;
 import cn.edu.seu.letao.mapper.OmOrderItemMapper;
 import cn.edu.seu.letao.mapper.OmOrderMapper;
@@ -20,19 +16,15 @@ import cn.edu.seu.letao.service.mall.OrderService;
 import cn.edu.seu.letao.util.BeanUtil;
 import cn.edu.seu.letao.util.PageQueryUtil;
 import cn.edu.seu.letao.util.PageResult;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
 
-import freemarker.template.utility.NumberUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -93,8 +85,29 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
+    @Override
+    public OmOrder getOrderByOrderNo(String OrderNo) {
+        return omOrderMapper.selectByOrderNo(OrderNo);
+    }
 
-//    @Transactional
+    @Override
+    public String paySuccess(String orderNo) {
+        OmOrder omOrder = omOrderMapper.selectByOrderNo(orderNo);
+        if(null!=omOrder){
+            omOrder.setStatus(1);
+            omOrder.setPayType(2);
+            omOrder.setPaymentTime(LocalDateTime.now());
+            omOrder.setModifyTime(LocalDateTime.now());
+            if(omOrderMapper.updateByPrimaryKeySelective(omOrder)>0){
+                return ServiceResultEnum.SUCCESS.getResult();
+            }else{
+                return ServiceResultEnum.DB_ERROR.getResult();
+            }
+        }
+        return ServiceResultEnum.ORDER_NOT_EXIST_ERROR.getResult();
+    }
+
+    //    @Transactional
 //    @Override
 //    public String saveOrder(LetaoMallUserVO user, List<LetaoMallCartItemVO> myShoppingCartItems) {
 //        List<Integer> itemIdList = myShoppingCartItems.stream().map(LetaoMallCartItemVO::getId).collect(Collectors.toList());
