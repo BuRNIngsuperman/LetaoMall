@@ -27,4 +27,6 @@ public interface UsrUserMapper extends BaseMapper<UsrUser> {
     int lockUserBatch(@Param("ids") Integer[] ids, @Param("lockStatus") int lockStatus);
 
 
+    int updateUserInfo(UsrUser user);
+
 }

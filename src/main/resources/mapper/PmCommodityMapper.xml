@@ -27,4 +27,28 @@
         </foreach>
     </update>
 
+    <select id="getCommodityForIndex" parameterType="Map" resultMap="PageResultMap">
+        select comm_id, name,description,album_pics,stock,price,publish_status from pm_commodity
+            where recommand_status=#{type}
+            limit #{number}
+
+    </select>
+
+    <select id="selectByPrimaryKeys" resultMap="PageResultMap">
+        select
+        comm_id, name,description,album_pics,stock,price,publish_status
+        from pm_commodity
+        where comm_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        order by field(comm_id,
+        <foreach item="id" collection="list" separator=",">
+            #{id}
+        </foreach>
+        );
+    </select>
+
+
+
 </mapper>

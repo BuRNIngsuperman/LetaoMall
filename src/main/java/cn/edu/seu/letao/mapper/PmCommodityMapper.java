@@ -21,4 +21,9 @@ public interface PmCommodityMapper extends BaseMapper<PmCommodity> {
 
     boolean updateSellStatus(@Param("ids")Long[] ids, @Param("sellStatus") int sellStatus);
 
+    List<PmCommodity> getCommodityForIndex(@Param("type")int type, @Param("number")int number);
+
+
+    //lijia
+    List<PmCommodity> selectByPrimaryKeys(@Param("list") List<Integer> commIds);
 }
