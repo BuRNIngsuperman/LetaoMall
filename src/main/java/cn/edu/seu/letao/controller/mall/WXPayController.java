@@ -179,8 +179,8 @@ public class WXPayController {
 
     @GetMapping("/paySuccess")
     @ResponseBody
-    public Result paySuccess(@RequestParam("outTradeNo") String orderNo) {
-        OmOrder order = orderService.getOrderByOrderNo(orderNo);
+    public Result paySuccess(@RequestParam("outTradeNo") String orderSn) {
+        OmOrder order = orderService.getOrderByOrderSn(orderSn);
         if(order==null) return ResultGenerator.genFailResult("此订单不存在");
         Integer payType = order.getPayType();
         if (payType==2) {
