@@ -36,4 +36,11 @@
             limit #{start},#{limit}
         </if>
     </select>
+
+    <select id="findOrderList" parameterType="Map" resultType="cn.edu.seu.letao.entity.OmOrder">
+        select * from om_order where status in (0,1) order by created_time desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
 </mapper>

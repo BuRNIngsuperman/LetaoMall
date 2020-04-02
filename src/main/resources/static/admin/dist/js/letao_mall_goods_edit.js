@@ -228,7 +228,6 @@ $('#confirmButton').click(function () {
     $('#goodsModal').modal('show');
 });
 
-/*这个有问题*/
 $('#saveButton').click(function () {
         var goodsCommId = $('#commId').val();
         var goodsName = $('#goodsName').val();

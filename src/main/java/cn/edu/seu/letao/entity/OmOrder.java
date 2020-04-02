@@ -8,6 +8,7 @@ import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import java.util.Date;
 
 /**
  * <p>
@@ -53,32 +54,32 @@ public class OmOrder implements Serializable {
     /**
      * 提交时间
      */
-    private LocalDateTime createdTime;
+    private Date createdTime;
 
     /**
      * 支付时间
      */
-    private LocalDateTime paymentTime;
+    private Date paymentTime;
 
     /**
      * 发货时间
      */
-    private LocalDateTime deliveryTime;
+    private Date deliveryTime;
 
     /**
      * 确认收货时间
      */
-    private LocalDateTime receiveTime;
+    private Date receiveTime;
 
     /**
      * 评价时间
      */
-    private LocalDateTime commentTime;
+    private Date commentTime;
 
     /**
      * 修改时间
      */
-    private LocalDateTime modifyTime;
+    private Date modifyTime;
 
     /**
      * 应付金额（实际支付金额）
@@ -170,5 +171,14 @@ public class OmOrder implements Serializable {
      */
     private Integer useIntegration;
 
+    /**
+     * 下单时使用的地址
+     */
+    private String address;
+
+    /**
+     * 订单支付状态
+     */
+    private Integer payStatus;
 
 }
