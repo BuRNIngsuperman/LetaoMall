@@ -1,7 +1,12 @@
 package cn.edu.seu.letao.controller.mall;
 
+import cn.edu.seu.letao.common.ServiceResultEnum;
 import cn.edu.seu.letao.config.WXPayConfigImpl;
+import cn.edu.seu.letao.entity.OmOrder;
+import cn.edu.seu.letao.service.mall.OrderService;
 import cn.edu.seu.letao.service.mall.WXPayService;
+import cn.edu.seu.letao.util.Result;
+import cn.edu.seu.letao.util.ResultGenerator;
 import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayConfig;
 import com.github.wxpay.sdk.WXPayUtil;
@@ -9,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -36,6 +38,9 @@ public class WXPayController {
     @Autowired
     private WXPayService wxPayService;
 
+    @Autowired
+    private OrderService orderService;
+
 
     @RequestMapping(value = "/codeUrl")
     public String unifiedOrder(RedirectAttributes model){
@@ -47,8 +52,9 @@ public class WXPayController {
             3. 自定义参数：attach，可选
          */
         // 以下数据为模拟参数
-        String outTradeNo = new Long(new Date().getTime()).toString();
-        String totalPrice = "3"; // 金额必须为整数，单位：分
+        //String outTradeNo = new Long(new Date().getTime()).toString();
+        String outTradeNo = "20200326001";
+        String totalPrice = "1"; // 金额必须为整数，单位：分
         String body = "商品描述信息";
         String productId = new Long(new Date().getTime()).toString();
         String attach = "wxpay";
@@ -104,6 +110,10 @@ public class WXPayController {
 
             验证不通过则停止执行回调并通知微信订单处理失败
         */
+        orderService.paySuccess(outTradeNo);
+
+
+
         PrintWriter writer = response.getWriter();
         // 签名是否正确
         if (signatureValid) {
@@ -111,6 +121,8 @@ public class WXPayController {
             if ("SUCCESS".equals(map.get("result_code"))) {
                 // 补充以下代码, 根据实际业务完善逻辑
                 // 如：修改订单状态为"已付款" ...
+
+
                 System.out.println("********付款成功********");
                 // 通知微信订单处理成功
                 String noticeStr = setXML("SUCCESS", "SUCCESS");
@@ -119,6 +131,7 @@ public class WXPayController {
             }
         } else {
             // 通知微信订单处理失败
+            System.out.println("********付款失败********");
             String noticeStr = setXML("FAIL", "FAIL");
             writer.write(noticeStr);
             writer.flush();
@@ -138,6 +151,39 @@ public class WXPayController {
 //        model.addAttribute("qrAddress",request.getAttribute("qrAddress"));
         System.out.println(model.getAttribute("totalFee"));
         return "mall/user_payPage";
+    }
+
+    @RequestMapping("/orderQuery")
+    public Result orderQuery(Model model,String outTradeNo) throws Exception {
+
+
+        Map<String, String> map = WXPayService.orderQuery(outTradeNo, "");
+        String attach = map.get("attach");
+        String appId = map.get("appid");
+        String totalFee = map.get("total_fee");
+        String strXml = WXPayUtil.mapToXml(map);
+        String resultCode = map.get("result_code");
+        System.out.println("strXml: " + strXml);
+        if("SUCCESS".equals(resultCode)){
+            return ResultGenerator.genSuccessResult();
+        }
+        else{
+            return ResultGenerator.genFailResult("ERROR");
+        }
+    }
+
+
+    @GetMapping("/paySuccess")
+    @ResponseBody
+    public Result paySuccess(@RequestParam("outTradeNo") String orderNo) {
+        OmOrder order = orderService.getOrderByOrderNo(orderNo);
+        if(order==null) return ResultGenerator.genFailResult("此订单不存在");
+        Integer payType = order.getPayType();
+        if (payType==2) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("未成功支付");
+        }
     }
 
 

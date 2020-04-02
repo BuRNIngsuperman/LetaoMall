@@ -49,6 +49,13 @@
         );
     </select>
 
+    <update id="updateStockNum">
+        <foreach collection="stockNumDTOS" item="stockNumDTO">
+            update pm_commodity set stock = stock-#{stockNumDTO.quantity}
+            where comm_id = #{stockNumDTO.commId} and stock>=#{stockNumDTO.quantity} and publish_status = 0;
+        </foreach>
+    </update>
+
 
 
 </mapper>

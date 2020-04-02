@@ -56,5 +56,9 @@ public class OmOrderItem implements Serializable {
      */
     private String sp1;
 
+    private String albumPics;//商品图片
+
+    private String name;//商品名称
+
 
 }

@@ -74,10 +74,13 @@
 <script type="text/javascript">
     function payOrderSuccess() {
         var orderNo = $("#orderNoValue").val();
+        console.log(orderNo);
+
         $.ajax({
             type: 'GET',
-            url: '/paySuccess?payType=2&orderNo=' + orderNo,
+            url: '/pay/paySuccess?outTradeNo=' + orderNo,
             success: function (result) {
+                console.log(result);
                 if (result.resultCode == 200) {
                     window.location.href = '/orders/' + orderNo;
                 } else {
@@ -85,7 +88,26 @@
                 }
             },
             error: function () {
-                alert("操作失败");
+                alert("尚未支付成功");
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    var wxTM = setInterval(function() {
+        getWxPayStatus();
+    },2000)
+    function getWxPayStatus(){
+        var orderNo = $("#orderNo").val();
+        jQuery.ajax({
+            type: 'GET',
+            url: '/pay/paySuccess?outTradeNo=' + orderNo,
+            success: function (result) {
+                console.log(result);
+                if (result.resultCode == 200) {
+                    clearInterval(wxTM);
+                    window.location.href = '/orders/' + orderNo;
+                }
             }
         });
     }
