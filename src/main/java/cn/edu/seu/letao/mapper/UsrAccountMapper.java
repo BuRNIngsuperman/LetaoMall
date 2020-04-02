@@ -4,7 +4,6 @@ import cn.edu.seu.letao.entity.UsrAccount;
 import cn.edu.seu.letao.util.PageQueryUtil;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 /**
