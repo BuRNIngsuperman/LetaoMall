@@ -23,5 +23,7 @@ public interface OrderService {
     OmOrder getOrderByOrderNo(String OrderNo);
 
     String paySuccess(String orderNo);
+
+    OmOrder getLetaoMallOrderByOrderNo(String orderNo);
 }
 

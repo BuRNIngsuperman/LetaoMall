@@ -7,6 +7,7 @@ import cn.edu.seu.letao.controller.vo.LetaoMallCartItemVO;
 import cn.edu.seu.letao.controller.vo.LetaoMallUserVO;
 import cn.edu.seu.letao.controller.vo.OrderDetailVO;
 import cn.edu.seu.letao.entity.OmCart;
+import cn.edu.seu.letao.entity.OmOrder;
 import cn.edu.seu.letao.entity.UsrAccount;
 import cn.edu.seu.letao.entity.UsrUser;
 import cn.edu.seu.letao.service.mall.IOmCartService;
@@ -197,6 +198,17 @@ public class LiController {
         }
         request.setAttribute("orderDetailVO", orderDetailVO);
         return "mall/order-detail";
+    }
+
+    @GetMapping("/selectPayType")
+    public String selectPayType(HttpServletRequest request, @RequestParam("orderNo") String orderNo, HttpSession httpSession) {
+        LetaoMallUserVO user = (LetaoMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        OmOrder letaoMallOrder = orderService.getLetaoMallOrderByOrderNo(orderNo);
+        //todo 判断订单userId
+        //todo 判断订单状态
+        httpSession.setAttribute("orderNo", orderNo);
+        httpSession.setAttribute("totalPrice", letaoMallOrder.getTotalAmount());
+        return "redirect:/pay/codeUrl";
     }
 
     //退出回到登录界面

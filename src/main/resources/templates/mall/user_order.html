@@ -60,7 +60,7 @@
                                                             class="sep">|</span>在线支付</p></th>
                                                     <th class="col-sub"><p class="caption-price">应付金额：<span
                                                             class="num"
-                                                            th:text="${order.totalAmount+'.00'}">1299.00</span>元
+                                                            th:text="${order.payAmount+'.00'}">1299.00</span>元
                                                     </p></th>
                                                 </tr>
                                                 </thead>
@@ -69,27 +69,27 @@
                                                     <td class="order-items">
                                                         <ul class="goods-list">
                                                             <th:block
-                                                                    th:each="item : ${order.newBeeMallOrderItemVOS}">
+                                                                    th:each="item : ${order.letaoMallOrderItemVOS}">
                                                                 <li>
                                                                     <div class="figure figure-thumb">
                                                                         <a target="_blank"
-                                                                           th:href="@{'/goods/detail/'+${item.goodsId}}">
-                                                                            <img th:src="@{${item.goodsCoverImg}}"
+                                                                           th:href="@{'/goods/detail/'+${item.commId}}">
+                                                                            <img th:src="@{${item.albumPics}}"
                                                                                  width="80" height="80" alt="">
                                                                         </a>
                                                                     </div>
                                                                     <p class="name"><a target="_blank"
-                                                                                       th:href="@{'/goods/detail/'+${item.goodsId}}"
-                                                                                       th:text="${item.goodsName}">newbee</a>
+                                                                                       th:href="@{'/goods/detail/'+${item.commId}}"
+                                                                                       th:text="${item.name}">letao</a>
                                                                     </p>
                                                                     <p class="price"
-                                                                       th:text="${item.sellingPrice+'元 x '+item.goodsCount}">
+                                                                       th:text="${item.price+'元 x '+item.productQuantity}">
                                                                         13元 × 1</p></li>
                                                             </th:block>
                                                         </ul>
                                                     </td>
                                                     <td class="order-actions"><a class="btn btn-small btn-line-gray"
-                                                                                 th:href="@{${'/orders/'+order.orderNo}}">订单详情</a>
+                                                                                 th:href="@{${'/orders/'+order.orderSn}}">订单详情</a>
                                                     </td>
                                                 </tr>
                                                 </tbody>
