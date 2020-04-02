@@ -15,13 +15,13 @@
 
     <insert id="insertBatch" parameterType="cn.edu.seu.letao.entity.OmOrderItem">
         insert into om_order_item (order_id, comm_id,
-        orderItemPrice,
-        product_quantity,name,album_pics)
+        price,
+        quantity,name,album_pics)
         values
         <foreach collection="orderItems" item="orderItem" separator=",">
             (#{orderItem.orderId}, #{orderItem.commId},
-            #{orderItem.orderItemPrice},
-            #{orderItem.productQuantity},
+            #{orderItem.price},
+            #{orderItem.quantity},
             #{orderItem.name},
             #{orderItem.albumPics})
         </foreach>

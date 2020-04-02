@@ -8,19 +8,45 @@
     </sql>
 
     <select id="getMyOrderCount" parameterType="Map" resultType="int">
-        select count(*) from om_order where user_id=#{userId} and delete_status=0
-    </select>
-
-    <select id="findMyOrderList" parameterType="Map" resultType="cn.edu.seu.letao.entity.OmOrder">
-        select
-        *
-        from om_order
+        select count(*) from om_order
         <where>
-            <if test="orderSn!=null and orderSo!=''">
+            <if test="orderSn!=null and orderSn!=''">
                 and order_sn = #{orderSn}
             </if>
             <if test="userId!=null and userId!=''">
                 and user_id = #{userId}
+            </if>
+            <if test="payType!=null and payType!=''">
+                and pay_type = #{payType}
+            </if>
+            <if test="status!=null and status!=''">
+                and status = #{status}
+            </if>
+            <if test="isDeleted!=null and isDeleted!=''">
+                and delete_status = #{deleteStatus}
+            </if>
+            <if test="startTime != null and startTime.trim() != ''">
+                and created_time &gt; #{startTime}
+            </if>
+            <if test="endTime != null and endTime.trim() != ''">
+                and created_time &lt; #{endTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="findMyOrderList" parameterType="Map" resultType="cn.edu.seu.letao.entity.OmOrder">
+        select
+        <include refid="Base_Column_List"/>
+        from om_order
+        <where>
+            <if test="orderSn!=null and orderSn!=''">
+                and order_sn = #{orderSn}
+            </if>
+            <if test="userId!=null and userId!=''">
+                and user_id = #{userId}
+            </if>
+            <if test="payType!=null and payType!=''">
+                and pay_type = #{payType}
             </if>
 
             <if test="status!=null and status!=''">
