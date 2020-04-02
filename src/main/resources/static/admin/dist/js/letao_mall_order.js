@@ -4,13 +4,13 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: 'id', name: 'orderId', index: 'orderId', width: 50, key: true, hidden: true},
-            {label: '订单号', name: 'orderNo', index: 'orderNo', width: 120},
-            {label: '订单总价', name: 'totalPrice', index: 'totalPrice', width: 60},
-            {label: '订单状态', name: 'orderStatus', index: 'orderStatus', width: 80, formatter: orderStatusFormatter},
+            {label: '订单号', name: 'orderSn', index: 'orderSn', width: 120},
+            {label: '订单总价', name: 'totalAmount', index: 'totalAmount', width: 60},
+            {label: '订单状态', name: 'status', index: 'status', width: 80, formatter: orderStatusFormatter},
             {label: '支付方式', name: 'payType', index: 'payType', width: 80,formatter:payTypeFormatter},
-            {label: '收件人地址', name: 'userAddress', index: 'userAddress', width: 10, hidden: true},
-            {label: '创建时间', name: 'createTime', index: 'createTime', width: 120},
-            {label: '操作', name: 'createTime', index: 'createTime', width: 120, formatter: operateFormatter}
+            {label: '收件人地址', name: 'address', index: 'address', width: 10, hidden: true},
+            {label: '创建时间', name: 'createdTime', index: 'createdTime', width: 120},
+            {label: '操作', name: 'createdTime', index: 'createdTime', width: 120, formatter: operateFormatter}
         ],
         height: 760,
         rowNum: 20,
@@ -50,31 +50,26 @@ $(function () {
     }
 
     function orderStatusFormatter(cellvalue) {
-        //订单状态:0.待支付 1.已支付 2.配货完成 3:出库成功 4.交易成功 -1.手动关闭 -2.超时关闭 -3.商家关闭
+        //原订单状态:0.待支付 1.已支付 2.配货完成 3:出库成功 4.交易成功 -1.手动关闭 -2.超时关闭 -3.商家关闭
+        //现在：0.待付款 1.待发货 2.已发货 3.以完成 4.以关闭 5.无效订单
         if (cellvalue == 0) {
-            return "待支付";
+            return "待付款";
         }
         if (cellvalue == 1) {
-            return "已支付";
+            return "待发货";
         }
-        if (cellvalue == 2) {
-            return "配货完成";
-        }
-        if (cellvalue == 3) {
-            return "出库成功";
-        }
-        if (cellvalue == 4) {
-            return "交易成功";
-        }
-        if (cellvalue == -1) {
-            return "手动关闭";
-        }
-        if (cellvalue == -2) {
-            return "超时关闭";
-        }
-        if (cellvalue == -3) {
-            return "商家关闭";
-        }
+//        if (cellvalue == 2) {
+//            return "已发货";
+//        }
+//        if (cellvalue == 3) {
+//            return "交易完成完成";
+//        }
+//        if (cellvalue == 4) {
+//            return "已关闭";
+//        }
+//        if (cellvalue == 5) {
+//            return "无效订单";
+//        }
     }
 
     function payTypeFormatter(cellvalue) {
@@ -164,25 +159,25 @@ function orderEdit() {
     $('.modal-title').html('订单编辑');
     $('#orderInfoModal').modal('show');
     $("#orderId").val(id);
-    $("#userAddress").val(rowData.userAddress);
-    $("#totalPrice").val(rowData.totalPrice);
+    $("#userAddress").val(rowData.address);
+    $("#totalPrice").val(rowData.totalAmount);
 }
 
 
 //绑定modal上的保存按钮
 $('#saveButton').click(function () {
     var totalPrice = $("#totalPrice").val();
-    var userName = $("#userName").val();
-    var userPhone = $("#userPhone").val();
+//    var userName = $("#userName").val();
+//    var userPhone = $("#userPhone").val();
     var userAddress = $("#userAddress").val();
     var id = getSelectedRowWithoutAlert();
     var url = '/admin/orders/update';
     var data = {
         "orderId": id,
-        "totalPrice": totalPrice,
-        "userName": userName,
-        "userPhone": userPhone,
-        "userAddress": userAddress
+        "totalAmount": totalPrice,
+//        "userName": userName,
+//        "userPhone": userPhone,
+        "address": userAddress
     };
     $.ajax({
         type: 'POST',//方法类型
@@ -195,7 +190,7 @@ $('#saveButton').click(function () {
                 swal("保存成功", {
                     icon: "success",
                 });
-                reload();
+                $("#jqGrid").trigger("reloadGrid");
             } else {
                 $('#orderInfoModal').modal('hide');
                 swal(result.message, {
