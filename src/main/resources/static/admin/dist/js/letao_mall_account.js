@@ -2,6 +2,7 @@ $(function () {
     $("#jqGrid").jqGrid({
         url: '/admin/accounts/list',
         dataType: "json",
+
         colModel: [
             {label: 'id', name: 'accoId',index: 'accoId',width: 50, key: true, hidden: true},
             {label: '管理员名称', name: 'username', index: 'username', width: 150},
