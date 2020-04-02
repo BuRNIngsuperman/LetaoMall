@@ -68,7 +68,7 @@
                 <li class="nav-header">统计管理</li>
 
                 <li class="nav-item">
-                    <a th:href="@{/admin/statistics}" class="nav-link">
+                    <a th:href="@{/admin/statistics}" th:class="${path}=='admin_statistics'?'nav-link active':'nav-link'">
                         <i class="fa fa-line-chart nav-icon"></i>
                         <p>统计报表</p>
                     </a>
@@ -86,7 +86,7 @@
                 </li>
 
                 <li class="nav-item" th:if="${session.AdminUser.getType()} == 'admin'">
-                    <a th:href="@{/admin/account}" th:class="${path}=='admin_user'?'nav-link active':'nav-link'">
+                    <a th:href="@{/admin/accounts}" th:class="${path}=='admin_account'?'nav-link active':'nav-link'">
                         <i class="fa fa-users nav-icon" aria-hidden="true"></i>
                         <p>
                             账户管理

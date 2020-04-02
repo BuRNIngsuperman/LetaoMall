@@ -20,6 +20,6 @@ public class InitDataBasesTest {
 
     @Test
     public void test(){
-        adminService.addAdminAccount("test1","test1");
+        adminService.addAdminAccount("test2","test2");
     }
 }

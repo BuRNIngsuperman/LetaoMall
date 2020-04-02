@@ -16,12 +16,13 @@
     </div>
     <!-- Main content -->
     <div class="content">
-        <div class="card card-primary card-outline">
-            <div class="card-header">
-                <h3 class="card-title">管理员账户管理页面</h3>
-            </div>
-            <div class="card-body">
-                <div class="grid-btn">
+        <div class="container-fluid">
+            <div class="card card-primary card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">管理员账户管理页面</h3>
+                </div>
+                <div class="card-body">
+                    <div class="grid-btn">
                     <button class="btn btn-info" onclick="lockAccount(0)"><i
                             class="fa fa-plus"></i>&nbsp;解除禁用
                     </button>
@@ -31,13 +32,14 @@
                     <button class="btn btn-success" onclick="assignRole()"><i
                             class="fa fa-user"></i>&nbsp;分配角色
                     </button>
-                </div>
+                    </div>
                 <div class="card-body">
                     <table id="jqGrid" class="table table-bordered">
                     </table>
                     <div id="jqGridPager"></div>
                 </div><!-- /.card-body -->
                 <!--body-->
+            </div>
             </div>
         </div>
         <!-- /.content -->
