@@ -21,6 +21,9 @@ public interface OmOrderMapper extends BaseMapper<OmOrder> {
 
     List<OmOrder> findMyOrderList(PageQueryUtil pageUtil);
 
+    //后台使用
+    List<OmOrder> findOrderList(PageQueryUtil pageUtil);
+
     int insertSelective(OmOrder letaoMallOrder);
 
 
