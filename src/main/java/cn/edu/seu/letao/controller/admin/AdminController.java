@@ -23,8 +23,8 @@ public class AdminController {
     IAdminService adminService;
 
     @GetMapping(path = {"","/","/index","index.html"})
-    public String index(HttpServletRequest request){
-        request.setAttribute("path", "index");
+    public String index(Model model){
+        model.addAttribute("path", "index");
         return "admin/admin_index";
     }
 
@@ -121,7 +121,7 @@ public class AdminController {
         if(usrAccount == null){
             return "admin/admin_login";
         }
-        model.addAttribute("path", "profile");
+        model.addAttribute("path", "personalInfo");
         model.addAttribute("loginUserName",usrAccount.getUsername());
         return "admin/admin_profile";
     }

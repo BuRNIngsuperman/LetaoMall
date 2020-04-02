@@ -4,6 +4,7 @@ import cn.edu.seu.letao.service.admin.IAdminUserService;
 import cn.edu.seu.letao.util.PageQueryUtil;
 import cn.edu.seu.letao.util.Result;
 import cn.edu.seu.letao.util.ResultGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -18,12 +19,12 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class AdminUserController {
 
-    @Resource
+    @Autowired
     IAdminUserService adminUserService;
 
     @RequestMapping(value = "/users",method = {RequestMethod.GET})
     public String UsersPage(Model model){
-        model.addAttribute("path", "users");
+        model.addAttribute("path", "admin_user");
         return "admin/admin_user";
     }
 
