@@ -15,11 +15,12 @@ public interface IAdminUserService extends IService<UsrUser> {
 
     /**
      * 后台分页
-     * @param pageUtil
-     * @return
      */
     PageResult getMallUserPage(PageQueryUtil pageUtil);
 
 
+    /**
+     * 锁定用户
+     */
     Boolean lockUsers(Integer[] ids, int lockStatus);
 }
