@@ -20,10 +20,9 @@ public interface OrderService {
 
     OrderDetailVO getOrderDetailByOrderNo(String orderSn, Long userId);
 
-    OmOrder getOrderByOrderNo(String OrderNo);
+    OmOrder getOrderByOrderSn(String OrderSn);
 
-    String paySuccess(String orderNo);
+    String paySuccess(String orderSn);
 
-    OmOrder getLetaoMallOrderByOrderNo(String orderNo);
 }
 
