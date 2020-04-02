@@ -101,7 +101,7 @@ public class LiController {
             }
             //总价
             for (LetaoMallCartItemVO letaoMallCartItemVO : myShoppingCartItems) {
-                priceTotal += letaoMallCartItemVO.getQuantity() * letaoMallCartItemVO.getOrderItemPrice().intValue();
+                priceTotal += letaoMallCartItemVO.getQuantity() * letaoMallCartItemVO.getPrice().intValue();
             }
             if (priceTotal < 1) {
                 return "error/error_5xx";
@@ -158,7 +158,7 @@ public class LiController {
         } else {
             //总价
             for (LetaoMallCartItemVO newBeeMallShoppingCartItemVO : myShoppingCartItems) {
-                priceTotal += newBeeMallShoppingCartItemVO.getQuantity() * newBeeMallShoppingCartItemVO.getOrderItemPrice().intValue();
+                priceTotal += newBeeMallShoppingCartItemVO.getQuantity() * newBeeMallShoppingCartItemVO.getPrice().intValue();
             }
             if (priceTotal < 1) {
                 return "error/error_5xx";
@@ -200,16 +200,6 @@ public class LiController {
         return "mall/order-detail";
     }
 
-    @GetMapping("/selectPayType")
-    public String selectPayType(HttpServletRequest request, @RequestParam("orderNo") String orderNo, HttpSession httpSession) {
-        LetaoMallUserVO user = (LetaoMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        OmOrder letaoMallOrder = orderService.getLetaoMallOrderByOrderNo(orderNo);
-        //todo 判断订单userId
-        //todo 判断订单状态
-        httpSession.setAttribute("orderNo", orderNo);
-        httpSession.setAttribute("totalPrice", letaoMallOrder.getTotalAmount());
-        return "redirect:/pay/codeUrl";
-    }
 
     //退出回到登录界面
     @GetMapping("/logout")

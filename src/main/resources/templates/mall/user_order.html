@@ -60,7 +60,7 @@
                                                             class="sep">|</span>在线支付</p></th>
                                                     <th class="col-sub"><p class="caption-price">应付金额：<span
                                                             class="num"
-                                                            th:text="${order.payAmount+'.00'}">1299.00</span>元
+                                                            th:text="${order.totalAmount+'.00'}">1299.00</span>元
                                                     </p></th>
                                                 </tr>
                                                 </thead>
@@ -83,7 +83,7 @@
                                                                                        th:text="${item.name}">letao</a>
                                                                     </p>
                                                                     <p class="price"
-                                                                       th:text="${item.price+'元 x '+item.productQuantity}">
+                                                                       th:text="${item.price+'元 x '+item.quantity}">
                                                                         13元 × 1</p></li>
                                                             </th:block>
                                                         </ul>

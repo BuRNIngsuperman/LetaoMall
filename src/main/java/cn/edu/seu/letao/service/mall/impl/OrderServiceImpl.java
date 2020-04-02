@@ -133,7 +133,7 @@ public class OrderServiceImpl implements OrderService {
                 letaoMallOrder.setAddress(user.getAddress());
                 //总价
                 for (LetaoMallCartItemVO CartItemVO : myShoppingCartItems) {
-                    priceTotal += CartItemVO.getQuantity() * CartItemVO.getOrderItemPrice().intValue();
+                    priceTotal += CartItemVO.getQuantity() * CartItemVO.getPrice().intValue();
                 }
                 if (priceTotal < 1) {
                     LetaoMallException.fail(ServiceResultEnum.ORDER_PRICE_ERROR.getResult());
