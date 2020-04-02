@@ -15,7 +15,7 @@ public class LetaoMallOrderListVO implements Serializable {
 
     private String orderSn;//订单编号
 
-    private BigDecimal payAmount;//订单价格
+    private BigDecimal totalAmount;//订单价格
 
     private Integer payType;
 
@@ -45,12 +45,12 @@ public class LetaoMallOrderListVO implements Serializable {
         this.orderSn = orderSn;
     }
 
-    public BigDecimal getPayAmount() {
-        return payAmount;
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setPayAmount(BigDecimal payAmount) {
-        this.payAmount = payAmount;
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public Integer getPayType() {

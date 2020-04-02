@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class LetaoMallOrderItemVO implements Serializable {
     private Integer commId; //商品id
 
-    private Integer productQuantity;//购买数量
+    private Integer quantity;//购买数量
 
     private String name;//商品名称
 
@@ -25,12 +25,12 @@ public class LetaoMallOrderItemVO implements Serializable {
         this.commId = commId;
     }
 
-    public Integer getProductQuantity() {
-        return productQuantity;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setProductQuantity(Integer productQuantity) {
-        this.productQuantity = productQuantity;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public String getName() {

@@ -49,14 +49,14 @@
                         </div>
                         <div class="sub_content cover fl"><img th:src="@{${item.albumPics}}"></div>
                         <div class="sub_content fl ft20" th:text="${item.name}">商品名称</div>
-                        <div class="sub_content fl" th:text="${item.orderItemPrice+'元'}">1299元</div>
+                        <div class="sub_content fl" th:text="${item.price+'元'}">1299元</div>
                         <div class="sub_content fl">
                             <input class="goods_count" th:id="${'goodsCount'+item.id}" type="number"
                                    th:onblur="'updateItem('+${item.id}+')'"
                                    th:value="${item.quantity}" step="1" min="1"
                                    max="5">
                         </div>
-                        <div class="sub_content fl" th:text="${item.quantity*item.orderItemPrice+'元'}">1299元</div>
+                        <div class="sub_content fl" th:text="${item.quantity*item.price+'元'}">1299元</div>
                         <div class="sub_content fl"><a href="##" th:onclick="'deleteItem('+${item.id}+')'">×</a>
                         </div>
                         <div class="clear"></div>

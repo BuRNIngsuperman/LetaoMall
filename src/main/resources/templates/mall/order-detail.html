@@ -149,7 +149,7 @@
                                                 </p>
                                             </td>
                                             <td class="col col-price"><p class="price"
-                                                                         th:text="${item.price+'元 x '+item.productQuantity}">
+                                                                         th:text="${item.price+'元 x '+item.quantity}">
                                                 1299元 × 1</p></td>
                                             <td class="col col-actions">
                                             </td>
@@ -253,6 +253,7 @@
     function payOrder() {
         var orderNo = $("#orderNoValue").val();
         var totalPrice=$("#totalPrice").html();
+
         window.location.href = '/pay/codeUrl?orderNo='+orderNo+'&totalPrice='+totalPrice+'';
     }
 
