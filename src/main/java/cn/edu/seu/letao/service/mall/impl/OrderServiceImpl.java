@@ -213,5 +213,10 @@ public class OrderServiceImpl implements OrderService {
         return ServiceResultEnum.ORDER_NOT_EXIST_ERROR.getResult();
     }
 
+    @Override
+    public OmOrder getLetaoMallOrderByOrderNo(String orderNo) {
+        return omOrderMapper.selectByOrderNo(orderNo);
+    }
+
 
 }
