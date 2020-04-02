@@ -43,7 +43,7 @@ public class WXPayController {
 
 
     @RequestMapping(value = "/codeUrl")
-    public String unifiedOrder(RedirectAttributes model){
+    public String unifiedOrder(RedirectAttributes model,@RequestParam("orderNo")String outTradeNo,@RequestParam("totalPrice")String totalPrice){
         Map<String, String> result = new HashMap<>();
 
         /*
@@ -53,8 +53,12 @@ public class WXPayController {
          */
         // 以下数据为模拟参数
         //String outTradeNo = new Long(new Date().getTime()).toString();
-        String outTradeNo = "20200326001";
-        String totalPrice = "1"; // 金额必须为整数，单位：分
+        //String outTradeNo = "20200326001";
+        //String totalPrice = "1"; // 金额必须为整数，单位：分
+        String totalFee= totalPrice.substring(0,totalPrice.length()-3);
+        totalPrice = totalPrice.replace(".","");
+        totalPrice = totalPrice.substring(0,totalPrice.length()-2);
+        System.out.println("支付信息"+outTradeNo+" "+totalPrice);
         String body = "商品描述信息";
         String productId = new Long(new Date().getTime()).toString();
         String attach = "wxpay";
@@ -68,7 +72,7 @@ public class WXPayController {
         result.put("codeUrl", codeUrl);
         //return result;
         //System.out.println("codeUrl");
-        model.addFlashAttribute("totalPrice",totalPrice);
+        model.addFlashAttribute("totalPrice",totalFee);
         model.addFlashAttribute("orderNo",outTradeNo);
         model.addFlashAttribute("qrAddress",codeUrl);
         return "redirect:toPayPage";
