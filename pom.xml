@@ -144,6 +144,13 @@
             <version>2.2.4.RELEASE</version>
         </dependency>
 
+        <!--Hutool工具-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.2.5</version>
+        </dependency>
+
     </dependencies>
 
     <build>
