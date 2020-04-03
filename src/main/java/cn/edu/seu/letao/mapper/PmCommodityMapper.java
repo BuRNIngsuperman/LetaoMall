@@ -24,4 +24,7 @@ public interface PmCommodityMapper extends BaseMapper<PmCommodity> {
     List<PmCommodity> getCommodityForIndex(@Param("type")int type, @Param("number")int number);
 
 
+    List<PmCommodity> findLetaoMallGoodsListBySearch(PageQueryUtil pageUtil);
+
+    int getTotalLetaoMallGoodsBySearch(PageQueryUtil pageUtil);
 }

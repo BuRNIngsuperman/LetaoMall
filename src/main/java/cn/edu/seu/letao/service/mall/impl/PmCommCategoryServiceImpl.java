@@ -3,6 +3,7 @@ package cn.edu.seu.letao.service.mall.impl;
 import cn.edu.seu.letao.common.Constants;
 import cn.edu.seu.letao.common.LetaoMallCategoryLevelEnum;
 import cn.edu.seu.letao.controller.vo.LetaoMallIndexCategoryVO;
+import cn.edu.seu.letao.controller.vo.SearchPageCategoryVO;
 import cn.edu.seu.letao.controller.vo.SecondLevelCategoryVO;
 import cn.edu.seu.letao.controller.vo.ThirdLevelCategoryVO;
 import cn.edu.seu.letao.entity.PmCommCategory;
@@ -79,5 +80,24 @@ public class PmCommCategoryServiceImpl implements IPmCommCategoryService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public SearchPageCategoryVO getCategoriesForSearch(Integer categoryId) {
+        SearchPageCategoryVO searchPageCategoryVO = new SearchPageCategoryVO();
+        PmCommCategory thirdLevelGoodsCategory = pmCommCategoryMapper.selectById(categoryId);
+        if (thirdLevelGoodsCategory != null && thirdLevelGoodsCategory.getLevel() == LetaoMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
+            //获取当前三级分类的二级分类
+            PmCommCategory secondLevelGoodsCategory = pmCommCategoryMapper.selectById(thirdLevelGoodsCategory.getParentId());
+            if (secondLevelGoodsCategory != null && secondLevelGoodsCategory.getLevel() == LetaoMallCategoryLevelEnum.LEVEL_TWO.getLevel()) {
+                //获取当前二级分类下的三级分类List
+                List<PmCommCategory> thirdLevelCategories = pmCommCategoryMapper.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondLevelGoodsCategory.getCid()), LetaoMallCategoryLevelEnum.LEVEL_THREE.getLevel(), Constants.SEARCH_CATEGORY_NUMBER);
+                searchPageCategoryVO.setCurrentCategoryName(thirdLevelGoodsCategory.getCname());
+                searchPageCategoryVO.setSecondLevelCategoryName(secondLevelGoodsCategory.getCname());
+                searchPageCategoryVO.setThirdLevelCategoryList(thirdLevelCategories);
+                return searchPageCategoryVO;
+            }
+        }
+        return null;
     }
 }

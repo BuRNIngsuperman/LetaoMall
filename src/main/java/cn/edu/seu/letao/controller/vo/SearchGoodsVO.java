@@ -1,59 +1,60 @@
 package cn.edu.seu.letao.controller.vo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 搜索列表页商品VO
  */
 public class SearchGoodsVO implements Serializable {
 
-    private Long goodsId;
+    private Integer commId;
 
-    private String goodsName;
+    private String name;
 
-    private String goodsIntro;
+    private String description;
 
-    private String goodsCoverImg;
+    private String albumPics;
 
-    private Integer sellingPrice;
+    private BigDecimal price;
 
-    public Long getGoodsId() {
-        return goodsId;
+    public Integer getGoodsId() {
+        return commId;
     }
 
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
+    public void setCommId(Integer goodsId) {
+        this.commId = goodsId;
     }
 
     public String getGoodsName() {
-        return goodsName;
+        return name;
     }
 
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
+    public void setName(String goodsName) {
+        this.name = goodsName;
     }
 
     public String getGoodsIntro() {
-        return goodsIntro;
+        return description;
     }
 
-    public void setGoodsIntro(String goodsIntro) {
-        this.goodsIntro = goodsIntro;
+    public void setDescription(String goodsIntro) {
+        this.description = goodsIntro;
     }
 
     public String getGoodsCoverImg() {
-        return goodsCoverImg;
+        return albumPics;
     }
 
-    public void setGoodsCoverImg(String goodsCoverImg) {
-        this.goodsCoverImg = goodsCoverImg;
+    public void setAlbumPics(String goodsCoverImg) {
+        this.albumPics = goodsCoverImg;
     }
 
-    public Integer getSellingPrice() {
-        return sellingPrice;
+    public BigDecimal getSellingPrice() {
+        return price;
     }
 
-    public void setSellingPrice(Integer sellingPrice) {
-        this.sellingPrice = sellingPrice;
+    public void setPrice(BigDecimal sellingPrice) {
+        this.price = sellingPrice;
     }
 }

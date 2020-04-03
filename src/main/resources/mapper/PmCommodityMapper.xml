@@ -12,6 +12,9 @@
         <result column="publish_status" jdbcType="INTEGER" property="publishStatus"/>
     </resultMap>
 
+
+
+
     <select id="selectForPage" parameterType="Map" resultMap="PageResultMap">
         select comm_id, name,description,album_pics,stock,price,publish_status from pm_commodity
         <if test="start!=null and limit!=null">
@@ -33,6 +36,49 @@
             where recommand_status=#{type}
             limit #{number}
 
+    </select>
+
+
+
+    <select id="findLetaoMallGoodsListBySearch" parameterType="Map" resultMap="PageResultMap">
+        select comm_id, name,description,album_pics,stock,price,publish_status from pm_commodity
+        <where>
+            <if test="keyword!=null and keyword!=''">
+                and (name like CONCAT('%',#{keyword},'%') or description like CONCAT('%',#{keyword},'%'))
+            </if>
+            <if test="goodsCategoryId!=null and goodsCategoryId!=''">
+                and commodity_category_id = #{goodsCategoryId}
+            </if>
+        </where>
+        <if test="orderBy!=null and orderBy!=''">
+            <choose>
+
+                <when test="orderBy == 'price'">
+                    <!-- 按照售价从小到大排列 -->
+                    order by price asc
+                </when>
+                <otherwise>
+                    <!-- 默认按照库存数量从大到小排列 -->
+                    order by stock desc
+                </otherwise>
+            </choose>
+        </if>
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+
+    <select id="getTotalLetaoMallGoodsBySearch" parameterType="Map" resultType="int">
+        select count(*) from pm_commodity
+        <where>
+            <if test="keyword!=null and keyword!=''">
+                and (name like CONCAT('%',#{keyword},'%') or description like CONCAT('%',#{keyword},'%'))
+            </if>
+            <if test="goodsCategoryId!=null and goodsCategoryId!=''">
+                and commodity_category_id = #{goodsCategoryId}
+            </if>
+        </where>
     </select>
 
 </mapper>
