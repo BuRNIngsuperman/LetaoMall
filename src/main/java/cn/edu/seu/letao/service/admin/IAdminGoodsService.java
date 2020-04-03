@@ -1,6 +1,5 @@
 package cn.edu.seu.letao.service.admin;
 
-import cn.edu.seu.letao.entity.PmCommCategory;
 import cn.edu.seu.letao.entity.PmCommodity;
 import cn.edu.seu.letao.util.PageQueryUtil;
 import cn.edu.seu.letao.util.PageResult;

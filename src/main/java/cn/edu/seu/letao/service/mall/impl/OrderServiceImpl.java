@@ -171,7 +171,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDetailVO getOrderDetailByOrderNo(String orderSn, Long userId) {
-        OmOrder letaoMallOrder = omOrderMapper.selectByOrderNo(orderSn);
+        OmOrder letaoMallOrder = omOrderMapper.selectByOrderSn(orderSn);
         if (letaoMallOrder != null) {
             //todo 验证是否是当前userId下的订单，否则报错
             List<OmOrderItem> orderItems = omOrderItemMapper.selectByOrderId(letaoMallOrder.getOrderId());
@@ -192,13 +192,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OmOrder getOrderByOrderNo(String OrderNo) {
-        return omOrderMapper.selectByOrderNo(OrderNo);
+    public OmOrder getOrderByOrderSn(String OrderSn) {
+        return omOrderMapper.selectByOrderSn(OrderSn);
     }
 
     @Override
-    public String paySuccess(String orderNo) {
-        OmOrder omOrder = omOrderMapper.selectByOrderNo(orderNo);
+    public String paySuccess(String orderSn) {
+        OmOrder omOrder = omOrderMapper.selectByOrderSn(orderSn);
         if(null!=omOrder){
             omOrder.setStatus(1);
             omOrder.setPayType(2);
@@ -213,10 +213,6 @@ public class OrderServiceImpl implements OrderService {
         return ServiceResultEnum.ORDER_NOT_EXIST_ERROR.getResult();
     }
 
-    @Override
-    public OmOrder getLetaoMallOrderByOrderNo(String orderNo) {
-        return omOrderMapper.selectByOrderNo(orderNo);
-    }
 
 
 }

@@ -5,7 +5,6 @@ import cn.edu.seu.letao.util.PageQueryUtil;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 /**
