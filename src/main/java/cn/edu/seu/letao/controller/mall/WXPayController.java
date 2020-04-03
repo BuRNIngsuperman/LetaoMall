@@ -65,7 +65,7 @@ public class WXPayController {
 
         String codeUrl = null;
         try {
-            codeUrl = wxPayService.wxUnifiedOrder(outTradeNo, totalPrice, body, productId, attach);
+            codeUrl = wxPayService.wxUnifiedOrder(outTradeNo, "1", body, productId, attach);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -182,7 +182,7 @@ public class WXPayController {
     public Result paySuccess(@RequestParam("outTradeNo") String orderSn) {
         OmOrder order = orderService.getOrderByOrderSn(orderSn);
         if(order==null) return ResultGenerator.genFailResult("此订单不存在");
-        Integer payType = order.getPayType();
+        int payType = order.getPayType();
         if (payType==2) {
             return ResultGenerator.genSuccessResult();
         } else {

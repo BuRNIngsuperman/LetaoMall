@@ -7,6 +7,8 @@ public enum ServiceResultEnum {
 
     DATA_NOT_EXIST("未查询到记录！"),
 
+    NO_UPDATA("商品已付款，不可修改价格"),
+
     SAME_CATEGORY_EXIST("有同级同名的分类！"),
 
     SAME_LOGIN_NAME_EXIST("用户名已存在！"),

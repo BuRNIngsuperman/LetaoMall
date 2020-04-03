@@ -192,4 +192,30 @@
         </set>
         where order_sn = #{orderSn}
     </update>
+
+    <select id="findOrderList" parameterType="Map" resultType="cn.edu.seu.letao.entity.OmOrder">
+        select * from om_order where status in (0,1) order by created_time desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <update id="checkDone">
+        update om_order
+        set status = 2,modify_time = now()
+        where order_id in
+        <foreach collection="ids" item="item" index="index"
+                 open="(" separator="," close=")">#{item}
+        </foreach>
+    </update>
+
+    <update id="closeOrder">
+        update om_order
+        set status = 4,modify_time = now()
+        where order_id in
+        <foreach collection="ids" item="item" index="index"
+                 open="(" separator="," close=")">#{item}
+        </foreach>
+    </update>
+
 </mapper>
