@@ -75,7 +75,7 @@ $(function () {
     function payTypeFormatter(cellvalue) {
         //支付类型:0.无 1.支付宝支付 2.微信支付
         if (cellvalue == 0) {
-            return "无";
+            return "未支付";
         }
         if (cellvalue == 1) {
             return "支付宝支付";
@@ -215,20 +215,20 @@ function orderCheckDone() {
     if (ids == null) {
         return;
     }
-    var orderNos = '';
+    var orderSns = '';
     for (i = 0; i < ids.length; i++) {
         var rowData = $("#jqGrid").jqGrid("getRowData", ids[i]);
-        if (rowData.orderStatus != '已支付') {
-            orderNos += rowData.orderNo + " ";
+        if (rowData.status != '待发货') {
+            orderSns += rowData.orderSn + " ";
         }
     }
-    if (orderNos.length > 0 & orderNos.length < 100) {
-        swal(orderNos + "订单的状态不是支付成功无法执行配货完成操作", {
+    if (orderSns.length > 0 & orderSns.length < 100) {
+        swal(orderSns + "订单的状态不是支付成功无法执行配货完成操作", {
             icon: "error",
         });
         return;
     }
-    if (orderNos.length >= 100) {
+    if (orderSns.length >= 100) {
         swal("你选择了太多状态不是支付成功的订单，无法执行配货完成操作", {
             icon: "error",
         });

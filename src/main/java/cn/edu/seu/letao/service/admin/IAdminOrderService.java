@@ -19,4 +19,20 @@ public interface IAdminOrderService {
      * @return
      */
     String updateOrderInfo(OmOrder order);
+
+    /**
+     * 配货
+     *
+     * @param ids
+     * @return
+     */
+    String checkDone(Integer[] ids);
+
+    /**
+     * 关闭
+     *
+     * @param ids
+     * @return
+     */
+    String closeOrder(Integer[] ids);
 }

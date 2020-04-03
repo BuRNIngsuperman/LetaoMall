@@ -200,4 +200,22 @@
         </if>
     </select>
 
+    <update id="checkDone">
+        update om_order
+        set status = 2,modify_time = now()
+        where order_id in
+        <foreach collection="ids" item="item" index="index"
+                 open="(" separator="," close=")">#{item}
+        </foreach>
+    </update>
+
+    <update id="closeOrder">
+        update om_order
+        set status = 4,modify_time = now()
+        where order_id in
+        <foreach collection="ids" item="item" index="index"
+                 open="(" separator="," close=")">#{item}
+        </foreach>
+    </update>
+
 </mapper>

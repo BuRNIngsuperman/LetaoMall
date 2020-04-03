@@ -63,5 +63,39 @@ public class AdminOrdersController {
         }
     }
 
+    /**
+     * 配货
+     */
+    @RequestMapping(value = "/orders/checkDone", method = RequestMethod.POST)
+    @ResponseBody
+    public Result checkDone(@RequestBody Integer[] ids) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        String result = orderService.checkDone(ids);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(result);
+        }
+    }
+
+    /**
+     * 关闭订单
+     */
+    @RequestMapping(value = "/orders/close", method = RequestMethod.POST)
+    @ResponseBody
+    public Result closeOrder(@RequestBody Integer[] ids) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        String result = orderService.closeOrder(ids);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(result);
+        }
+    }
+
 
 }
