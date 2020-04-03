@@ -71,6 +71,9 @@
 <!-- echart -->
 <script th:src="@{/admin/plugins/echarts.common.min.js}"></script>
 
+<!--layer-->
+<script th:src="@{/admin/plugins/layer/2.4/layer.js}"></script>
+
 <!-- sweetalert -->
 <script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
 <script th:src="@{/admin/dist/js/public.js}"></script>
@@ -89,6 +92,36 @@
     var myChart = echarts.init(document.getElementById('container'),'light');
     var xDatas=[],yDatas=[],startDate,endDate,year=0;
     getChartData(0,null,null);
+    function getChartData(type) {
+        var index = layer.load(3);
+        $.ajax({
+            type: 'GET',
+            url: '/admin/statistics/order',
+            dataType: 'json',
+            data:{
+                type: type,
+                startTime: startDate,
+                endTime: endDate,
+                year: year
+            },
+            success: function(data){
+                layer.close(index);
+                if(r.resultCode != 200){
+                    layer.alert(data.message,{title: '错误信息',icon: 2});
+                    return;
+                }
+                console.log(data)
+                xDatas = data.result.xDatas;
+                yDatas = data.result.yDatas;
+                $("#countAll").html(data.result.countAll);
+                drawChart();
+            },
+            error:function(XMLHttpRequest){
+                layer.close(index);
+                layer.alert('数据处理失败! 错误码:'+XMLHttpRequest.status,{title: '错误信息',icon: 2});
+            }
+        });
+    }
 
 
     function drawChart() {
