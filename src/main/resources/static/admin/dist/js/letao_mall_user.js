@@ -10,7 +10,7 @@ $(function () {
             {label: '是否注销', name: 'isDeleted', index: 'isDeleted', width: 60, formatter: deletedFormatter},
             {label: '注册时间', name: 'createTime', index: 'createTime', width: 120}
         ],
-        height: 560,
+        height: 500,
         rowNum: 10,
         rowList: [10, 20, 50],
         styleUI: 'Bootstrap',
@@ -43,7 +43,7 @@ $(function () {
 
     function lockedFormatter(cellvalue) {
         if (cellvalue == 1) {
-            return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 50%;\">锁定</button>";
+            return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 50%;\">锁定中</button>";
         } else if (cellvalue == 0) {
             return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">正常</button>";
         }

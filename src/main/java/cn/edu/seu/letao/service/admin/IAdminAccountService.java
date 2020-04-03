@@ -16,4 +16,12 @@ public interface IAdminAccountService extends IService<UsrAccount> {
      */
     PageResult getAccountPage(PageQueryUtil pageQueryUtil);
 
+    /**
+     * 锁定账户
+     */
+    boolean lockAccounts(Integer[] ids, String stopStatus);
+
+
+    boolean updateRoleType(Integer[] ids,String role);
+
 }

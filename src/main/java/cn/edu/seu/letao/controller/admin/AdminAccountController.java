@@ -21,9 +21,9 @@ public class AdminAccountController {
     @Autowired
     AdminAccountService adminAccountService;
 
-    @RequestMapping(value = "/accounts",method = {RequestMethod.GET,RequestMethod.POST})
-    public String accountPage(Model model){
-        model.addAttribute("path","admin_account");
+    @RequestMapping(value = "/accounts", method = {RequestMethod.GET, RequestMethod.POST})
+    public String accountPage(Model model) {
+        model.addAttribute("path", "admin_account");
         return "admin/admin_account";
     }
 
@@ -38,6 +38,46 @@ public class AdminAccountController {
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
         return ResultGenerator.genSuccessResult(adminAccountService.getAccountPage(pageUtil));
+    }
+
+    /**
+     * 锁定用户
+     */
+    @RequestMapping(value = "/accounts/lock/{stopStatus}", method = {RequestMethod.POST})
+    @ResponseBody
+    public Result lockAccount(@RequestBody Integer[] ids, @PathVariable("stopStatus") String stopStatus) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常! ");
+        }
+        if (stopStatus.equals("yes") || stopStatus.equals("no")) {
+            if (adminAccountService.lockAccounts(ids, stopStatus)) {
+                return ResultGenerator.genSuccessResult();
+            } else {
+                return ResultGenerator.genFailResult("禁用失败");
+            }
+        } else {
+            return ResultGenerator.genFailResult("操作非法");
+        }
+    }
+
+    /**
+     * 更改管理员权限
+     */
+    @RequestMapping(value = "/accounts/role/{role}", method = {RequestMethod.POST})
+    @ResponseBody
+    public Result changeRole(@RequestBody Integer[] ids, @PathVariable("role") String role) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常! ");
+        }
+        if (role.equals("admin") || role.equals("normal")) {
+            if (adminAccountService.updateRoleType(ids,role)) {
+                return ResultGenerator.genSuccessResult();
+            } else {
+                return ResultGenerator.genFailResult("禁用失败");
+            }
+        } else {
+            return ResultGenerator.genFailResult("操作非法");
+        }
     }
 
 }
