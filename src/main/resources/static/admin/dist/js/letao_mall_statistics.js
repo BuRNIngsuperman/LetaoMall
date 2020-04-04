@@ -1,12 +1,3 @@
-$(document).ready(function () {
-    $("#year").append("<option selected value='-1'>按年统计</option>")
-    var startYear = 2018,nowYear = new Date().getFullYear();
-    for(var  i = 0;i<=nowYear-startYear+1;i++){
-        $("#year").append("<option value='"+startYear+"'>"+startYear+"年</option>");
-        startYear += 1;
-    }
-});
-
 //基于准备好的dom，初始化echarts实例
 var myChart = echarts.init(document.getElementById('container'),'light');
 var xDatas=[],yDatas=[],startDate,endDate,year=0;

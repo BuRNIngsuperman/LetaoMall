@@ -218,4 +218,26 @@
         </foreach>
     </update>
 
+    <select id="selectOrderChart" resultType="cn.edu.seu.letao.controller.vo.OrderChartData">
+        select
+        sum(total_amount) money,DATE(payment_time) time
+        FROM
+        om_order
+        WHERE
+        payment_time BETWEEN #{startTime} and #{endTime}
+        AND `status` > 0
+        GROUP BY DAY(payment_time),DATE(payment_time)
+    </select>
+
+    <select id="selectOrderChartByYear" resultType="cn.edu.seu.letao.controller.vo.OrderChartData">
+        select
+        sum(total_amount) money,DATE(payment_time) time
+        FROM
+        om_order
+        WHERE
+        YEAR(payment_time) = #{year}
+        AND `status` > 0
+        GROUP BY MONTH(payment_time),DATE(payment_time)
+    </select>
+
 </mapper>
