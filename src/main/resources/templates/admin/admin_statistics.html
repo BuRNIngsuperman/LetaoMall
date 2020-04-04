@@ -45,7 +45,6 @@
                     </div>
                     <div id="container" style="min-width:700px;height:450px;margin-top: 10px;"></div>
                 </div>
-
             </div>
         </div>
         <!-- /.content -->
@@ -78,11 +77,13 @@
 <script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
 <script th:src="@{/admin/dist/js/public.js}"></script>
 
+<!--自定义js-->
 <script type="text/javascript">
     $(document).ready(function () {
         $("#year").append("<option selected value='-1'>按年统计</option>")
-        var startYear = 2017,nowYear = new Date().getFullYear();
-        for(var  i = 0;i<nowYear-startYear;i++){
+        var startYear = 2018,nowYear = new Date().getFullYear();
+        console.log("nowYear:"+nowYear);
+        for(var  i = 0;i <= nowYear-startYear+2;i++){
             $("#year").append("<option value='"+startYear+"'>"+startYear+"年</option>");
             startYear += 1;
         }
@@ -91,6 +92,7 @@
     //基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('container'),'light');
     var xDatas=[],yDatas=[],startDate,endDate,year=0;
+
     getChartData(0,null,null);
     function getChartData(type) {
         var index = layer.load(3);
@@ -104,16 +106,17 @@
                 endTime: endDate,
                 year: year
             },
-            success: function(data){
+            success: function(r){
                 layer.close(index);
                 if(r.resultCode != 200){
-                    layer.alert(data.message,{title: '错误信息',icon: 2});
-                    return;
+                    swal(r.message,{
+                        icon: "error",
+                    });
                 }
-                console.log(data)
-                xDatas = data.result.xDatas;
-                yDatas = data.result.yDatas;
-                $("#countAll").html(data.result.countAll);
+                console.log(r);
+                xDatas = r.data.xdatas;
+                yDatas = r.data.ydatas;
+                $("#countAll").html(r.data.countAll);
                 drawChart();
             },
             error:function(XMLHttpRequest){
@@ -123,16 +126,40 @@
         });
     }
 
+    function getCustomData() {
+        startDate = $('#startDate').val();
+        if(startDate==""||startDate==null){
+            $('#startDate').focus();
+            return;
+        }
+        endDate = $('#endDate').val();
+        if(endDate==""||endDate==null){
+            $('#endDate').focus();
+            return;
+        }
+        getChartData(-1);
+    }
+
+    function getYearData() {
+        console.log(1)
+        year = $('#year').val();
+        if(year==""||year=="-1"||year==null){
+            return;
+        }
+        getChartData(-2);
+    }
+
 
     function drawChart() {
         // 指定图表的配置项和数据
         var option = {
             title: {
                 text: '订单销量统计',
-                subtext: 'XMall'
+                subtext: 'LetaoMall'
             },
             tooltip: {
-                trigger: 'axis'
+                trigger: 'axis',
+                formatter: '{b} <br/>{a} : {c} ￥'
             },
             legend: {
                 data: ['销售金额']
@@ -169,7 +196,6 @@
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
     }
-    drawChart();
 </script>
 </body>
 </html>
