@@ -3,7 +3,7 @@ package cn.edu.seu.letao.service.admin;
 import cn.edu.seu.letao.entity.UsrAccount;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-
+import org.springframework.ui.Model;
 
 public interface IAdminService extends IService<UsrAccount> {
 
@@ -19,6 +19,8 @@ public interface IAdminService extends IService<UsrAccount> {
     boolean updateName(int userId,String originalUsername,String newUsername);
 
     boolean updatePassword(int userId,String originalPaw,String newPaw);
+
+    void setData(Model model);
 
 
 }

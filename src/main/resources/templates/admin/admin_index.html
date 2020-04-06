@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<header th:replace="admin/header::header-fragment"></header>
+<header th:replace="admin/header::header-fragment">
+</header>
 <body class="hold-transition sidebar-mini">
+
 <div class="wrapper">
     <!-- 引入页面头header-fragment -->
     <div th:replace="admin/header::header-nav"></div>
@@ -22,6 +24,182 @@
                 </div>
                 <div class="card-body">
                     <!--body-->
+                    <div class="app-container">
+                        <div class="total-layout">
+                            <table class="total-layout-table">
+                                <tr>
+                                    <td>
+                                        <div class="total-frame">
+                                        <img th:src="@{/admin/dist/img/home_order.png}" class="total-icon">
+                                        <div class="total-title">今日订单总数</div>
+                                        <div class="total-value" th:text="${sum_orders}">加载失败</div>
+                                        </div>
+                                    </td>
+                                    <td class="right-td">
+                                        <div class="total-frame">
+                                        <img th:src="@{/admin/dist/img/home_today_amount.png}" class="total-icon">
+                                        <div class="total-title">今日销售总额</div>
+                                        <div class="total-value" th:text="${today_sum_sale}">加载失败</div>
+                                         </div>
+                                    </td>
+                                    <td class="right-td">
+                                        <div class="total-frame">
+                                        <img th:src="@{/admin/dist/img/home_yesterday_amount.png}" class="total-icon">
+                                        <div class="total-title">昨日销售总额</div>
+                                        <div class="total-value" th:text="${yesterday_sum_sale}">加载失败</div>
+                                        </div>
+                                    </td>
+                                    </tr>
+                            </table>
+
+                        </div>
+
+                        <div class="un-handle-layout">
+                            <div class="layout-title">待处理事务</div>
+                            <div class="un-handle-content">
+                                <table class="un-handle-table">
+                                    <tr>
+                                        <!--第一行第一列-->
+                                        <td>
+                                            <div class="un-handle-item">
+                                                <span class="font-medium">待付款订单</span>
+                                                <span style="float: right" class="color-danger" th:text="${status_0!= null}?${status_0}:'0'">加载失败</span>
+                                            </div>
+
+                                            <div class="un-handle-item">
+                                                <span class="font-medium">待发货货订单</span>
+                                                <span style="float: right" class="color-danger" th:text="${status_1!= null}?${status_1}:'0'">加载失败</span>
+                                            </div>
+
+                                            <div class="un-handle-item">
+                                                <span class="font-medium">待收货订单</span>
+                                                <span style="float: right" class="color-danger" th:text="${status_2!= null}?${status_2}:'0'">加载失败</span>
+                                            </div>
+                                        </td>
+                                        <!--第一行第二列-->
+                                        <td>
+                                            <div class="un-handle-item">
+                                                <span class="font-medium">已完成订单</span>
+                                                <span style="float: right" class="color-danger" th:text="${status_3!= null}?${status_3}:'0'">加载失败</span>
+                                            </div>
+
+                                            <div class="un-handle-item">
+                                                <span class="font-medium">待处理退货单</span>
+                                                <span style="float: right" class="color-danger" th:text="${returnOrder_status_0 != null}?${returnOrder_status_0}:'0'">加载失败</span>
+                                            </div>
+
+                                            <div class="un-handle-item">
+                                                <span class="font-medium">缺货商品</span>
+                                                <span style="float: right" class="color-danger" th:text="${low_goods != null}?${low_goods}:'0'">加载失败</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </div>
+                        <div class="overview-layout">
+
+                                    <div class="out-border" style="float:left;">
+                                        <div class="layout-title">商品总览</div>
+                                        <div style="padding: 30px 10px;">
+                                            <div>
+                                                <span class="border-span-number" th:text="${publish_status_0 != null}?${publish_status_0}:'0'">0</span>
+                                                <span class="border-span-number" th:text="${publish_status_1 != null}?${publish_status_1}:'0'">0</span>
+                                                <span class="border-span-number" th:text="${low_goods != null}?${low_goods}:'0'">0</span>
+                                                <span class="border-span-number" th:text="${all_goods != null}?${all_goods}:'0'">0</span>
+                                            </div>
+
+                                            <div class="font-medium" style="margin-bottom:20px;">
+                                                <sapn class="border-span-text">已下架</sapn>
+                                                <sapn class="border-span-text">已上架</sapn>
+                                                <span class="border-span-text">库存紧张</span>
+                                                <span class="border-span-text">全部商品</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="out-border" style="float:right;">
+                                        <div class="layout-title">用户总览</div>
+                                        <div style="padding: 30px 10px;">
+                                            <div>
+                                                <span class="border-span-number" th:text="${today_account != null}?${today_account}:'0'">100</span>
+                                                <span class="border-span-number" th:text="${yesterday_account != null}?${yesterday_account}:'0'">200</span>
+                                                <span class="border-span-number" th:text="${month_account != null}?${month_account}:'0'">1000</span>
+                                                <span class="border-span-number" >缺少字段</span>
+                                            </div>
+                                            <div class="font-medium" style="margin-bottom:20px;">
+                                                <span class="border-span-text">今日新增</span>
+                                                <span class="border-span-text">昨日新增</span>
+                                                <span class="border-span-text">本月新增</span>
+                                                <span class="border-span-text">会员总数</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                        </div>
+
+                        <div style="clear:both;padding-top:20px;">
+                        <div class="statistics-layout" >
+                            <div class="layout-title">订单统计</div>
+                            <div>
+                                <!--左侧数据显示栏-->
+                                <div style="padding: 20px" class="statistics-left">
+                                    <div>
+                                        <div style="color: #909399;font-size: 14px">本月订单总数</div>
+                                        <div style="color: #606266;font-size: 24px;padding: 10px 0" th:text="${month_orders != null}?${month_account}:'0'">1000</div>
+                                        <div>
+                                            <span class="color-success" style="font-size: 14px" th:text="${month_orders_compare != null}?${month_orders_compare}:'0'">0%</span>
+                                            <span style="color: #C0C4CC;font-size: 14px" >同比上月</span>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 20px;">
+                                        <div style="color: #909399;font-size: 14px">本周订单总数</div>
+                                        <div style="color: #606266;font-size: 24px;padding: 10px 0" th:text="${week_orders != null}?${week_orders}:'0'">1000</div>
+                                        <div>
+                                            <span class="color-danger" style="font-size: 14px" th:text="${week_orders_compare != null}?${week_orders_compare}:'0'">-10%</span>
+                                            <span style="color: #C0C4CC;font-size: 14px">同比上周</span>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 20px;">
+                                        <div style="color: #909399;font-size: 14px">本月销售总额</div>
+                                        <div style="color: #606266;font-size: 24px;padding: 10px 0" th:text="${month_sale != null}?${month_sale}:'0'">1000</div>
+                                        <div>
+                                            <span class="color-success" style="font-size: 14px" th:text="${month_sale_compare != null}?${month_sale_compare}:'0'">+10%</span>
+                                            <span style="color: #C0C4CC;font-size: 14px">同比上月</span>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 20px;">
+                                        <div style="color: #909399;font-size: 14px">本周销售总额</div>
+                                        <div style="color: #606266;font-size: 24px;padding: 10px 0" th:text="${week_sale != null}?${week_sale}:'0'">50000</div>
+                                        <div>
+                                            <span class="color-danger" style="font-size: 14px" th:text="${week_sale_compare != null}?${week_sale_compare}:'0'">-10%</span>
+                                            <span style="color: #C0C4CC;font-size: 14px">同比上周</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--右侧图表栏-->
+                                <div class="statistics-right">
+                                    <div id="container" style="height: 100%;"></div>
+                                    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+                                    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+                                    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+                                    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+                                    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+                                    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+                                    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+                                    <script type="text/javascript" th:src="@{/admin/dist/js/my-echart.js}"></script>
+                                </div>
+
+                            </div>
+                        </div>
+                        </div>
+
+                    </div>
+                    <!--body-->
                 </div>
             </div>
         <!-- /.content -->
@@ -39,5 +217,7 @@
 <script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <!-- AdminLTE App -->
 <script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+<script th:src="@{/admin/dist/js/letao_mall_index.js}"></script>
+
 </body>
 </html>

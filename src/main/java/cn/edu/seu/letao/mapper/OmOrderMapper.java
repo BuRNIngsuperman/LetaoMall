@@ -25,6 +25,7 @@ public interface OmOrderMapper extends BaseMapper<OmOrder> {
     //后台使用
     List<OmOrder> findOrderList(PageQueryUtil pageUtil);
 
+
     int closeOrder(@Param("ids") List<Integer> asList);
 
     int checkDone(@Param("ids") List<Integer> asList);

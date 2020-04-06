@@ -1,0 +1,134 @@
+  .app-container {
+    margin-top: 40px;
+    margin-left: 80px;
+    margin-right: 80px;
+  }
+
+  .address-layout {
+  }
+
+  .total-layout {
+    margin-top: 20px;
+  }
+  .total-layout-table{
+    width:100%;
+    border:none;
+  }
+
+  .total-frame {
+    border: 2px solid #DCDFE6;
+    padding: 20px;
+    height: 100px;
+    width: 300px;
+    display: inline-block;
+  }
+
+  .total-icon {
+    color: #409EFF;
+    width: 60px;
+    height: 60px;
+  }
+
+  .total-title {
+    position: relative;
+    font-size: 16px;
+    color: #909399;
+    left: 70px;
+    top: -50px;
+  }
+
+  .total-value {
+    position: relative;
+    font-size: 18px;
+    color: #606266;
+    left: 70px;
+    top: -40px;
+  }
+
+  .un-handle-layout {
+    margin-top: 20px;
+    border: 1px solid #DCDFE6;
+  }
+  .un-handle-table{
+    width:800px;
+    border:none;
+    margin:0 auto;
+  }
+  .un-handle-table tr{
+      padding:5px;
+   }
+  .un-handle-table td{
+      padding:10px;
+  }
+
+  .layout-title {
+    color: #606266;
+    padding: 15px 20px;
+    background: #F2F6FC;
+    font-weight: bold;
+  }
+
+  .un-handle-content {
+    padding: 20px 40px;
+  }
+
+  .un-handle-item {
+    border-bottom: 1px solid #EBEEF5;
+    padding: 10px;
+  }
+
+  .overview-layout {
+    margin-top: 20px;
+  }
+
+  .overview-item-value {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .overview-item-title {
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .out-border {
+    display:inline-block;
+    width:49%;
+    border: 1px solid #DCDFE6;
+  }
+  .border-span-number{
+    width:100px;
+    font-size:22px;
+    display:inline-block;
+    text-align:center;
+    color:red;
+  }
+  .border-span-text{
+    width:100px;
+    text-align:center;
+    display:inline-block;
+    font-size:18px;
+  }
+
+  .statistics-layout {
+    border: 1px solid #DCDFE6;
+  }
+  .statistics-left{
+    float:left;
+  }
+  .statistics-right{
+      width:82%;
+      height:490px;
+      float:right;
+  }
+  .mine-layout {
+    position: absolute;
+    right: 140px;
+    top: 107px;
+    width: 250px;
+    height: 235px;
+  }
+  .address-content{
+    padding: 20px;
+    font-size: 18px
+  }

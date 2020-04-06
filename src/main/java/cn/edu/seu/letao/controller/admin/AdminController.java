@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.util.StringUtils;
-import org.thymeleaf.model.IModel;
+
+import java.net.SocketTimeoutException;
 
 @Controller
 @RequestMapping("/admin")
@@ -24,7 +25,12 @@ public class AdminController {
 
     @GetMapping(path = {"","/","/index","index.html"})
     public String index(Model model){
+        //设置前往的路径标示
         model.addAttribute("path", "index");
+
+        //封装首页数据
+        adminService.setData(model);
+
         return "admin/admin_index";
     }
 
