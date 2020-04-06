@@ -57,7 +57,8 @@ public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> i
         //23.本周销售总额week_sale;
         //24.同比上周week_sale_compare;
 
-        List<OmOrder> orderlists=orderMapper.selectList(null);
+        QueryWrapper orderListWrapper = new QueryWrapper<>().ne("status",0);
+        List<OmOrder> orderlists=orderMapper.selectList(orderListWrapper);
 
         //处理日期
         final String todayStr;
@@ -130,11 +131,12 @@ public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> i
         int month_sale = 0,last_month_sale=0;
         int month_sale_compare = 0;
 
-        int week_orders = 0,last_week_worders = 0;
+        int week_orders = 0,last_week_orders = 0;
         int week_orders_compare = 0;
         int week_sale = 0,last_week_sale = 0;
         int week_sale_compare = 0;
 
+        double[] mondayToweekday = new double[7];//记录本周每天的销售额
 
         for(OmOrder omOrder:orderlists){
             //计算今天和昨天订单数与销售额
@@ -151,9 +153,10 @@ public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> i
                 if(weekStr[j].equals(tempOrderDateStr)){
                     week_orders++;
                     week_sale += omOrder.getTotalAmount().doubleValue();
+                    mondayToweekday[j] += omOrder.getTotalAmount().doubleValue();
                     break;
                 }else if(lastWeekStr[j].equals(tempOrderDateStr)){
-                    last_week_worders++;
+                    last_week_orders++;
                     last_week_sale += omOrder.getTotalAmount().doubleValue();
                     break;
                 }
@@ -182,8 +185,8 @@ public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> i
         }
 
         //计算月周比值
-        if(last_week_worders != 0){
-            week_orders_compare = (week_orders-last_week_worders)/last_week_worders*100;
+        if(last_week_orders != 0){
+            week_orders_compare = (int)((week_orders-last_week_orders)*1.0/last_week_orders*100);
             if(week_orders_compare>0){
                 model.addAttribute("week_orders_compare","+"+week_orders_compare+"%");
             }else{
@@ -193,7 +196,7 @@ public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> i
             model.addAttribute("week_orders_compare","上周无数据");
         }
         if(last_week_sale != 0){
-            week_sale_compare =(week_sale-last_week_sale)/last_week_sale*100;
+            week_sale_compare =(int)((week_sale-last_week_sale)*1.0/last_week_sale*100);
             if(week_sale_compare>0){
                 model.addAttribute("week_sale_compare","+"+week_sale_compare+"%");
             }else{
@@ -203,7 +206,7 @@ public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> i
             model.addAttribute("week_sale_compare","上周无数据");
         }
         if(last_month_orders != 0){
-            month_orders_compare = (month_orders-last_month_orders)/last_month_orders*100;
+            month_orders_compare = (int)((month_orders-last_month_orders)*1.0/last_month_orders*100);
             if(month_orders_compare>0){
                 model.addAttribute("month_orders_compare","+"+month_orders_compare+"%");
             }else{
@@ -213,7 +216,7 @@ public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> i
             model.addAttribute("month_orders_compare","上月无数据");
         }
         if(last_month_sale != 0){
-            month_sale_compare = (month_sale-last_month_sale)/last_month_sale*100;
+            month_sale_compare = (int)((month_sale-last_month_sale)*1.0/last_month_sale*100);
             if(month_sale_compare>0){
                 model.addAttribute("month_sale_compare","+"+month_sale_compare+"%");
             }else{
@@ -236,6 +239,15 @@ public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> i
         model.addAttribute("month_sale",month_sale);
         model.addAttribute("week_orders",week_orders);
         model.addAttribute("week_sale",week_sale);
+
+
+        model.addAttribute("monday",mondayToweekday[0]);
+        model.addAttribute("tuesday",mondayToweekday[1]);
+        model.addAttribute("wednesday",mondayToweekday[2]);
+        model.addAttribute("thursday",mondayToweekday[3]);
+        model.addAttribute("friday",mondayToweekday[4]);
+        model.addAttribute("saturday",mondayToweekday[5]);
+        model.addAttribute("weekday",mondayToweekday[6]);
 
         //7.获取未处理退单returnOrder_status_0
         QueryWrapper wrapper_1 = new QueryWrapper();

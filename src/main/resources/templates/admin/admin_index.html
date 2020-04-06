@@ -181,6 +181,14 @@
                                     </div>
                                 </div>
 
+                                <input type="hidden" id="monday" th:value="${monday != null}?${monday}:0">
+                                <input type="hidden" id="tuesday" th:value="${tuesday != null}?${tuesday}:0">
+                                <input type="hidden" id="wednesday" th:value="${wednesday != null}?${wednesday}:0">
+                                <input type="hidden" id="thursday" th:value="${thursday != null}?${thursday}:0">
+                                <input type="hidden" id="friday" th:value="${friday != null}?${friday}:0">
+                                <input type="hidden" id="saturday" th:value="${saturday != null}?${saturday}:0">
+                                <input type="hidden" id="weekday" th:value="${weekday != null}?${weekday}:0">
+
                                 <!--右侧图表栏-->
                                 <div class="statistics-right">
                                     <div id="container" style="height: 100%;"></div>
@@ -191,12 +199,12 @@
                                     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
                                     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
                                     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
-                                    <script type="text/javascript" th:src="@{/admin/dist/js/my-echart.js}"></script>
                                 </div>
 
                             </div>
                         </div>
                         </div>
+
 
                     </div>
                     <!--body-->
