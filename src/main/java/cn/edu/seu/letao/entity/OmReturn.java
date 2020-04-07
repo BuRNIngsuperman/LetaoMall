@@ -30,7 +30,7 @@ public class OmReturn implements Serializable {
     private Integer returnId;
 
     /**
-     * 订单id
+     * 订单号
      */
     private String orderSn;
 
