@@ -2,8 +2,12 @@ package cn.edu.seu.letao.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -37,7 +41,7 @@ public class OmReturn implements Serializable {
     /**
      * 申请创建时间
      */
-    private LocalDateTime createdTime;
+    private Date createdTime;
 
     /**
      * 退货数量
