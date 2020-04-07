@@ -2,11 +2,17 @@ package cn.edu.seu.letao.service.admin.impl;
 
 import cn.edu.seu.letao.common.LetaoMallOrderStatusEnum;
 import cn.edu.seu.letao.common.ServiceResultEnum;
+import cn.edu.seu.letao.controller.vo.OrderItemVO;
 import cn.edu.seu.letao.entity.OmOrder;
+import cn.edu.seu.letao.entity.OmOrderItem;
+import cn.edu.seu.letao.entity.PmCommodity;
+import cn.edu.seu.letao.mapper.OmOrderItemMapper;
 import cn.edu.seu.letao.mapper.OmOrderMapper;
+import cn.edu.seu.letao.mapper.PmCommodityMapper;
 import cn.edu.seu.letao.service.admin.IAdminOrderService;
 import cn.edu.seu.letao.util.PageQueryUtil;
 import cn.edu.seu.letao.util.PageResult;
+import cn.hutool.db.sql.Order;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +30,12 @@ public class AdminOrderServiceImpl implements IAdminOrderService {
 
     @Autowired
     OmOrderMapper orderMapper;
+
+    @Autowired
+    OmOrderItemMapper orderItemMapper;
+
+    @Autowired
+    PmCommodityMapper commodityMapper;
 
     @Override
     public PageResult getOrdersPage(PageQueryUtil pageUtil) {
@@ -141,6 +154,23 @@ public class AdminOrderServiceImpl implements IAdminOrderService {
         }
         //未查询到数据 返回错误提示
         return ServiceResultEnum.DATA_NOT_EXIST.getResult();
+    }
+
+    @Override
+    public List<OrderItemVO>  getOrderItems(int orderId){
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("order_id",orderId);
+        List<OmOrderItem> itemList = orderItemMapper.selectList(queryWrapper);
+        List<OrderItemVO> VOList = new ArrayList<OrderItemVO>();
+        for(OmOrderItem item : itemList){
+            OrderItemVO itemVO = new OrderItemVO();
+            itemVO.setGoodsName(commodityMapper.selectById(item.getCommId()).getName());
+            itemVO.setGoodsCount(item.getQuantity());
+            itemVO.setGoodsSN(commodityMapper.selectById(item.getCommId()).getProductSn());
+            VOList.add(itemVO);
+        }
+
+        return VOList;
     }
 
 

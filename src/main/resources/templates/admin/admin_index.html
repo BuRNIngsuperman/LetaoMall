@@ -128,7 +128,7 @@
                                                 <span class="border-span-number" th:text="${today_account != null}?${today_account}:'0'">100</span>
                                                 <span class="border-span-number" th:text="${yesterday_account != null}?${yesterday_account}:'0'">200</span>
                                                 <span class="border-span-number" th:text="${month_account != null}?${month_account}:'0'">1000</span>
-                                                <span class="border-span-number" >缺少字段</span>
+                                                <span class="border-span-number" th:text="${accounts_num != null}?${accounts_num}:'0'">0</span>
                                             </div>
                                             <div class="font-medium" style="margin-bottom:20px;">
                                                 <span class="border-span-text">今日新增</span>

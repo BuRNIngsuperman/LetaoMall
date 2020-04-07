@@ -103,8 +103,13 @@ public class AdminGoodsController {
 
     @GetMapping("/goods/edit/{goodsId}")
     public String edit(HttpServletRequest request, @PathVariable("goodsId") Long goodsId) {
+
         request.setAttribute("path", "edit");
         PmCommodity commodity = adminGoodsService.getGoodsById(goodsId.intValue());
+
+        System.out.println("----------------------");
+        System.out.println(commodity.getCommodityCategoryId());
+        System.out.println("-----------------------");
 
         if (commodity == null) {
             return "error/error_400";
@@ -135,9 +140,9 @@ public class AdminGoodsController {
                     request.setAttribute("firstLevelCategories", firstLevelCategories);
                     request.setAttribute("secondLevelCategories", secondLevelCategories);
                     request.setAttribute("thirdLevelCategories", thirdLevelCategories);
-                    request.setAttribute("firstLevelCategoryId", firestCategory.getLevel());
-                    request.setAttribute("secondLevelCategoryId", secondCategory.getLevel());
-                    request.setAttribute("thirdLevelCategoryId", commCategory.getLevel());
+                    request.setAttribute("firstLevelCategoryId", firestCategory.getCid());
+                    request.setAttribute("secondLevelCategoryId", secondCategory.getCid());
+                    request.setAttribute("thirdLevelCategoryId", commCategory.getCid());
                 }
             }
         }

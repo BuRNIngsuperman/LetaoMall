@@ -46,7 +46,7 @@ $(function () {
     function operateFormatter(cellvalue, rowObject) {
         return "<a href=\'##\' onclick=openOrderItems(" + rowObject.rowId + ")>查看订单信息</a>" +
             "<br>" +
-            "<a href=\'##\' onclick=openExpressInfo(" + rowObject.rowId + ")>查看收件人信息</a>";
+            "<a href=\'##\' onclick=openExpressInfo(" + rowObject.rowId + ")>查看收件地址</a>";
     }
 
     function orderStatusFormatter(cellvalue) {
@@ -117,7 +117,7 @@ function openOrderItems(orderId) {
                 $('#orderItemModal').modal('show');
                 var itemString = '';
                 for (i = 0; i < result.data.length; i++) {
-                    itemString += result.data[i].goodsName + ' x ' + result.data[i].goodsCount + ' 商品编号 ' + result.data[i].goodsId + ";<br>";
+                    itemString += " "+result.data[i].goodsName + ' x ' + result.data[i].goodsCount + ' 产品号: ' + result.data[i].goodsSN + ";<br>";
                 }
                 $("#orderItemString").html(itemString);
             } else {
@@ -143,7 +143,7 @@ function openExpressInfo(orderId) {
     var rowData = $("#jqGrid").jqGrid("getRowData", orderId);
     $('.modal-title').html('收件信息');
     $('#expressInfoModal').modal('show');
-    $("#userAddressInfo").html(rowData.userAddress);
+    $("#userAddressInfo").html(rowData.address);
 }
 
 /**
@@ -226,8 +226,8 @@ function orderCheckOut() {
         swal(orderNos + "订单的状态不是支付成功或配货完成无法执行出库操作", {
             icon: "error",
         });
-        return;
     }
+        return;
     if (orderNos.length >= 100) {
         swal("你选择了太多状态不是支付成功或配货完成的订单，无法执行出库操作", {
             icon: "error",

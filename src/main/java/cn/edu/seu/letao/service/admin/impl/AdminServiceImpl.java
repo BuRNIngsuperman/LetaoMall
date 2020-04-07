@@ -307,6 +307,7 @@ public class AdminServiceImpl extends ServiceImpl<UsrAccountMapper,UsrAccount> i
                 month_account++;
             }
         }
+        model.addAttribute("accounts_num",usrUserList.size());
         model.addAttribute("today_account",today_account);
         model.addAttribute("yesterday_account",yesterday_account);
         model.addAttribute("month_account",month_account);
