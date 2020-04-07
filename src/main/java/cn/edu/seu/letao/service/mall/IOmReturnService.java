@@ -7,8 +7,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author shkstart
  * @create 2020-04-07 14:49
  */
-public interface IOmReturnService{
+public interface IOmReturnService extends IService<OmReturn>{
 
-    void saveOmReturn(OmReturn omReturn);
+    void saveReturn(OmReturn omReturn);
 }
 
