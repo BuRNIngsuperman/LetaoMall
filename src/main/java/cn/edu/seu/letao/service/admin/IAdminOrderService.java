@@ -40,5 +40,15 @@ public interface IAdminOrderService {
      */
     String closeOrder(Integer[] ids);
 
+    /**
+     * 订单详情小窗口
+     */
     List<OrderItemVO>  getOrderItems(int orderId);
+
+    /**
+     * 分页
+     * @param pageUtil
+     * @return
+     */
+    PageResult getReturnOrdersPage(PageQueryUtil pageUtil);
 }

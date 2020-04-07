@@ -115,5 +115,25 @@ public class AdminOrdersController {
         return ResultGenerator.genFailResult(ServiceResultEnum.DATA_NOT_EXIST.getResult());
     }
 
+    /**
+     * 退单管理页面
+     */
+    @GetMapping("/returnOrders")
+    public String returnOrdersPage(HttpServletRequest request) {
+        request.setAttribute("path", "orders");
+        return "admin/admin_orders";
+    }
+    /**
+     * 获取退单数据列表
+     */
+    @RequestMapping(value = "/returnOrders/list", method = RequestMethod.GET)
+    @ResponseBody
+    public Result returnOrdersList(@RequestParam Map<String, Object> params) {
+        if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        PageQueryUtil pageUtil = new PageQueryUtil(params);
+        return ResultGenerator.genSuccessResult(orderService.getReturnOrdersPage(pageUtil));
+    }
 
 }

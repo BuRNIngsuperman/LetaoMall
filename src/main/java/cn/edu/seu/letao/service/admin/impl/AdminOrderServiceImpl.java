@@ -37,6 +37,8 @@ public class AdminOrderServiceImpl implements IAdminOrderService {
     @Autowired
     PmCommodityMapper commodityMapper;
 
+
+
     @Override
     public PageResult getOrdersPage(PageQueryUtil pageUtil) {
         List<OmOrder> newBeeMallOrders = orderMapper.findOrderList(pageUtil);
@@ -173,5 +175,16 @@ public class AdminOrderServiceImpl implements IAdminOrderService {
         return VOList;
     }
 
+    @Override
+    public PageResult getReturnOrdersPage(PageQueryUtil pageUtil) {
+        List<OmOrder> newBeeMallOrders = orderMapper.findOrderList(pageUtil);
+
+        //关闭的订单不在操作，4表示订单状态已经关闭
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.in("status",new int[]{0,1});
+        int total = orderMapper.selectCount(wrapper);
+        PageResult pageResult = new PageResult(newBeeMallOrders, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
 
 }
