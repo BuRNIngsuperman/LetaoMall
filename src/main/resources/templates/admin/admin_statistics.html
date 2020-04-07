@@ -2,6 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:replace="admin/header::header-fragment">
 </header>
+<link rel="stylesheet" th:href="@{/admin/plugins/h-ui/css/H-ui.min.css}"/>
+<link rel="stylesheet" th:href="@{/admin/plugins/h-ui.admin/css/H-ui.admin.css}"/>
+<link rel="stylesheet" th:href="@{/admin/plugins/Hui-iconfont/1.0.8/iconfont.css}"/>
+<link rel="stylesheet" th:href="@{/admin/plugins/h-ui.admin/skin/default/skin.css}"/>
+<link rel="stylesheet" th:href="@{/admin/plugins/h-ui.admin/css/style.css}"/>
 
 <body class="hold-transition sidebar-mini">
 <!-- 引入页面头header-fragment -->
@@ -19,10 +24,27 @@
     <div class="content">
         <div class="card card-primary card-outline">
             <div class="card-header">
-                <h3 class="card-title">统计报表页面</h3>
+                <h3 class="card-title">订单销量统计</h3>
             </div>
             <div class="card-body">
                 <!--body-->
+                <div class="page-container">
+                    <div class="cl pd-5 bg-1 bk-gray mt-20">
+                        <span class="l">
+			            <a href="javascript:;" onclick="getChartData(0)" class="btn btn-secondary-outline radius">本周</a>
+			            <a href="javascript:;" onclick="getChartData(1)" class="btn btn-secondary-outline radius">本月</a>
+			            <a href="javascript:;" onclick="getChartData(2)" class="btn btn-secondary-outline radius">上个月</a>
+			            <select class="select-box" style="width: 100px" id="year" onchange="getYearData()">
+			            </select>
+			&nbsp;&nbsp;           指定日期范围：<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'startDate\')||\'%y-%M-%d\'}' })" id="startDate" name="startDate" class="input-text Wdate" style="width:120px;">
+                            -
+                            <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'endDate\')}',maxDate:'%y-%M-%d' })" id="endDate" name="endDate" class="input-text Wdate" style="width:120px;">
+			&nbsp;&nbsp;            <a href="javascript:;" onclick="getCustomData()" class="btn btn-success">确定</a>
+		                </span>
+                        <span class="r">总销售额：<strong id="countAll">0.00</strong> ￥</span>
+                    </div>
+                    <div id="container" style="min-width:700px;height:450px;margin-top: 10px;"></div>
+                </div>
             </div>
         </div>
         <!-- /.content -->
@@ -36,17 +58,144 @@
 <script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
 <!-- jQuery UI 1.11.4 -->
 <script th:src="@{/admin/plugins/jQueryUI/jquery-ui.min.js}"></script>
-<!-- Bootstrap 4 -->
-<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- H-ui -->
+<script th:src="@{/admin/plugins/h-ui/js/H-ui.min.js}"></script>
+<script th:src="@{/admin/plugins/h-ui.admin/js/H-ui.admin.js}"></script>
+
 <!-- AdminLTE App -->
 <script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
-<!-- jqgrid -->
-<script th:src="@{/admin/plugins/jqgrid-5.3.0/jquery.jqGrid.min.js}"></script>
-<script th:src="@{/admin/plugins/jqgrid-5.3.0/grid.locale-cn.js}"></script>
+
+<script th:src="@{/admin/plugins/My97DatePicker/4.8/WdatePicker.js}"></script>
+
+<!-- echart -->
+<script th:src="@{/admin/plugins/echarts.common.min.js}"></script>
+
+<!--layer-->
+<script th:src="@{/admin/plugins/layer/2.4/layer.js}"></script>
 
 <!-- sweetalert -->
 <script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
 <script th:src="@{/admin/dist/js/public.js}"></script>
-<script th:src="@{/admin/dist/js/newbee_mall_index_config.js}"></script>
+
+<!--自定义js-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#year").append("<option selected value='-1'>按年统计</option>")
+        var startYear = 2018,nowYear = new Date().getFullYear();
+        console.log("nowYear:"+nowYear);
+        for(var  i = 0;i <= nowYear-startYear+2;i++){
+            $("#year").append("<option value='"+startYear+"'>"+startYear+"年</option>");
+            startYear += 1;
+        }
+    });
+
+    //基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'),'light');
+    var xDatas=[],yDatas=[],startDate,endDate,year=0;
+
+    getChartData(0,null,null);
+    function getChartData(type) {
+        var index = layer.load(3);
+        $.ajax({
+            type: 'GET',
+            url: '/admin/statistics/order',
+            dataType: 'json',
+            data:{
+                type: type,
+                startTime: startDate,
+                endTime: endDate,
+                year: year
+            },
+            success: function(r){
+                layer.close(index);
+                if(r.resultCode != 200){
+                    swal(r.message,{
+                        icon: "error",
+                    });
+                }
+                console.log(r);
+                xDatas = r.data.xdatas;
+                yDatas = r.data.ydatas;
+                $("#countAll").html(r.data.countAll);
+                drawChart();
+            },
+            error:function(XMLHttpRequest){
+                layer.close(index);
+                layer.alert('数据处理失败! 错误码:'+XMLHttpRequest.status,{title: '错误信息',icon: 2});
+            }
+        });
+    }
+
+    function getCustomData() {
+        startDate = $('#startDate').val();
+        if(startDate==""||startDate==null){
+            $('#startDate').focus();
+            return;
+        }
+        endDate = $('#endDate').val();
+        if(endDate==""||endDate==null){
+            $('#endDate').focus();
+            return;
+        }
+        getChartData(-1);
+    }
+
+    function getYearData() {
+        console.log(1)
+        year = $('#year').val();
+        if(year==""||year=="-1"||year==null){
+            return;
+        }
+        getChartData(-2);
+    }
+
+
+    function drawChart() {
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '订单销量统计',
+                subtext: 'LetaoMall'
+            },
+            tooltip: {
+                trigger: 'axis',
+                formatter: '{b} <br/>{a} : {c} ￥'
+            },
+            legend: {
+                data: ['销售金额']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    dataView: {readOnly: false},
+                    magicType: {type: ['line', 'bar']},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                boundaryGap: false,
+                data: xDatas
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} ￥'
+                }
+            },
+            series: [{
+                name: '销售金额',
+                type: 'line',
+                data: yDatas
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+</script>
 </body>
 </html>

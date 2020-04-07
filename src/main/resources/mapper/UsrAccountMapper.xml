@@ -34,4 +34,20 @@
         </if>
     </select>
 
+    <update id="lockAccountBatch">
+        update usr_account
+        set stop=#{stopStatus} where acco_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateTypeRole">
+        update usr_account
+        set type=#{role} where acco_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
 </mapper>

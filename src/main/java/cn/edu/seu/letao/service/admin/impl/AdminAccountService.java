@@ -29,4 +29,21 @@ public class AdminAccountService extends ServiceImpl<UsrAccountMapper, UsrAccoun
         PageResult pageResult = new PageResult(list,total,pageQueryUtil.getLimit(),pageQueryUtil.getPage());
         return pageResult;
     }
+
+    @Override
+    public boolean lockAccounts(Integer[] ids, String stopStatus) {
+        if(ids.length < 1){
+            return false;
+        }
+
+        return usrAccountMapper.lockAccountBatch(ids,stopStatus) > 0;
+    }
+
+    @Override
+    public boolean updateRoleType(Integer[] ids, String role) {
+        if(ids.length < 1){
+            return false;
+        }
+        return usrAccountMapper.updateTypeRole(ids,role) > 0;
+    }
 }

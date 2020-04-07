@@ -5,7 +5,7 @@ spring:
   datasource:
     username: letao
     password: Group02@!23
-    url: jdbc:mysql://39.98.59.185:3306/letaomall?useUnicode=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true
+    url: jdbc:mysql://39.98.59.185:3306/letaomall?useUnicode=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
