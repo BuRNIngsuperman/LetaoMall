@@ -62,9 +62,7 @@
                 </div>
                 <div class="shopcart">
                     <a th:href="@{/shop-cart}" style="color: white;"><i class="iconfont icon-cart"></i>
-                        购物车(
-                        <th:block th:text="${session.letaoMallUser.shopCartItemCount}"></th:block>
-                        )</a>
+                        购物车</a>
                 </div>
             </th:block>
             <th:block th:if="${session.letaoMallUser==null}">

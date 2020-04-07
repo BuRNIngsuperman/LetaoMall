@@ -38,7 +38,7 @@ public class OmCart implements Serializable {
     /**
      * 账户id
      */
-    private Integer accoId;
+    private Long userId;
 
     /**
      * 购买数量

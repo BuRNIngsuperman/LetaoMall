@@ -1,5 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.seu.letao.mapper.UsrAccountMapper">
+    <resultMap id="BaseResultMap" type="cn.edu.seu.letao.entity.UsrAccount">
+        <id column="acco_id" jdbcType="INTEGER" property="accoId"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="stop" jdbcType="VARCHAR" property="stop"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        acco_id,username,password,type,stop,create_time
+    </sql>
+
+    <select id="getAccountList" parameterType="Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from usr_account
+        where 1=1
+        <if test="username !=null and username !=''">
+            and username = #{username}
+        </if>
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="getTotalAdminCount" parameterType="Map" resultType="int">
+        select count(*) from usr_account
+        where 1=1
+        <if test="username !=null and username!=''">
+            and username = #{username}
+        </if>
+    </select>
+
+    <update id="lockAccountBatch">
+        update usr_account
+        set stop=#{stopStatus} where acco_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateTypeRole">
+        update usr_account
+        set type=#{role} where acco_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 
 </mapper>

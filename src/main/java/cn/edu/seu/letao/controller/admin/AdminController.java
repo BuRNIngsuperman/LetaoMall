@@ -1,15 +1,20 @@
 package cn.edu.seu.letao.controller.admin;
 
+import cn.edu.seu.letao.common.ServiceResultEnum;
 import cn.edu.seu.letao.entity.UsrAccount;
 import cn.edu.seu.letao.service.admin.IAdminService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.util.StringUtils;
+
+import java.net.SocketTimeoutException;
 
 @Controller
 @RequestMapping("/admin")
@@ -19,7 +24,13 @@ public class AdminController {
     IAdminService adminService;
 
     @GetMapping(path = {"","/","/index","index.html"})
-    public String index(){
+    public String index(Model model){
+        //设置前往的路径标示
+        model.addAttribute("path", "index");
+
+        //封装首页数据
+        adminService.setData(model);
+
         return "admin/admin_index";
     }
 
@@ -52,9 +63,13 @@ public class AdminController {
             session.setAttribute("errorMsg", "验证码错误");
             return "admin/admin_login";
         }
-        Boolean bool = adminService.checkAccount(username, password);
-        if (bool) {
+        UsrAccount usrAccount = adminService.checkAccount(username, password);
+        if (usrAccount != null) {
             session.setAttribute("loginUser", username);
+            session.setAttribute("loginUserId",usrAccount.getAccoId());
+            session.setAttribute("AdminUser",usrAccount);
+            //session过期时间设置为7200秒 即两小时
+            //session.setMaxInactiveInterval(60 * 60 * 2);
             return "redirect:/admin/index";
         } else {
             session.setAttribute("errorMsg", "登陆失败，没有此账户");
@@ -90,6 +105,11 @@ public class AdminController {
         boolean flag = adminService.addAdminAccount(username,password);
         if(flag){
             session.setAttribute("loginUser", username);
+            QueryWrapper<UsrAccount> wrapper = new QueryWrapper<>();
+            wrapper.eq("username",username);
+            UsrAccount usrAccount = adminService.getOne(wrapper);
+            session.setAttribute("AdminUser",usrAccount);
+            session.setAttribute("loginUserId",usrAccount.getAccoId());
             return "redirect:/admin/index";
         }else {
             session.setAttribute("Msg", "注册失败，用户名已存在");
@@ -98,16 +118,61 @@ public class AdminController {
     }
 
 
-    @RequestMapping(value = "/profile",method = {RequestMethod.POST,RequestMethod.GET})
-    public String profile(){
-
+    @RequestMapping(value = "/profile",method = {RequestMethod.GET})
+    public String profile(HttpServletRequest request,Model model){
+        Integer userId = (int)request.getSession().getAttribute("loginUserId");
+        QueryWrapper<UsrAccount> wrapper = new QueryWrapper<>();
+        wrapper.eq("acco_id",userId);
+        UsrAccount usrAccount = adminService.getOne(wrapper);
+        if(usrAccount == null){
+            return "admin/admin_login";
+        }
+        model.addAttribute("path", "personalInfo");
+        model.addAttribute("loginUserName",usrAccount.getUsername());
         return "admin/admin_profile";
+    }
+
+    @RequestMapping(value = "/profile/name",method = {RequestMethod.POST})
+    @ResponseBody
+    public String updateName(HttpServletRequest request, @RequestParam("loginUserName") String originalUserName,
+                             @RequestParam("nickName") String newUserName){
+        if (originalUserName == null || newUserName == null){
+            return "参数不能为空";
+        }
+        int userId = (int) request.getSession().getAttribute("loginUserId");
+        if(adminService.updateName(userId,originalUserName,newUserName)){
+            return ServiceResultEnum.SUCCESS.getResult();
+        }else {
+            return "修改失败";
+        }
+    }
+
+    @RequestMapping(value = "/profile/password",method = {RequestMethod.POST})
+    @ResponseBody
+    public String updatepassword(HttpServletRequest request, @RequestParam("originalPassword") String originalPassword,
+                             @RequestParam("newPassword") String newPassword){
+        if(originalPassword == null || newPassword == null){
+            return "参数不能为空";
+        }
+        int userId = (int)request.getSession().getAttribute("loginUserId");
+        if(adminService.updatePassword(userId,originalPassword,newPassword)){
+            //修改密码成功后清空所有Session，并跳转至登录页面
+            request.getSession().removeAttribute("loginUserId");
+            request.getSession().removeAttribute("loginUser");
+            request.getSession().removeAttribute("errorMsg");
+            request.getSession().removeAttribute("AdminUser");
+            return ServiceResultEnum.SUCCESS.getResult();
+
+        }else {
+            return "修改失败";
+        }
     }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         request.getSession().removeAttribute("loginUserId");
         request.getSession().removeAttribute("loginUser");
+        request.getSession().removeAttribute("AdminUser");
         request.getSession().removeAttribute("errorMsg");
         return "admin/admin_login";
     }

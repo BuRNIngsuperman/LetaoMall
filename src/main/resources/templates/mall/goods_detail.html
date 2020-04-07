@@ -84,8 +84,8 @@
     function saveToCart(id) {
         var goodsCount = 1;
         var data = {
-            "goodsId": id,
-            "goodsCount": goodsCount
+            "commId": id,
+            "quantity": goodsCount
         };
         $.ajax({
             type: 'POST',
@@ -124,8 +124,8 @@
     function saveAndGoCart(id) {
         var goodsCount = 1;
         var data = {
-            "goodsId": id,
-            "goodsCount": goodsCount
+            "commId": id,
+            "quantity": goodsCount
         };
         $.ajax({
             type: 'POST',

@@ -43,18 +43,22 @@ public class OmOrderItem implements Serializable {
     /**
      * 购买数量
      */
-    private Integer productQuantity;
+    private Integer quantity;
 
     /**
      * 订单项目价格
      */
-    @TableField("orderItemPrice")
-    private BigDecimal orderItemPrice;
+    @TableField("price")
+    private BigDecimal price;
 
     /**
      * 商品的销售属性1
      */
     private String sp1;
+
+    private String albumPics;//商品图片
+
+    private String name;//商品名称
 
 
 }

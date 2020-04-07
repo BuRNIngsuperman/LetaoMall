@@ -6,6 +6,7 @@
         <result column="cid" jdbcType="INTEGER" property="cid"/>
         <result column="cname" jdbcType="INTEGER" property="cname"/>
         <result column="lever" jdbcType="INTEGER" property="level"/>
+        <result column="sort"   jdbcType="INTEGER" property="sort"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -40,6 +41,22 @@
             #{parentId,jdbcType=INTEGER}
         </foreach>
         and level = #{categoryLevel,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectForPage" parameterType="Map" resultMap="LevelResultMap">
+        select cid,cname,sort from pm_comm_category
+        <where>
+            <if test="categoryLevel!=null and categoryLevel!=''">
+                and level = #{categoryLevel}
+            </if>
+            <if test="parentId!=null and parentId!=''">
+                and parent_id = #{parentId}
+            </if>
+        </where>
+        order by sort desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
     </select>
 
 </mapper>

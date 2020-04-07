@@ -13,16 +13,7 @@
     <div class="self-info center">
 
         <!-- sidebar -->
-        <div class="lfnav fl">
-    <div class="nav_title">个人中心</div>
-    <div class="title_list">
-        <ul>
-            <li><a href="/personal">个人信息</a></li>
-            <li><a href="/orders">我的订单</a></li>
-            <li><a href="/logout">退出登录</a></li>
-        </ul>
-    </div>
-</div>
+        <div th:replace="mall/personal-sidebar::sidebar-fragment"></div>
 
         <div class="intro fr">
             <div class="uc-box uc-main-box">
@@ -34,17 +25,23 @@
                         </h1>
                         <div class="more clearfix">
                             <h2 class="subtitle">订单号：
-                                15851322854581277
+                                <th:block th:text="${orderDetailVO.orderSn}"></th:block>
                                 <span class="tag tag-subsidy"></span>
                             </h2>
                             <div class="actions">
-                                <input type="hidden" id="orderNoValue" value="15851322854581277">
-                                
-                                
+                                <input type="hidden" id="orderNoValue" th:value="${orderDetailVO.orderSn}">
+                                <th:block th:if="${orderDetailVO.status>0 and orderDetailVO.status<3}">
+                                    <a onclick="cancelOrder()"
+                                       class="btn btn-small btn-line-gray" title="取消订单">取消订单</a>
+                                </th:block>
+                                <th:block th:if="${orderDetailVO.status==0}">
                                     <a onclick="payOrder()"
                                        class="btn btn-small btn-primary" title="去支付">去支付</a>
-                                
-                                
+                                </th:block>
+                                <th:block th:if="${orderDetailVO.status==3}">
+                                    <a onclick="finishOrder()"
+                                       class="btn btn-small btn-primary" title="确认收货">确认收货</a>
+                                </th:block>
                             </div>
                         </div>
                     </div>
@@ -53,103 +50,111 @@
                             <div class="order-detail">
 
                                 <div class="order-summary">
-                                    <div class="order-status">待支付</div>
+                                    <div class="order-status" th:text="${orderDetailVO.orderStatusString}">
+                                        newbee
+                                    </div>
                                     <div class="order-desc">
-                                        请尽快完成支付哦~
-                                        
-                                        
-                                        
-                                        
-                                        
+                                        <th:block th:if="${orderDetailVO.status==0}">请尽快完成支付哦~</th:block>
+                                        <th:block th:if="${orderDetailVO.status==1}">newbee商城订单确认中~</th:block>
+                                        <th:block th:if="${orderDetailVO.status==2}">newbee仓库正在紧急配货中~</th:block>
+                                        <th:block th:if="${orderDetailVO.status==3}">订单已出库正在快马加鞭向您奔来~</th:block>
+                                        <th:block th:if="${orderDetailVO.status==4}">交易成功，感谢您对newbee商城的支持~
+                                        </th:block>
+                                        <th:block th:if="${orderDetailVO.status<0}">交易已关闭~</th:block>
 
                                     </div>
-                                    
+                                    <th:block th:if="${orderDetailVO.status>=0}">
                                         <div class="order-progress">
                                             <ol class="progress-list clearfix progress-list-5">
-                                                
+                                                <th:block th:if="${orderDetailVO.status==0}">
                                                     <li class="step step-active">
-                                                
-                                                
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.status>0}">
+                                                    <li class="step step-first">
+                                                </th:block>
                                                 <div class="progress"><span class="text">下单</span></div>
-                                                <div class="info"></div>
+                                                <div class="info"
+                                                     th:text="${#dates.format(orderDetailVO.createdTime, 'yyyy-MM-dd HH:mm:ss')}">
+                                                    02月07日
+                                                </div>
                                                 </li>
-                                                
+                                                <th:block th:if="${orderDetailVO.status<1}">
                                                     <li class="step">
-                                                
-                                                
-                                                
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.status==1}">
+                                                    <li class="step step-active">
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.status>1}">
+                                                    <li class="step step-done">
+                                                </th:block>
                                                 <div class="progress"><span class="text">付款</span></div>
                                                 <div class="info"></div>
                                                 </li>
-                                                
+                                                <th:block th:if="${orderDetailVO.status<2}">
                                                     <li class="step">
-                                                
-                                                
-                                                
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.status==2}">
+                                                    <li class="step step-active">
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.status>2}">
+                                                    <li class="step step-done">
+                                                </th:block>
                                                 <div class="progress"><span class="text">配货</span></div>
                                                 <div class="info"></div>
                                                 </li>
-                                                
+                                                <th:block th:if="${orderDetailVO.status<3}">
                                                     <li class="step">
-                                                
-                                                
-                                                
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.status==3}">
+                                                    <li class="step step-active">
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.status>3}">
+                                                    <li class="step step-done">
+                                                </th:block>
                                                 <div class="progress"><span class="text">出库</span></div>
                                                 <div class="info"></div>
                                                 </li>
-                                                
+                                                <th:block th:if="${orderDetailVO.status<4}">
                                                     <li class="step">
-                                                
-                                                
-                                                
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.status==4}">
+                                                    <li class="step step-active">
+                                                </th:block>
+                                                <th:block th:if="${orderDetailVO.status>4}">
+                                                    <li class="step step-last">
+                                                </th:block>
                                                 <div class="progress"><span class="text">交易成功</span></div>
                                                 <div class="info"></div>
                                                 </li>
                                             </ol>
                                         </div>
-                                    
+                                    </th:block>
                                 </div>
                                 <table class="order-items-table">
                                     <tbody>
-                                    
+                                    <th:block th:each="item : ${orderDetailVO.letaoMallOrderItemVOS}">
                                         <tr>
                                             <td class="col col-thumb">
                                                 <div class="figure figure-thumb">
-                                                    <a target="_blank" th:href="@{/goods/detail/10254}">
-                                                        <img th:src="@{/goods-img/7810bc9d-236f-4386-a0ef-45a831b49bf2.jpg}"
+                                                    <a target="_blank" th:href="@{'/goods/detail/'+${item.commId}}">
+                                                        <img th:src="@{${item.albumPics}}"
                                                              width="80" height="80" alt="">
                                                     </a>
                                                 </div>
                                             </td>
                                             <td class="col col-name">
                                                 <p class="name">
-                                                    <a target="_blank" href="/goods/detail/10254">Apple 2019款 MacBook Air 13.3</a>
+                                                    <a target="_blank" th:href="@{'/goods/detail/'+${item.commId}}"
+                                                       th:text="${item.name}">letao</a>
                                                 </p>
                                             </td>
-                                            <td class="col col-price"><p class="price">8499元 x 1</p></td>
+                                            <td class="col col-price"><p class="price"
+                                                                         th:text="${item.price+'元 x '+item.quantity}">
+                                                1299元 × 1</p></td>
                                             <td class="col col-actions">
                                             </td>
                                         </tr>
-                                    
-                                        <tr>
-                                            <td class="col col-thumb">
-                                                <div class="figure figure-thumb">
-                                                    <a target="_blank" th:href="@{/goods/detail/10154}">
-                                                        <img th:src="@{/goods-img/15395057-94e9-4545-a8ee-8aee025f40c5.jpg}"
-                                                             width="80" height="80" alt="">
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td class="col col-name">
-                                                <p class="name">
-                                                    <a target="_blank" th:href="@{/goods/detail/10154}">无印良品 MUJI 塑料浴室座椅</a>
-                                                </p>
-                                            </td>
-                                            <td class="col col-price"><p class="price">85元 x 1</p></td>
-                                            <td class="col col-actions">
-                                            </td>
-                                        </tr>
-                                    
+                                    </th:block>
                                     </tbody>
                                 </table>
                             </div>
@@ -158,7 +163,7 @@
                                 <table class="info-table">
                                     <tbody>
                                     <tr>
-                                        <td>江苏省苏州市独墅湖高教区399号</td>
+                                        <td th:text="${orderDetailVO.address}">letao</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -171,7 +176,9 @@
                                     <tbody>
                                     <tr>
                                         <th>支付方式：</th>
-                                        <td>无</td>
+                                        <td th:text="${orderDetailVO.payTypeString==null?'在线支付':orderDetailVO.payTypeString}">
+                                            在线支付
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -187,7 +194,8 @@
                                     </tr>
                                     <tr>
                                         <th class="total">商品总价：</th>
-                                        <td class="total"><span class="num">8584.00</span>元
+                                        <td class="total"><span class="num" id="totalPrice"
+                                                                th:text="${orderDetailVO.totalAmount+'.00'}">1299.00</span>元
                                         </td>
                                     </tr>
                                     </tbody>
@@ -244,7 +252,9 @@
 
     function payOrder() {
         var orderNo = $("#orderNoValue").val();
-        window.location.href = '/selectPayType?orderNo=' + orderNo;
+        var totalPrice=$("#totalPrice").html();
+
+        window.location.href = '/pay/codeUrl?orderNo='+orderNo+'&totalPrice='+totalPrice+'';
     }
 
     function finishOrder() {

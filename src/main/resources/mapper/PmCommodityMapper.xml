@@ -12,9 +12,6 @@
         <result column="publish_status" jdbcType="INTEGER" property="publishStatus"/>
     </resultMap>
 
-
-
-
     <select id="selectForPage" parameterType="Map" resultMap="PageResultMap">
         select comm_id, name,description,album_pics,stock,price,publish_status from pm_commodity
         <if test="start!=null and limit!=null">
@@ -30,7 +27,6 @@
         </foreach>
     </update>
 
-
     <select id="getCommodityForIndex" parameterType="Map" resultMap="PageResultMap">
         select comm_id, name,description,album_pics,stock,price,publish_status from pm_commodity
             where recommand_status=#{type}
@@ -38,7 +34,27 @@
 
     </select>
 
+    <select id="selectByPrimaryKeys" resultMap="PageResultMap">
+        select
+        comm_id, name,description,album_pics,stock,price,publish_status
+        from pm_commodity
+        where comm_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        order by field(comm_id,
+        <foreach item="id" collection="list" separator=",">
+            #{id}
+        </foreach>
+        );
+    </select>
 
+    <update id="updateStockNum">
+        <foreach collection="stockNumDTOS" item="stockNumDTO">
+            update pm_commodity set stock = stock-#{stockNumDTO.quantity}
+            where comm_id = #{stockNumDTO.commId} and stock>=#{stockNumDTO.quantity} and publish_status = 0;
+        </foreach>
+    </update>
 
     <select id="findLetaoMallGoodsListBySearch" parameterType="Map" resultMap="PageResultMap">
         select comm_id, name,description,album_pics,stock,price,publish_status from pm_commodity

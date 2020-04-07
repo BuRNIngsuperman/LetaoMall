@@ -2,4 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.seu.letao.mapper.OmOrderItemMapper">
 
+    <select id="selectByOrderIds" resultType="cn.edu.seu.letao.entity.OmOrderItem">
+        select
+        *
+        from om_order_item
+        where order_id
+        in
+        <foreach item="id" collection="orderIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <insert id="insertBatch" parameterType="cn.edu.seu.letao.entity.OmOrderItem">
+        insert into om_order_item (order_id, comm_id,
+        price,
+        quantity,name,album_pics)
+        values
+        <foreach collection="orderItems" item="orderItem" separator=",">
+            (#{orderItem.orderId}, #{orderItem.commId},
+            #{orderItem.price},
+            #{orderItem.quantity},
+            #{orderItem.name},
+            #{orderItem.albumPics})
+        </foreach>
+    </insert>
+
+    <select id="selectByOrderId" parameterType="int" resultType="cn.edu.seu.letao.entity.OmOrderItem">
+        select
+        *
+        from om_order_item
+        where order_id = #{orderId}
+    </select>
 </mapper>
