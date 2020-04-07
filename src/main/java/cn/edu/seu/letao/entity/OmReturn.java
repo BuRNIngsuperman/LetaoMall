@@ -31,9 +31,9 @@ public class OmReturn implements Serializable {
     private Integer returnId;
 
     /**
-     * 订单id
+     * 订单号
      */
-    private Integer orderId;
+    private String orderSn;
 
     /**
      * 申请创建时间

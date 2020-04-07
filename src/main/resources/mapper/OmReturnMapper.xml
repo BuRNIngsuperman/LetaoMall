@@ -2,5 +2,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.seu.letao.mapper.OmReturnMapper">
 
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="returnId"
+            parameterType="cn.edu.seu.letao.entity.OmReturn">
+        insert into om_return
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="returnId != null">
+                return_id,
+            </if>
+            <if test="orderSn != null">
+                order_sn,
+            </if>
+            <if test="returnAmount != null">
+                return_amount,
+            </if>
+            <if test="returnName != null">
+                return_name,
+            </if>
+            <if test="returnPhone != null">
+                return_phone,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="reason != null">
+                reason,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="returnId != null">
+                #{returnId},
+            </if>
+            <if test="orderSn != null">
+                #{orderSn},
+            </if>
+            <if test="returnAmount != null">
+                #{returnAmount},
+            </if>
+            <if test="returnName!= null">
+                #{returnName},
+            </if>
+            <if test="returnPhone != null">
+                #{returnPhone},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="reason != null">
+                #{reason},
+            </if>
+
+        </trim>
+    </insert>
 
 </mapper>

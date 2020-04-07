@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface OmReturnMapper extends BaseMapper<OmReturn> {
 
+
+    void insertSelective(OmReturn omReturn);
 }
