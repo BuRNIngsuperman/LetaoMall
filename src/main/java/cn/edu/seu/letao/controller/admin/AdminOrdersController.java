@@ -66,7 +66,7 @@ public class AdminOrdersController {
     /**
      * 配货
      */
-    @RequestMapping(value = "/orders/checkDone", method = RequestMethod.POST)
+    @RequestMapping(value = "/orders/checkOut", method = RequestMethod.POST)
     @ResponseBody
     public Result checkDone(@RequestBody Integer[] ids) {
         if (ids.length < 1) {

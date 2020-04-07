@@ -208,65 +208,6 @@ $('#saveButton').click(function () {
 });
 
 /**
- * 订单拣货完成
- */
-function orderCheckDone() {
-    var ids = getSelectedRows();
-    if (ids == null) {
-        return;
-    }
-    var orderSns = '';
-    for (i = 0; i < ids.length; i++) {
-        var rowData = $("#jqGrid").jqGrid("getRowData", ids[i]);
-        if (rowData.status != '待发货') {
-            orderSns += rowData.orderSn + " ";
-        }
-    }
-    if (orderSns.length > 0 & orderSns.length < 100) {
-        swal(orderSns + "订单的状态不是支付成功无法执行配货完成操作", {
-            icon: "error",
-        });
-        return;
-    }
-    if (orderSns.length >= 100) {
-        swal("你选择了太多状态不是支付成功的订单，无法执行配货完成操作", {
-            icon: "error",
-        });
-        return;
-    }
-    swal({
-        title: "确认弹框",
-        text: "确认要执行配货完成操作吗?",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-    }).then((flag) => {
-            if (flag) {
-                $.ajax({
-                    type: "POST",
-                    url: "/admin/orders/checkDone",
-                    contentType: "application/json",
-                    data: JSON.stringify(ids),
-                    success: function (r) {
-                        if (r.resultCode == 200) {
-                            swal("配货完成", {
-                                icon: "success",
-                            });
-                            $("#jqGrid").trigger("reloadGrid");
-                        } else {
-                            swal(r.message, {
-                                icon: "error",
-                            });
-                        }
-                    }
-                });
-            }
-        }
-    )
-    ;
-}
-
-/**
  * 订单出库
  */
 function orderCheckOut() {
@@ -277,8 +218,8 @@ function orderCheckOut() {
     var orderNos = '';
     for (i = 0; i < ids.length; i++) {
         var rowData = $("#jqGrid").jqGrid("getRowData", ids[i]);
-        if (rowData.orderStatus != '已支付' && rowData.orderStatus != '配货完成') {
-            orderNos += rowData.orderNo + " ";
+        if (rowData.status != '待发货') {
+            orderNos += rowData.orderSn + " ";
         }
     }
     if (orderNos.length > 0 & orderNos.length < 100) {
