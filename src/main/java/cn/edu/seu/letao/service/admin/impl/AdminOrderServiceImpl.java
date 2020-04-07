@@ -5,14 +5,15 @@ import cn.edu.seu.letao.common.ServiceResultEnum;
 import cn.edu.seu.letao.controller.vo.OrderItemVO;
 import cn.edu.seu.letao.entity.OmOrder;
 import cn.edu.seu.letao.entity.OmOrderItem;
+import cn.edu.seu.letao.entity.OmReturn;
 import cn.edu.seu.letao.entity.PmCommodity;
 import cn.edu.seu.letao.mapper.OmOrderItemMapper;
 import cn.edu.seu.letao.mapper.OmOrderMapper;
+import cn.edu.seu.letao.mapper.OmReturnMapper;
 import cn.edu.seu.letao.mapper.PmCommodityMapper;
 import cn.edu.seu.letao.service.admin.IAdminOrderService;
 import cn.edu.seu.letao.util.PageQueryUtil;
 import cn.edu.seu.letao.util.PageResult;
-import cn.hutool.db.sql.Order;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,8 @@ public class AdminOrderServiceImpl implements IAdminOrderService {
     @Autowired
     PmCommodityMapper commodityMapper;
 
-
+    @Autowired
+    OmReturnMapper returnMapper;
 
     @Override
     public PageResult getOrdersPage(PageQueryUtil pageUtil) {
@@ -177,14 +179,94 @@ public class AdminOrderServiceImpl implements IAdminOrderService {
 
     @Override
     public PageResult getReturnOrdersPage(PageQueryUtil pageUtil) {
-        List<OmOrder> newBeeMallOrders = orderMapper.findOrderList(pageUtil);
-
-        //关闭的订单不在操作，4表示订单状态已经关闭
-        QueryWrapper wrapper = new QueryWrapper();
-        wrapper.in("status",new int[]{0,1});
-        int total = orderMapper.selectCount(wrapper);
-        PageResult pageResult = new PageResult(newBeeMallOrders, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
+//        List<OmReturn> returnList = returnMapper.getReturnOrderList(pageUtil);
+//
+//        //已经处理的订单不在显示,status=1时表示该退单已经被处理完成
+//        QueryWrapper wrapper = new QueryWrapper();
+//        wrapper.eq("status",1);
+//        int total = returnMapper.selectCount(wrapper);
+//        PageResult pageResult = new PageResult(returnList, total, pageUtil.getLimit(), pageUtil.getPage());
+//        return pageResult;
+        return null;
     }
 
+    @Override
+    @Transactional
+    public String accepReturntOrder(Integer[] ids) {
+        //查询所有的订单 判断状态 修改状态和更新时间
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.in("return_id",ids);
+        List<OmReturn> returnList = returnMapper.selectList(wrapper);
+        String errorOrderNos = "";
+        if (!CollectionUtils.isEmpty(returnList)) {
+            for (OmReturn omReturn : returnList) {
+                // 是否已经关闭
+                if (omReturn.getStatus() == 2) {
+                    errorOrderNos += omReturn.getReturnId() + " ";
+                    continue;
+                }
+                //已处理完成，不该出现在管理列表
+                if (omReturn.getStatus() == 1) {
+                    errorOrderNos += omReturn.getReturnId() + " ";
+                }
+            }
+            if (StringUtils.isEmpty(errorOrderNos)) {
+                //订单状态正常 可以执行关闭操作 修改订单状态和更新时间
+                if (returnMapper.accepReturntOrder(Arrays.asList(ids))>0) {
+                    return ServiceResultEnum.SUCCESS.getResult();
+                } else {
+                    return ServiceResultEnum.DB_ERROR.getResult();
+                }
+            } else {
+                //退单此时不可执行关闭操作
+                if (errorOrderNos.length() > 0 && errorOrderNos.length() < 100) {
+                    return errorOrderNos + "退单状态异常";
+                } else {
+                    return "你选择的退单不能执行接受操作";
+                }
+            }
+        }
+        //未查询到数据 返回错误提示
+        return ServiceResultEnum.DATA_NOT_EXIST.getResult();
+    }
+
+    @Override
+    @Transactional
+    public String closeReturnOrder(Integer[] ids) {
+        //查询所有的订单 判断状态 修改状态和更新时间
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.in("return_id",ids);
+        List<OmReturn> returnList = returnMapper.selectList(wrapper);
+        String errorOrderNos = "";
+        if (!CollectionUtils.isEmpty(returnList)) {
+            for (OmReturn omReturn : returnList) {
+                // 是否已经关闭
+                if (omReturn.getStatus() == 2) {
+                    errorOrderNos += omReturn.getReturnId() + " ";
+                    continue;
+                }
+                //已处理完成，不该出现在管理列表
+                if (omReturn.getStatus() == 1) {
+                    errorOrderNos += omReturn.getReturnId() + " ";
+                }
+            }
+            if (StringUtils.isEmpty(errorOrderNos)) {
+                //订单状态正常 可以执行关闭操作 修改订单状态和更新时间
+                if (returnMapper.closeReturnOrder(Arrays.asList(ids))>0) {
+                    return ServiceResultEnum.SUCCESS.getResult();
+                } else {
+                    return ServiceResultEnum.DB_ERROR.getResult();
+                }
+            } else {
+                //退单此时不可执行关闭操作
+                if (errorOrderNos.length() > 0 && errorOrderNos.length() < 100) {
+                    return errorOrderNos + "退单状态异常";
+                } else {
+                    return "你选择的退单不能执行关闭操作";
+                }
+            }
+        }
+        //未查询到数据 返回错误提示
+        return ServiceResultEnum.DATA_NOT_EXIST.getResult();
+    }
 }

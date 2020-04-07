@@ -120,9 +120,10 @@ public class AdminOrdersController {
      */
     @GetMapping("/returnOrders")
     public String returnOrdersPage(HttpServletRequest request) {
-        request.setAttribute("path", "orders");
-        return "admin/admin_orders";
+        request.setAttribute("path", "admin_return_orders");
+        return "admin/admin_returnorder";
     }
+
     /**
      * 获取退单数据列表
      */
@@ -134,6 +135,40 @@ public class AdminOrdersController {
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
         return ResultGenerator.genSuccessResult(orderService.getReturnOrdersPage(pageUtil));
+    }
+
+    /**
+     * 接受退单
+     */
+    @RequestMapping(value = "/returnOrders/accept", method = RequestMethod.POST)
+    @ResponseBody
+    public Result accepReturntOrder(@RequestBody Integer[] ids) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        String result = orderService.accepReturntOrder(ids);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(result);
+        }
+    }
+
+    /**
+     * 关闭退单
+     */
+    @RequestMapping(value = "/returnOrder/close", method = RequestMethod.POST)
+    @ResponseBody
+    public Result closeReturnOrder(@RequestBody Integer[] ids) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        String result = orderService.closeReturnOrder(ids);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(result);
+        }
     }
 
 }

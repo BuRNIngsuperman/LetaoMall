@@ -51,4 +51,21 @@ public interface IAdminOrderService {
      * @return
      */
     PageResult getReturnOrdersPage(PageQueryUtil pageUtil);
+
+    /**
+     * 接受退单
+     *
+     * @param ids
+     * @return
+     */
+    String accepReturntOrder(Integer[] ids);
+
+
+    /**
+     * 关闭退单
+     *
+     * @param ids
+     * @return
+     */
+    String closeReturnOrder(Integer[] ids);
 }
