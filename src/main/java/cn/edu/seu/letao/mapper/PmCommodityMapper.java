@@ -30,4 +30,8 @@ public interface PmCommodityMapper extends BaseMapper<PmCommodity> {
 
     //lijia
     int updateStockNum(@Param("stockNumDTOS") List<StockNumDTO> stockNumDTOS);
+
+    List<PmCommodity> findLetaoMallGoodsListBySearch(PageQueryUtil pageUtil);
+
+    int getTotalLetaoMallGoodsBySearch(PageQueryUtil pageUtil);
 }
