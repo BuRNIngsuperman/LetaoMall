@@ -51,14 +51,14 @@
 
                                 <div class="order-summary">
                                     <div class="order-status" th:text="${orderDetailVO.orderStatusString}">
-                                        newbee
+                                        letao
                                     </div>
                                     <div class="order-desc">
                                         <th:block th:if="${orderDetailVO.status==0}">请尽快完成支付哦~</th:block>
-                                        <th:block th:if="${orderDetailVO.status==1}">newbee商城订单确认中~</th:block>
-                                        <th:block th:if="${orderDetailVO.status==2}">newbee仓库正在紧急配货中~</th:block>
+                                        <th:block th:if="${orderDetailVO.status==1}">letao商城订单确认中~</th:block>
+                                        <th:block th:if="${orderDetailVO.status==2}">letao仓库正在紧急配货中~</th:block>
                                         <th:block th:if="${orderDetailVO.status==3}">订单已出库正在快马加鞭向您奔来~</th:block>
-                                        <th:block th:if="${orderDetailVO.status==4}">交易成功，感谢您对newbee商城的支持~
+                                        <th:block th:if="${orderDetailVO.status==4}">交易成功，感谢您对letao商城的支持~
                                         </th:block>
                                         <th:block th:if="${orderDetailVO.status<0}">交易已关闭~</th:block>
 
