@@ -109,20 +109,22 @@ public class AdminStatisticsServiceImpl implements IAdminStatisticsService {
         List<OrderChartData> fullData = new ArrayList<>();
         //起始月份
         Date everyMonth = TimeUtil.getBeginDayOfYear(year);
-        int count = -1;
         for(int i=0;i<12;i++){
             boolean flag = true;
+            BigDecimal money = new BigDecimal(0);
             for(OrderChartData chartData:data){
                 if(DateUtil.month(chartData.getTime())==DateUtil.month(everyMonth)){
                     //有数据
                     flag = false;
-                    count++;
-                    break;
+                    money=money.add(chartData.getMoney());
                 }
             }
-            if(!flag){
-                fullData.add(data.get(count));
-            }else{
+            if (!flag){
+                OrderChartData orderChartData = new OrderChartData();
+                orderChartData.setTime(everyMonth);
+                orderChartData.setMoney(money);
+                fullData.add(orderChartData);
+            }else {
                 OrderChartData orderChartData = new OrderChartData();
                 orderChartData.setTime(everyMonth);
                 orderChartData.setMoney(new BigDecimal("0"));

@@ -99,6 +99,7 @@
         $.ajax({
             type: 'GET',
             url: '/admin/statistics/order',
+            contentType: 'application/json',
             dataType: 'json',
             data:{
                 type: type,
