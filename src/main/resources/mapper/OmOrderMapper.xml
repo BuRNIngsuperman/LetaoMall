@@ -189,6 +189,9 @@
             <if test="modifyTime != null">
                 modify_time = #{modifyTime},
             </if>
+            <if test="payType!=null and payType!=''">
+                pay_type = #{payType}
+            </if>
         </set>
         where order_sn = #{orderSn}
     </update>
