@@ -79,7 +79,11 @@ public class AdminController {
 
 
     @RequestMapping(value = "/register",method = {RequestMethod.GET})
-    public String toRegister(){
+    public String toRegister(HttpServletRequest request){
+        request.getSession().removeAttribute("loginUserId");
+        request.getSession().removeAttribute("loginUser");
+        request.getSession().removeAttribute("AdminUser");
+        request.getSession().removeAttribute("errorMsg");
         return "admin/admin_register";
     }
 
