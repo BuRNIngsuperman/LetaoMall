@@ -75,7 +75,7 @@ public class OmCartServiceImpl implements IOmCartService {
         //todo 数量相同不会进行修改
         //todo userId不同不能修改
         cartItemUpdate.setQuantity(cart.getQuantity());
-        cartItemUpdate.setModifyDate(LocalDateTime.now());
+        cartItemUpdate.setModifyDate(new Date());
         //修改记录
         if (omCartMapper.updateByPrimaryKeySelective(cartItemUpdate) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
@@ -128,7 +128,7 @@ public class OmCartServiceImpl implements IOmCartService {
         //todo 数量相同不会进行修改
         //todo userId不同不能修改
         cartItemUpdate.setQuantity(letaoMallCartItem.getQuantity());
-        cartItemUpdate.setModifyDate(LocalDateTime.now());
+        cartItemUpdate.setModifyDate(new Date());
         //修改记录
         if (omCartMapper.updateByPrimaryKeySelective(cartItemUpdate) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
