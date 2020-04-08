@@ -98,7 +98,7 @@
         getWxPayStatus();
     },2000)
     function getWxPayStatus(){
-        var orderNo = $("#orderNo").val();
+        var orderNo = $("#orderNoValue").val();
         jQuery.ajax({
             type: 'GET',
             url: '/pay/paySuccess?outTradeNo=' + orderNo,
