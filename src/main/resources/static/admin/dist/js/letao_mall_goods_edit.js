@@ -43,7 +43,7 @@ $(function () {
 $('#confirmButton').click(function () {
     var goodsName = $('#goodsName').val();
     var goodsPrice = $('#goodsPrice').val();
-    var goodsImageURL = $('#goodsImageURL').val();
+    //var goodsImageURL = $('#goodsImageURL').val();
     var goodsStock = $('#goodsStock').val();
     var goodsUnit = $('#goodsUnit').val();
     var goodsSN = $('#goodsSN').val();
@@ -55,7 +55,7 @@ $('#confirmButton').click(function () {
         var goodsOriginalPrice = $('#goodsOriginalPrice').val();
         var goodsLowStock = $('#goodsLowStock').val();
         var goodsWeight = $('#goodsWeight').val();
-        var goodsKeyWords = $('#goodsKeyWords').val();
+       // var goodsKeyWords = $('#goodsKeyWords').val();
         var goodsNote = $('#goodsNote').val();
 
 
@@ -65,9 +65,9 @@ $('#confirmButton').click(function () {
     var goodsRecommandStatus = $("input[name='goodsRecommandStatus']:checked").val();
 
     var goodsDescription = editor.html();
-    var goodsDetailTitle = $("textarea[id='editor2']").html();
-    var goodsDetailDesc = $("textarea[id='editor3']").html();
-    var goodsDetailHtml = $("textarea[id='editor4']").html();
+    var goodsDetailTitle = $('textarea[id="editor2"]').val();
+    var goodsDetailDesc = $("textarea[id='editor3']").val();
+    var goodsDetailHtml = $("textarea[id='editor4']").val();
 
     if (isNull(goodsDetailTitle)) {
         swal("请输入商品详情标题", {
@@ -94,12 +94,7 @@ $('#confirmButton').click(function () {
         });
         return;
     }
-    if (isNull(goodsKeyWords)) {
-        swal("请输入商品关键字", {
-            icon: "error",
-        });
-        return;
-    }
+
     if (isNull(goodsNote)) {
         swal("请输入商品备注", {
             icon: "error",
@@ -147,12 +142,6 @@ $('#confirmButton').click(function () {
     }
     if (!validLength(goodsName, 200)) {
         swal("商品名称过长", {
-            icon: "error",
-        });
-        return;
-    }
-    if (isNull(goodsImageURL)) {
-        swal("请输入图片路径", {
             icon: "error",
         });
         return;
@@ -232,7 +221,7 @@ $('#saveButton').click(function () {
         var goodsCommId = $('#commId').val();
         var goodsName = $('#goodsName').val();
         var goodsPrice = $('#goodsPrice').val();
-        var goodsImageURL = $('#goodsImageURL').val();
+        //var goodsImageURL = $('#goodsImageURL').val();
         var goodsStock = $('#goodsStock').val();
         var goodsUnit = $('#goodsUnit').val();
         var goodsSN = $('#goodsSN').val();
@@ -243,7 +232,7 @@ $('#saveButton').click(function () {
         var goodsOriginalPrice = $('#goodsOriginalPrice').val();
         var goodsLowStock = $('#goodsLowStock').val();
         var goodsWeight = $('#goodsWeight').val();
-        var goodsKeyWords = $('#goodsKeyWords').val();
+        //var goodsKeyWords = $('#goodsKeyWords').val();
         var goodsNote = $('#goodsNote').val();
         var goodsSellStatus = $("input[name='goodsSellStatus']:checked").val();
         var goodsNewStatus = $("input[name='goodsNewStatus']:checked").val();
