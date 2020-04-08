@@ -81,7 +81,7 @@ public class CommonController {
             }
             file.transferTo(destFile);
             Result resultSuccess = ResultGenerator.genSuccessResult();
-            resultSuccess.setData( "/goods-img/" + newFileName);
+            resultSuccess.setData( "http://39.98.59.185/productimgs/group02/" + newFileName);
             return resultSuccess;
         } catch (IOException e) {
             e.printStackTrace();

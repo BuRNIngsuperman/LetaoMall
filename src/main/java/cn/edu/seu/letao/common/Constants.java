@@ -5,7 +5,7 @@ package cn.edu.seu.letao.common;
  */
 public class Constants {
 
-    public final static String FILE_UPLOAD_DIC = "/goods-img/";//上传文件的默认url前缀
+    public final static String FILE_UPLOAD_DIC = "/usr/share/nginx/html/productimgs/group02/";//上传文件的默认url前缀
 
     public final static int INDEX_CAROUSEL_NUMBER = 5;//首页轮播图数量(可根据自身需求修改)
 
