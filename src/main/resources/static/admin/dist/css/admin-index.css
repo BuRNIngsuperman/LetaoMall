@@ -114,11 +114,12 @@
     border: 1px solid #DCDFE6;
   }
   .statistics-left{
+    width:180px;
     float:left;
   }
   .statistics-right{
-      width:82%;
-      height:490px;
+      width:750px;
+      height:500px;
       float:right;
   }
   .mine-layout {
