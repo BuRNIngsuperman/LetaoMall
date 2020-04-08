@@ -179,15 +179,13 @@ public class AdminOrderServiceImpl implements IAdminOrderService {
 
     @Override
     public PageResult getReturnOrdersPage(PageQueryUtil pageUtil) {
-//        List<OmReturn> returnList = returnMapper.getReturnOrderList(pageUtil);
-//
-//        //已经处理的订单不在显示,status=1时表示该退单已经被处理完成
-//        QueryWrapper wrapper = new QueryWrapper();
-//        wrapper.eq("status",1);
-//        int total = returnMapper.selectCount(wrapper);
-//        PageResult pageResult = new PageResult(returnList, total, pageUtil.getLimit(), pageUtil.getPage());
-//        return pageResult;
-        return null;
+        List<OmReturn> returnList = returnMapper.getReturnOrderList(pageUtil);
+        //已经处理的订单不在显示,status=1时表示该退单已经被处理完成,status=2被关闭不在处理。
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("status",0);
+        int total = returnMapper.selectCount(wrapper);
+        PageResult pageResult = new PageResult(returnList, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
     }
 
     @Override

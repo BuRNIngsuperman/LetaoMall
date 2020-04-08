@@ -55,4 +55,31 @@
         </trim>
     </insert>
 
+    <select id="getReturnOrderList" parameterType="Map" resultType="cn.edu.seu.letao.entity.OmReturn">
+        select * from om_return where status=0 order by created_time desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <update id="accepReturntOrder">
+        update om_return
+        set status = 1
+        where  return_id in
+        <foreach collection="ids" item="item" index="index"
+                 open="(" separator="," close=")">#{item}
+        </foreach>
+    </update>
+
+    <update id="closeReturnOrder">
+        update om_return
+        set status = 2
+        where  return_id in
+        <foreach collection="ids" item="item" index="index"
+                 open="(" separator="," close=")">#{item}
+        </foreach>
+    </update>
+
+
+
 </mapper>
