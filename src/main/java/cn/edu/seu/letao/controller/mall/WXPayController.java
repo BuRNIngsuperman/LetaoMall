@@ -114,7 +114,7 @@ public class WXPayController {
 
             验证不通过则停止执行回调并通知微信订单处理失败
         */
-        orderService.paySuccess(outTradeNo);
+
 
 
 
@@ -126,7 +126,7 @@ public class WXPayController {
                 // 补充以下代码, 根据实际业务完善逻辑
                 // 如：修改订单状态为"已付款" ...
 
-
+                orderService.paySuccess(outTradeNo);
                 System.out.println("********付款成功********");
                 // 通知微信订单处理成功
                 String noticeStr = setXML("SUCCESS", "SUCCESS");
