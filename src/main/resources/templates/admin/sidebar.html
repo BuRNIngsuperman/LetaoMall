@@ -103,6 +103,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item" th:if="${session.AdminUser.getType()} == 'admin'">
+                    <a th:href="@{/admin/register}" class="nav-link">
+                        <i class="fa fa-user-plus nav-icon"></i>
+                        <p>注册管理</p>
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <a th:href="@{/admin/logout}" class="nav-link">
                         <i class="fa fa-sign-out nav-icon"></i>
