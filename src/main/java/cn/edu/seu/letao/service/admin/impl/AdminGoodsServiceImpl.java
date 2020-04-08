@@ -49,6 +49,12 @@ public class AdminGoodsServiceImpl implements IAdminGoodsService {
     @Override
     public String saveCommodity(PmCommodity commodity){
 
+        commodity.setDeleteStatus(0);
+        commodity.setVerifyStatus(1);
+        commodity.setBrandId(0);
+        commodity.setSort(0);
+        commodity.setSale(0);
+        commodity.setKeywords("keyWords");
         if(commodityMapper.insert(commodity) > 0)
             return  ServiceResultEnum.SUCCESS.getResult();
 

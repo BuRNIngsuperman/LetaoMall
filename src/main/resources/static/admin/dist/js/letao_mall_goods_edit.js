@@ -238,9 +238,9 @@ $('#saveButton').click(function () {
         var goodsNewStatus = $("input[name='goodsNewStatus']:checked").val();
         var goodsRecommandStatus = $("input[name='goodsRecommandStatus']:checked").val();
         var goodsDescription = editor.html();
-        var goodsDetailTitle = $("textarea[id='editor2']").html();
-        var goodsDetailDesc = $("textarea[id='editor3']").html();
-        var goodsDetailHtml = $("textarea[id='editor4']").html();
+    var goodsDetailTitle = $('textarea[id="editor2"]').val();
+    var goodsDetailDesc = $("textarea[id='editor3']").val();
+    var goodsDetailHtml = $("textarea[id='editor4']").val();
 
         var goodsCoverImg = $('#goodsCoverImg')[0].src;
         if (isNull(goodsCoverImg) || goodsCoverImg.indexOf('img-upload') != -1) {
@@ -272,7 +272,6 @@ $('#saveButton').click(function () {
 
             "lowStock":goodsLowStock,
             "weight":goodsWeight,
-            "keyWords":goodsKeyWords,
             "note":goodsNote,
             "detailTitle":goodsDetailTitle,
             "detailDesc":goodsDetailDesc,
@@ -301,7 +300,6 @@ $('#saveButton').click(function () {
             "originalPrice":goodsOriginalPrice,
             "lowStock":goodsLowStock,
             "weight":goodsWeight,
-            "keyWords":goodsKeyWords,
             "note":goodsNote,
             "detailTitle":goodsDetailTitle,
             "detailDesc":goodsDetailDesc,

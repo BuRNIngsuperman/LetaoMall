@@ -107,9 +107,6 @@ public class AdminGoodsController {
         request.setAttribute("path", "edit");
         PmCommodity commodity = adminGoodsService.getGoodsById(goodsId.intValue());
 
-        System.out.println("----------------------");
-        System.out.println(commodity.getCommodityCategoryId());
-        System.out.println("-----------------------");
 
         if (commodity == null) {
             return "error/error_400";
@@ -173,7 +170,6 @@ public class AdminGoodsController {
                 || Objects.isNull(commodity.getOriginalPrice())
                 || Objects.isNull(commodity.getLowStock())
                 || Objects.isNull(commodity.getWeight())
-                || Objects.isNull(commodity.getKeywords())
                 || Objects.isNull(commodity.getDetailTitle())
                 || Objects.isNull(commodity.getDetailDesc())
                 || Objects.isNull(commodity.getDetailHtml())
@@ -213,7 +209,6 @@ public class AdminGoodsController {
                 || Objects.isNull(commodity.getOriginalPrice())
                 || Objects.isNull(commodity.getLowStock())
                 || Objects.isNull(commodity.getWeight())
-                || Objects.isNull(commodity.getKeywords())
                 || Objects.isNull(commodity.getDetailTitle())
                 || Objects.isNull(commodity.getDetailDesc())
                 || Objects.isNull(commodity.getDetailHtml())
