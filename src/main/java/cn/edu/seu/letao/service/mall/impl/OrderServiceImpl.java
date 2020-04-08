@@ -126,6 +126,7 @@ public class OrderServiceImpl implements OrderService {
                 int priceTotal = 0;
                 //保存订单
                 OmOrder letaoMallOrder = new OmOrder();
+                letaoMallOrder.setCreatedTime(new Date());
                 letaoMallOrder.setOrderSn(orderNo);
                 long userId=user.getUserId();
                 int userId1=(int)userId;
