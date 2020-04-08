@@ -158,8 +158,8 @@
                                 <label class="control-label">新品状态:&nbsp;</label>
                                 <input name="goodsNewStatus" type="radio" id="goodsNewStatusTrue" checked=true
                                        th:checked="${null==goods||(null !=goods and null !=goods.newStatus and goods.newStatus==1)} ?true:false"
-                                       value="0"/>&nbsp;新品&nbsp;
-                                <input name="goodsNewStatus" type="radio" id="goodsNewStatusFalse" value="1"
+                                       value="1"/>&nbsp;新品&nbsp;
+                                <input name="goodsNewStatus" type="radio" id="goodsNewStatusFalse" value="0"
                                        th:checked="${null !=goods and null !=goods.newStatus and goods.newStatus==0} ?true:false"/>&nbsp;非新品&nbsp;
                             </div>
 
@@ -167,8 +167,8 @@
                                 <label class="control-label">推荐状态:&nbsp;</label>
                                 <input name="goodsRecommandStatus" type="radio" id="goodsRecommandStatusTrue" checked=true
                                        th:checked="${null==goods||(null !=goods and null !=goods.recommandStatus and goods.recommandStatus==1)} ?true:false"
-                                       value="0"/>&nbsp;推荐&nbsp;
-                                <input name="goodsRecommandStatus" type="radio" id="goodsRecommandStatusFalse" value="1"
+                                       value="1"/>&nbsp;推荐&nbsp;
+                                <input name="goodsRecommandStatus" type="radio" id="goodsRecommandStatusFalse" value="0"
                                        th:checked="${null !=goods and null !=goods.recommandStatus and goods.recommandStatus==0} ?true:false"/>&nbsp;不推荐&nbsp;
                             </div>
 
